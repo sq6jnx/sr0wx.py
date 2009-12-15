@@ -1,0 +1,5 @@
+.svn/*
+docs/.svn/*
+pl/.svn/*
+lib/.svn/*
+*pyc
