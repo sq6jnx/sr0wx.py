@@ -294,4 +294,25 @@ imgw_prognoza.podajCisnHpa    = 1
 imgw_prognoza.podajSileWiatru = 1
 imgw_prognoza.podajKierWiatru = 1
 
+# -------------
+# sunRiseSet
+# -------------
+
+sunriset = m()
+
+# As stated in Sun.py (around line 230):
+# Eastern longitude positive, Western longitude negative       
+# Northern latitude positive, Southern latitude negative 
+sunriset.location = (17.03, 51.110) # Wroclaw
+sunriset.timeZone = "Europe/Warsaw"
+
+sunriset.giveSunRiseAfterSunRise = 1
+sunriset.giveSunSetAfterSunSet = 1
+sunriset.giveDayLength = 1
+
+# Na ile godzin przed wschodem/zachodem podajemy godzinę wschodu/zachodu (-1 = zawsze)
+sunriset.hoursBeforeSunRise = -1 
+sunriset.hoursBeforeSunSet = -1 
+
+
 # That's all for now.
