@@ -33,9 +33,9 @@ CTCSSVolume = 0.1
 # Here you can define serial port for PTT (default is ``None``) and baud rate.
 # Refer your TRX manual.
 
-#serialPort = None
-serialPort     = '/dev/ttyS0'
-serialBaudRate = 9600
+serialPort = None
+#serialPort     = '/dev/ttyS0'
+#serialBaudRate = 9600
 
 # Welcome and Goodbye messages. Quite easy, too. It's just a playlist of files
 # which will be played as a welcome message. Remember -- don't write ``.ogg``
@@ -54,6 +54,10 @@ from lib.cw import *
 helloMsg = ["tu","eksperymentalna","automatyczna_stacja_pogodowa",\
     "sp6yre",cw("sp6yre"),"lokator","jo81ld"]
 goodbyeMsg = ["_","tu","sp6yre",cw("sp6yre")]
+
+#helloMsg = ["tu","eksperymentalna","automatyczna_stacja_pogodowa",\
+#    "sp6yre","lokator","jo81ld"]
+#goodbyeMsg = ["_","tu","sp6yre"]
 
 # This one informes which modules will be used by SR0WX. These *must*
 # be stored as an array (possibly as a tuple, too).

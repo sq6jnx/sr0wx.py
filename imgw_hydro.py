@@ -11,7 +11,7 @@ import pl.pl as lang
 # ** NOTE **
 #
 # This module uses links [http://links.sourceforge.net/] (text mode) 
-# for downlading and pre-parsing poor HTML code.
+# for downlading and pre-parsing pure HTML code.
 #
 # pomysl: pamietac wodowskazy i sprawdzic czy nie doszly jakies nowe
 
