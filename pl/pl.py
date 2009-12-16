@@ -62,7 +62,7 @@ weatherDate   =  "stan_pogody_z_dnia"
 
 # * *"forecast for next ... hours"
 forecast = "prognoza_na_nastepne"
-hrs = ["","godziny","godzin"]
+hrs = ["godzina","godziny","godzin"]
 
 # * *"pressure ... hectopascals"*
 pressure      = "cisnienie"
@@ -146,7 +146,8 @@ tomorrow = "jutro"
 # and this is most important.
 #
 
-jednostki = [u""] + u"jeden dwa trzy cztery pięć sześć siedem osiem dziewięć".split()
+jednostkiM = [u""] + u"jeden dwa trzy cztery pięć sześć siedem osiem dziewięć".split() # masculinum
+jednostkiF = [u""] + u"jedna dwie trzy cztery pięć sześć siedem osiem dziewięć".split() # femininum
 dziesiatki = [u""] + u"""dziesięć dwadzieścia  trzydzieści czterdzieści
      pięćdziesiąt sześćdziesiąt siedemdziesiąt osiemdziesiąt dziewięćdziesiąt""".split()
 nastki = u"""dziesięć jedenaście dwanaście trzynaście czternaście piętnaście
@@ -167,7 +168,11 @@ wielkie = [ l.split() for l in ws.split('\n') ]
 # There are also some functions, by dowgird, so I haven't even looked into
 # them.
 
-def _slownie3cyfry(liczba):
+def _slownie3cyfry(liczba, rodzaj='M'):
+    if rodzaj=='F':
+	jednostki=jednostkiF
+    else:
+	jednostki=jednostkiM
     je = liczba % 10
     dz = (liczba//10) % 10
     se = (liczba//100) % 10
@@ -200,7 +205,7 @@ def _przypadek(liczba):
 
     return typ
 
-def lslownie(liczba):
+def lslownie(liczba, rodzaj='M'):
     """Liczba całkowita słownie"""
     trojki = []
     if liczba==0:
@@ -214,20 +219,20 @@ def lslownie(liczba):
             if i>0:
                 p = _przypadek(n)
                 w = wielkie[i][p]
-                slowa.append(_slownie3cyfry(n)+u" "+w)
+                slowa.append(_slownie3cyfry(n, rodzaj)+u" "+w)
             else:
-                slowa.append(_slownie3cyfry(n))
+                slowa.append(_slownie3cyfry(n, rodzaj))
     slowa.reverse()
     return ' '.join(slowa)
 
-def cosslownie(liczba,cos):
+def cosslownie(liczba,cos, rodzaj='M'):
     """Słownie "ileś cosiów"
 
     liczba - int
     cos - tablica przypadków [coś, cosie, cosiów]"""
     #print liczba
     #print cos[_przypadek(liczba)]
-    return lslownie(liczba)+" " + cos[_przypadek(liczba)]
+    return lslownie(liczba, rodzaj)+" " + cos[_przypadek(liczba)]
 
 ##def kwotaslownie(liczba, format = 0):
 ##    """Słownie złotych, groszy.
@@ -247,7 +252,7 @@ def cosslownie(liczba,cos):
 # As you remember, ``cardinal()`` must be defined, this is the function which
 # will be used by SR0WX modules. This functions was also written by dowgrid,
 # modified by me. (Is function's name proper?)
-def cardinal(no, units=[u"",u"",u""]):
+def cardinal(no, units=[u"",u"",u""], gender='M'):
     """Zamienia liczbę zapisaną cyframi na zapis słowny, opcjonalnie z jednostkami
 w odpowiednim przypadku. Obsługuje liczby ujemne."""
     if no<0:
@@ -296,3 +301,21 @@ def readISODT(ISODT):
     MMslownie = cardinal(mm).replace("zero","zero_zero")
 
     return " ".join( (Dslownie, Mslownie, "godzina", HHslownie, MMslownie) )
+
+
+sunrise = "wschod_slonca"
+sunset  = "zachod_slonca"
+dayLength = "dlugosc_dnia"
+
+mns = ["minuta","minuty","minut"]
+
+def readHour(dt):
+    return removeDiacritics(readISODT('0000-00-00 '+str(dt.hour).rjust(2, '0')+':'+str(dt.minute).rjust(2, '0')+':00'))
+
+def readHourLen(hour):
+    ss = hour.seconds
+    hh = ss/3600
+    mm = (ss-hh*3600)/60
+    return removeDiacritics(" ".join( (cardinal(hh, hrs, gender='F'), cardinal(mm, mns, gender='F')) ))
+
+

@@ -6,8 +6,6 @@ import pytz, datetime
 import lib.Sun
 lang=None
 
-# Moduł powinien podawać godzinę wschodu słońca przed jego wschodem danego dnia, zachodu na X godzin przed jego zachodem
-
 
 # This tiny function is used to convert from UTC to local time. Code inspired
 # by ``pytz`` manual, http://pytz.sourceforge.net/#example-usage .
@@ -30,6 +28,20 @@ def my_import(name):
         mod = getattr(mod, comp)
     return mod
 
+def float2datetime(time, date=datetime.datetime.utcnow()):
+	hh = int(time)
+
+	time = (time-hh)*60
+	mm = int(time)
+
+	time = (time-mm)*60
+	ss = int(time)
+
+	time = (time-ss)*1000000
+	ms = int(time)
+
+	return datetime.datetime(date.year, date.month, date.day, hh, mm, ss, ms, tzinfo=pytz.timezone("UTC"))
+
 def getData(l):
         global lang
         lang = my_import(l+"."+l)
@@ -37,17 +49,24 @@ def getData(l):
         data = {"data":"", "needCTCSS":False, "debug":None, "allOK":True}
         
         
-        dt = datetime.datetime.utcnow()
+        now = datetime.datetime.utcnow().replace(tzinfo=pytz.timezone("UTC"))
 
         sun = lib.Sun.Sun()
-        sunrise, sunset = sun.sunRiseSet(dt.year, dt.month, dt.day, config.location[0], config.location[1])
+        sunrise, sunset = sun.sunRiseSet(now.year, now.month, now.day, config.location[0], config.location[1])
 
-        sunrise, sunset = datetime.timedelta(hours=sunrise), datetime.timedelta(hours=sunset)
+        sunrise, sunset = float2datetime(sunrise), float2datetime(sunset)
 
-        print sunrise, sunset
-        print sunrise > datetime.datetime.utcnow()
-        
+	if (now>sunrise and (config.hoursBeforeSunRise==-1 or (now-sunrise).seconds/3600.0<=config.hoursBeforeSunRise)) or config.giveSunRiseAfterSunRise == 1:
+		data["data"] = " ".join( (data["data"], lang.sunrise, lang.readHour(sunrise.astimezone(pytz.timezone(config.timeZone)))) )
 
-# Wschod slonca godzina 6:34 zachod slonca 16:45. dzien bedzie trwal 14h 34m. <-- jeśli przed świtem (w tym po zachodzie)
-# Zachód słońca  godzina 15:45 <-- jeśli dzień trwa
-# Długosc dnia....
+
+	if (sunset>now and (config.hoursBeforeSunSet ==-1 or (sunset-now).seconds/3600.0<=config.hoursBeforeSunSet)) or config.giveSunSetAfterSunSet == 1:
+		data["data"] = " ".join( (data["data"], lang.sunset, lang.readHour(sunset.astimezone(pytz.timezone(config.timeZone)))) )
+
+	if config.giveDayLength==1:
+		data["data"] = " ".join( (data["data"], lang.dayLength, lang.readHourLen(sunset-sunrise)) )
+
+	return data
+
+if __name__ == '__main__':
+	print getData('pl')["data"]

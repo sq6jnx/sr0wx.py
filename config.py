@@ -58,11 +58,11 @@ goodbyeMsg = ["_","tu","sp6yre",cw("sp6yre")]
 # There is a bug, probably in pygame, which makes cw played twice.
 # There is also a workaround of this problem
 
-playHalf = 0
+playHalf = 1
 
 # This one informes which modules will be used by SR0WX. These *must*
 # be stored as an array (possibly as a tuple, too).
-modules = ["metar","taf","meteoalarm","imgw_hydro"]
+modules = ["metar","taf","meteoalarm","imgw_hydro","sunriset"]
 
 # =====================
 # Modules configuration
@@ -312,8 +312,8 @@ sunriset.giveSunSetAfterSunSet = 1
 sunriset.giveDayLength = 1
 
 # Na ile godzin przed wschodem/zachodem podajemy godzinę wschodu/zachodu (-1 = zawsze)
-sunriset.hoursBeforeSunRise = -1 
-sunriset.hoursBeforeSunSet = -1 
+sunriset.hoursBeforeSunRise = 3 
+sunriset.hoursBeforeSunSet = 3 
 
 
 # That's all for now.
