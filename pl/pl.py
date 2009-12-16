@@ -319,3 +319,7 @@ def readHourLen(hour):
     return removeDiacritics(" ".join( (cardinal(hh, hrs, gender='F'), cardinal(mm, mns, gender='F')) ))
 
 
+gopr_region = ["", "w_karkonoszach obowiazuje", "", "w_regionie_babiej_gory obowiazuje", "w_pieninach obowiazuje", "w_bieszczadach obowiazuje"]
+avalacheLevel = [i+' stopien_zagrozenia_lawinowego' for i in ['pierwszy', 'drugi', 'trzeci', 'czwarty', 'piaty najwyzszy'] ]
+gopr_tendention = ['', '', 'tendencja_spadkowa', 'tendencja_wzrostowa']
+
