@@ -40,7 +40,7 @@ import os,sys
 import pygame
 import time
 import config
-#import lib.cw as cw
+import lib.cw as cw
 import debug, traceback
 
 # ``os``, ``sys`` and ``time`` doesn't need further explanation, these are
