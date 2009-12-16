@@ -51,13 +51,14 @@ serialPort = None
 
 from lib.cw import *
 
-helloMsg = ["tu","eksperymentalna","automatyczna_stacja_pogodowa",\
+helloMsg = [cw('test'), "tu","eksperymentalna","automatyczna_stacja_pogodowa",\
     "sp6yre",cw("sp6yre"),"lokator","jo81ld"]
 goodbyeMsg = ["_","tu","sp6yre",cw("sp6yre")]
 
-#helloMsg = ["tu","eksperymentalna","automatyczna_stacja_pogodowa",\
-#    "sp6yre","lokator","jo81ld"]
-#goodbyeMsg = ["_","tu","sp6yre"]
+# There is a bug, probably in pygame, which makes cw played twice.
+# There is also a workaround of this problem
+
+playHalf = 0
 
 # This one informes which modules will be used by SR0WX. These *must*
 # be stored as an array (possibly as a tuple, too).
