@@ -296,3 +296,29 @@ def readISODT(ISODT):
     MMslownie = cardinal(mm).replace("zero","zero_zero")
 
     return " ".join( (Dslownie, Mslownie, "godzina", HHslownie, MMslownie) )
+<<<<<<< HEAD:pl/pl.py
+=======
+
+
+sunrise = "wschod_slonca"
+sunset  = "zachod_slonca"
+dayLength = "dlugosc_dnia"
+
+mns = ["minuta","minuty","minut"]
+
+def readHour(dt):
+    return removeDiacritics(readISODT('0000-00-00 '+str(dt.hour).rjust(2, '0')+':'+str(dt.minute).rjust(2, '0')+':00'))
+
+def readHourLen(hour):
+    ss = hour.seconds
+    hh = ss/3600
+    mm = (ss-hh*3600)/60
+    return removeDiacritics(" ".join( (cardinal(hh, hrs, gender='F'), cardinal(mm, mns, gender='F')) ))
+
+
+gopr_region = ["", "w_karkonoszach obowiazuje", "", "w_regionie_babiej_gory obowiazuje", "w_pieninach obowiazuje", "w_bieszczadach obowiazuje"]
+avalancheLevel = ['']+[i+' stopien_zagrozenia_lawinowego' for i in ['pierwszy', 'drugi', 'trzeci', 'czwarty', 'piaty najwyzszy'] ]
+gopr_tendention = ['', '', 'tendencja_spadkowa', 'tendencja_wzrostowa']
+info_at = 'komunikat_z_dnia'
+
+>>>>>>> gopr-lawiny:pl/pl.py

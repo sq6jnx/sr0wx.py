@@ -57,7 +57,11 @@ goodbyeMsg = ["_","tu","sp6yre",cw("sp6yre")]
 
 # This one informes which modules will be used by SR0WX. These *must*
 # be stored as an array (possibly as a tuple, too).
+<<<<<<< HEAD:config.py
 modules = ["metar","taf","meteoalarm","imgw_hydro"]
+=======
+modules = ["metar","taf","meteoalarm","imgw_hydro","gopr_lawiny","sunriset"]
+>>>>>>> gopr-lawiny:config.py
 
 # =====================
 # Modules configuration
@@ -290,4 +294,47 @@ imgw_prognoza.podajCisnHpa    = 1
 imgw_prognoza.podajSileWiatru = 1
 imgw_prognoza.podajKierWiatru = 1
 
+<<<<<<< HEAD:config.py
+=======
+# -------------
+# sunRiseSet
+# -------------
+
+sunriset = m()
+
+# As stated in Sun.py (around line 230):
+# Eastern longitude positive, Western longitude negative       
+# Northern latitude positive, Southern latitude negative 
+sunriset.location = (17.03, 51.110) # Wroclaw
+sunriset.timeZone = "Europe/Warsaw"
+
+sunriset.giveSunRiseAfterSunRise = 1
+sunriset.giveSunSetAfterSunSet = 1
+sunriset.giveDayLength = 1
+
+# Na ile godzin przed wschodem/zachodem podajemy godzinę wschodu/zachodu (-1 = zawsze)
+sunriset.hoursBeforeSunRise = 3 
+sunriset.hoursBeforeSunSet = 3 
+
+# -------------
+# gopr_lawiny
+# -------------
+
+gopr_lawiny = m()
+
+# GOPR podzielił Polskę na następujące regiony:
+# 1 - Karkonosze
+# 2 - Śnieżnik Kłodzki
+# 3 - Babia Góra
+# 4 - Pieniny
+# 5 - Bieszczady
+#
+# Niestety, dla Śnieżnika Kłodzkiego odsyła na stronę Horska Sluzba CZ, dla Pienin nie podaje komunikatów wogóle.
+# Zagrożenia dla Tatr podaje TOPR.
+
+gopr_lawiny.region = 1
+gopr_lawiny.podajTendencje = 1
+gopr_lawiny.podajWystawe = 1   # not yet implemented
+
+>>>>>>> gopr-lawiny:config.py
 # That's all for now.
