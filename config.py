@@ -33,9 +33,9 @@ CTCSSVolume = 0.1
 # Here you can define serial port for PTT (default is ``None``) and baud rate.
 # Refer your TRX manual.
 
-serialPort = None
-#serialPort     = '/dev/ttyS0'
-#serialBaudRate = 9600
+#serialPort = None
+serialPort     = '/dev/ttyS0'
+serialBaudRate = 9600
 
 # Welcome and Goodbye messages. Quite easy, too. It's just a playlist of files
 # which will be played as a welcome message. Remember -- don't write ``.ogg``
@@ -51,18 +51,13 @@ serialPort = None
 
 from lib.cw import *
 
-helloMsg = [cw('test'), "tu","eksperymentalna","automatyczna_stacja_pogodowa",\
+helloMsg = ["tu","eksperymentalna","automatyczna_stacja_pogodowa",\
     "sp6yre",cw("sp6yre"),"lokator","jo81ld"]
 goodbyeMsg = ["_","tu","sp6yre",cw("sp6yre")]
 
-# There is a bug, probably in pygame, which makes cw played twice.
-# There is also a workaround of this problem
-
-playHalf = 1
-
 # This one informes which modules will be used by SR0WX. These *must*
 # be stored as an array (possibly as a tuple, too).
-modules = ["metar","taf","meteoalarm","imgw_hydro","sunriset"]
+modules = ["metar","taf","meteoalarm","imgw_hydro"]
 
 # =====================
 # Modules configuration
@@ -294,26 +289,5 @@ imgw_prognoza.podajTempOdcz   = 1
 imgw_prognoza.podajCisnHpa    = 1
 imgw_prognoza.podajSileWiatru = 1
 imgw_prognoza.podajKierWiatru = 1
-
-# -------------
-# sunRiseSet
-# -------------
-
-sunriset = m()
-
-# As stated in Sun.py (around line 230):
-# Eastern longitude positive, Western longitude negative       
-# Northern latitude positive, Southern latitude negative 
-sunriset.location = (17.03, 51.110) # Wroclaw
-sunriset.timeZone = "Europe/Warsaw"
-
-sunriset.giveSunRiseAfterSunRise = 1
-sunriset.giveSunSetAfterSunSet = 1
-sunriset.giveDayLength = 1
-
-# Na ile godzin przed wschodem/zachodem podajemy godzinę wschodu/zachodu (-1 = zawsze)
-sunriset.hoursBeforeSunRise = 3 
-sunriset.hoursBeforeSunSet = 3 
-
 
 # That's all for now.

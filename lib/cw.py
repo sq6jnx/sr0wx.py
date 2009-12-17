@@ -1,7 +1,7 @@
 #!/usr/bin/python -tt
 # -*- coding: utf-8 -*-
 
-import numpy.oldnumeric as Numeric
+import Numeric
 
 morse = { "A": ".-", "B": "-...", "C": "-.-.","D": "-..","E": ".","F": "..-.",
     "G": "--.", "H": "....", "I": "..", "J": ".---", "K": "-.-", "L": ".-..",
@@ -115,6 +115,7 @@ def cw(text, wpm=25, farnsworth=None, weight=None, pitch=600, volume=0.1, sample
         else:
             message = Numeric.concatenate( (message, interWord) )
 
+
     return Numeric.transpose(Numeric.array((message,message)))
 
 
@@ -124,26 +125,23 @@ def sine_array_onecycle(hz, peak=0.9,sampleRate=44100):
     length = sampleRate / float(hz)
     omega = Numeric.pi * 2 / length
     xvalues = Numeric.arange(int(length)) * omega
-    return ((peak * 32767) * Numeric.sin(xvalues)).astype(Numeric.int16)
+    return ((peak * 32767) * Numeric.sin(xvalues)).astype(Numeric.Int16)
 
 def sine_array(hz, peak, sampleRate=44100,length=1.0):
 #Compute N samples of a sine wave with given frequency and peak amplitude (defaults to one second).
     return Numeric.resize(sine_array_onecycle(hz, peak), (int(sampleRate*length),))
 
 
-def play(text, wpm=50, farnsworth=None, weight=None, pitch=800, volume=1, sampleRate=44100):
-    s= pygame.sndarray.make_sound( cw(text, wpm, farnsworth, weight, pitch, volume, sampleRate) )
-    # dirty hack below:
-    s= pygame.sndarray.make_sound(pygame.sndarray.array(s)[:len(pygame.sndarray.array(s))/2])
-    c = s.play()
-    while c.get_busy() == True:
-        pygame.time.wait(25)
-
-if __name__ == '__main__':
-    import pygame
-    pygame.mixer.pre_init(44100,-16,2,1024)
-    pygame.mixer.init(44100,-16,2,1024)
-    pygame.sndarray.use_arraytype('numpy')
-    pygame.init()
-    play("vvv= test")
-
+##def play(text, wpm=25, farnsworth=None, weight=None, pitch=800, volume=1, sampleRate=44100):
+##    s= pygame.sndarray.make_sound( cw(text, wpm, farnsworth, weight, pitch, volume, sampleRate) )
+##    c = s.play()
+##    while c.get_busy() == True:
+##        pygame.time.wait(25)
+##
+##if __name__ == '__main__':
+##    import pygame
+##    pygame.mixer.pre_init(44100,-16,2,1024)
+##    pygame.mixer.init(44100,-16,2,1024)
+##    #pygame.init()
+##    play("vvv= test")
+##

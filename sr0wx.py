@@ -101,10 +101,6 @@ data = config.helloMsg + data.split() + config.goodbyeMsg
 
 pygame.mixer.init(44100,-16,2,1024)
 
-# We'll probably play cw, so:
-
-pygame.sndarray.use_arraytype('numpy')
-
 # Next (as a tiny timesaver & memory eater ;) program loads all neccessary
 # samples into memory. I think that this is better approach than reading
 # every single sample from disk in the same moment when it's time to play it.
@@ -169,11 +165,7 @@ for el in data:
         if "upper" in dir(el):
             voiceChannel = soundSamples[el].play()
         elif "upper" not in dir(el):
-# There is a bug, probably in pygame, which efects in playing twice CW. This trick is dirty.
-	    s = pygame.sndarray.make_sound(el)
-	    if config.playHalf == 1:	
-	        s= pygame.sndarray.make_sound(pygame.sndarray.array(s)[:len(pygame.sndarray.array(s))/2])
-            voiceChannel = s.play()
+            voiceChannel = pygame.sndarray.make_sound(el).play()
         while voiceChannel.get_busy():
             pygame.time.Clock().tick(25)
 
