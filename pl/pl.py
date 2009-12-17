@@ -296,9 +296,27 @@ def readISODT(ISODT):
     MMslownie = cardinal(mm).replace("zero","zero_zero")
 
     return " ".join( (Dslownie, Mslownie, "godzina", HHslownie, MMslownie) )
-<<<<<<< HEAD:pl/pl.py
-=======
 
+def readISODate(ISODate):
+    _rv=() # return value
+    y,m,d,hh,mm,ss= ( int(ISODate[0:4]),   int(ISODate[5:7]),   int(ISODate[8:10]),
+                      int(ISODate[11:13]), int(ISODate[14:16]), int(ISODate[17:19]) )
+
+    # miesiąc
+    _M = ["","stycznia","lutego","marca","kwietnia","maja","czerwca","lipca",
+         "sierpnia","września","października","listopada","grudnia"]
+    Mslownie = _M[m]
+    # dzień
+    _j = ["","pierwszego","drugiego","trzeciego","czwartego","piątego","szóstego",
+        "siódmego","ósmego","dziewiątego","dziesiątego","jedenastego",
+        "dwunastego","trzynastego","czternastego","piętnastego","szesnastego",
+        "siedemnastego","osiemnastego","dziewiętnastego"]
+    _d = ["","","dwudziestego","trzydziestego"]
+
+    if d<20: Dslownie = _j[d]
+    else: Dslownie = " ".join( (_d[d/10], _j[d%10]) )
+
+    return " ".join( (Dslownie, Mslownie) )
 
 sunrise = "wschod_slonca"
 sunset  = "zachod_slonca"
@@ -321,4 +339,5 @@ avalancheLevel = ['']+[i+' stopien_zagrozenia_lawinowego' for i in ['pierwszy', 
 gopr_tendention = ['', '', 'tendencja_spadkowa', 'tendencja_wzrostowa']
 info_at = 'komunikat_z_dnia'
 
->>>>>>> gopr-lawiny:pl/pl.py
+hscr_region = {"K": "w_karkonoszach obowiazuje", "J": "w_jesionikach_i_masywie_snieznika obowiazuje"}
+hscr_tendention = ['', '', 'tendencja_spadkowa', 'tendencja_wzrostowa']

@@ -57,11 +57,7 @@ goodbyeMsg = ["_","tu","sp6yre",cw("sp6yre")]
 
 # This one informes which modules will be used by SR0WX. These *must*
 # be stored as an array (possibly as a tuple, too).
-<<<<<<< HEAD:config.py
-modules = ["metar","taf","meteoalarm","imgw_hydro"]
-=======
-modules = ["metar","taf","meteoalarm","imgw_hydro","gopr_lawiny","sunriset"]
->>>>>>> gopr-lawiny:config.py
+modules = ["metar","taf","meteoalarm","imgw_hydro","gopr_lawiny","hscr_laviny","sunriset"]
 
 # =====================
 # Modules configuration
@@ -294,8 +290,6 @@ imgw_prognoza.podajCisnHpa    = 1
 imgw_prognoza.podajSileWiatru = 1
 imgw_prognoza.podajKierWiatru = 1
 
-<<<<<<< HEAD:config.py
-=======
 # -------------
 # sunRiseSet
 # -------------
@@ -336,5 +330,20 @@ gopr_lawiny.region = 1
 gopr_lawiny.podajTendencje = 1
 gopr_lawiny.podajWystawe = 1   # not yet implemented
 
->>>>>>> gopr-lawiny:config.py
+# -------------
+# hscr_laviny
+# -------------
+
+hscr_laviny = m()
+
+# HS CR gives avalanche awarenesses for two regions: Krkonoše and Jeseníky.
+# As a reference we use a little bit strange shorthand for these, so any
+# string which matches "Krkonoše" or "Jeseníky" is valid, i.e. "Krk" or "Jesen".
+# 
+
+#hscr_laviny.region = "Krkono"
+hscr_laviny.region = "Jesen"
+hscr_laviny.giveTendention = 1
+hscr_laviny.giveExposition = 1   # not yet implemented
+
 # That's all for now.
