@@ -320,6 +320,7 @@ def readHourLen(hour):
 
 
 gopr_region = ["", "w_karkonoszach obowiazuje", "", "w_regionie_babiej_gory obowiazuje", "w_pieninach obowiazuje", "w_bieszczadach obowiazuje"]
-avalacheLevel = [i+' stopien_zagrozenia_lawinowego' for i in ['pierwszy', 'drugi', 'trzeci', 'czwarty', 'piaty najwyzszy'] ]
+avalancheLevel = ['']+[i+' stopien_zagrozenia_lawinowego' for i in ['pierwszy', 'drugi', 'trzeci', 'czwarty', 'piaty najwyzszy'] ]
 gopr_tendention = ['', '', 'tendencja_spadkowa', 'tendencja_wzrostowa']
+info_at = 'komunikat_z_dnia'
 

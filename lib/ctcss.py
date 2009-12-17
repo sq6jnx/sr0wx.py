@@ -10,7 +10,7 @@ CTCSSTones = {'A': 67.0, 'T': 131.8, 'B': 71.9, 'U': 136.5, 'C': 74.4,
     'AH': 218.1, 'P': 114.8, 'AI': 225.7, 'Q': 118.8, 'AJ': 233.6, 'R': 123.0,
     'AK': 241.8, 'S': 127.3, 'AL': 250.3}
 
-import Numeric
+import numpy.oldnumeric as Numeric
 
 # http://www.nabble.com/Chord-player-td21350708.html
 def getCTCSS(tone, sampleRate=44100, peak=0.9):

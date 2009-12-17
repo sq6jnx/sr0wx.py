@@ -5,6 +5,7 @@ import re
 import urllib
 
 from config import gopr_lawiny as config
+import datetime
 lang=None
 
 def downloadFile(url):
@@ -27,8 +28,9 @@ def last(list):
 def pobierzOstrzezenia(region):
     url = "http://www.gopr.pl/index.php?action=zagrozenie_lawinowe&id=%d"%region
 
-    print url
+    aktualny = True
 
+    _date      = re.compile('(\d{4})-(\d{2})-(\d{2})\ (\d{2}):(\d{2}):(\d{2})')
     _brak      = re.compile('w momencie zaistnienia adekwatnych')
     _stopien   = re.compile('img/lawina/stopnie/(\d)D.gif')
     _tendencja = re.compile("img/lawina/strzalka(\d).gif")
@@ -42,8 +44,17 @@ def pobierzOstrzezenia(region):
             stopien   = stopien   or last(_stopien.findall(line))
             tendencja = tendencja or last(_tendencja.findall(line))
             wystawa   = wystawa   or last(_wystawa.findall(line))
+	    if _date.findall(line)!=[]:
+	        dt      = _date.findall(line)[0]
+	        now     = datetime.datetime.now()
+	        delta   = datetime.timedelta(hours=24)
+	        infoDT  = datetime.datetime(int(dt[0]), int(dt[1]), int(dt[2]), int(dt[3]), int(dt[4]), int(dt[5]))
+	        if infoDT+delta<now:
+                     aktualny = False
 
-    return (stopien, tendencja, wystawa)
+    print (stopien, tendencja, wystawa, aktualny, infoDT)
+
+    return (int(stopien), int(tendencja), int(wystawa), aktualny, infoDT)
 
 def getData(l):
     global lang
@@ -51,7 +62,7 @@ def getData(l):
 
     data = {"data":"", "needCTCSS":False, "debug":None, "allOK":True}
 
-    stopien, tendencja, wystawa = pobierzOstrzezenia(config.region)
+    stopien, tendencja, wystawa, aktualny, infoDT = pobierzOstrzezenia(config.region)
 
     if stopien == -1:
         return ""
@@ -60,10 +71,15 @@ def getData(l):
 
     data["data"] = " ".join( (data["data"], lang.gopr_region[config.region], lang.avalancheLevel[stopien]) )
 
-    if config.podaj_tendencje==1:
+    if config.podajTendencje==1:
         data["data"] = " ".join( (data["data"], lang.gopr_tendention[tendencja]) )
 
+    if aktualny==False:
+	data["data"] = " ".join( (data["data"], lang.info_at, lang.readISODT(infoDT.isoformat(' '))) )
+
     # Profile i szczególnie niebezpieczne wystawy niezaimplementowane.
+
+    data["data"] = lang.removeDiacritics(data["data"])
 
     return data	
 

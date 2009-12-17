@@ -51,7 +51,7 @@ serialPort = None
 
 from lib.cw import *
 
-helloMsg = [cw('test'), "tu","eksperymentalna","automatyczna_stacja_pogodowa",\
+helloMsg = ["tu","eksperymentalna","automatyczna_stacja_pogodowa",\
     "sp6yre",cw("sp6yre"),"lokator","jo81ld"]
 goodbyeMsg = ["_","tu","sp6yre",cw("sp6yre")]
 
@@ -62,7 +62,7 @@ playHalf = 1
 
 # This one informes which modules will be used by SR0WX. These *must*
 # be stored as an array (possibly as a tuple, too).
-modules = ["metar","taf","meteoalarm","imgw_hydro","sunriset"]
+modules = ["metar","taf","meteoalarm","imgw_hydro","gopr_lawiny","sunriset"]
 
 # =====================
 # Modules configuration
