@@ -1,7 +1,7 @@
 #!/usr/bin/python -tt
 # -*- coding: utf-8 -*-
 
-import Numeric
+import numpy.oldnumeric as Numeric
 
 morse = { "A": ".-", "B": "-...", "C": "-.-.","D": "-..","E": ".","F": "..-.",
     "G": "--.", "H": "....", "I": "..", "J": ".---", "K": "-.-", "L": ".-..",
