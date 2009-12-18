@@ -146,7 +146,8 @@ tomorrow = "jutro"
 # and this is most important.
 #
 
-jednostki = [u""] + u"jeden dwa trzy cztery pięć sześć siedem osiem dziewięć".split()
+jednostkiM = [u""] + u"jeden dwa trzy cztery pięć sześć siedem osiem dziewięć".split()
+jednostkiF = [u""] + u"jedną dwie trzy cztery pięć sześć siedem osiem dziewięć".split()
 dziesiatki = [u""] + u"""dziesięć dwadzieścia  trzydzieści czterdzieści
      pięćdziesiąt sześćdziesiąt siedemdziesiąt osiemdziesiąt dziewięćdziesiąt""".split()
 nastki = u"""dziesięć jedenaście dwanaście trzynaście czternaście piętnaście
@@ -167,7 +168,12 @@ wielkie = [ l.split() for l in ws.split('\n') ]
 # There are also some functions, by dowgird, so I haven't even looked into
 # them.
 
-def _slownie3cyfry(liczba):
+def _slownie3cyfry(liczba, plec='M'):
+    if plec=='M':
+        jednostki = jednostkiM
+    else:
+        jednostki = jednostkiF
+
     je = liczba % 10
     dz = (liczba//10) % 10
     se = (liczba//100) % 10
@@ -200,7 +206,7 @@ def _przypadek(liczba):
 
     return typ
 
-def lslownie(liczba):
+def lslownie(liczba, plec='M'):
     """Liczba całkowita słownie"""
     trojki = []
     if liczba==0:
@@ -214,20 +220,20 @@ def lslownie(liczba):
             if i>0:
                 p = _przypadek(n)
                 w = wielkie[i][p]
-                slowa.append(_slownie3cyfry(n)+u" "+w)
+                slowa.append(_slownie3cyfry(n, plec)+u" "+w)
             else:
-                slowa.append(_slownie3cyfry(n))
+                slowa.append(_slownie3cyfry(n, plec))
     slowa.reverse()
     return ' '.join(slowa)
 
-def cosslownie(liczba,cos):
+def cosslownie(liczba,cos, plec='M'):
     """Słownie "ileś cosiów"
 
     liczba - int
     cos - tablica przypadków [coś, cosie, cosiów]"""
     #print liczba
     #print cos[_przypadek(liczba)]
-    return lslownie(liczba)+" " + cos[_przypadek(liczba)]
+    return lslownie(liczba, plec)+" " + cos[_przypadek(liczba)]
 
 ##def kwotaslownie(liczba, format = 0):
 ##    """Słownie złotych, groszy.
@@ -247,13 +253,13 @@ def cosslownie(liczba,cos):
 # As you remember, ``cardinal()`` must be defined, this is the function which
 # will be used by SR0WX modules. This functions was also written by dowgrid,
 # modified by me. (Is function's name proper?)
-def cardinal(no, units=[u"",u"",u""]):
+def cardinal(no, units=[u"",u"",u""], gender='M'):
     """Zamienia liczbę zapisaną cyframi na zapis słowny, opcjonalnie z jednostkami
 w odpowiednim przypadku. Obsługuje liczby ujemne."""
     if no<0:
-        return (u"minus " + cosslownie(-no, units)).replace(u"jeden tysiąc", u"tysiąc",1).encode("utf-8")
+        return (u"minus " + cosslownie(-no, units, plec=gender)).replace(u"jeden tysiąc", u"tysiąc",1).encode("utf-8")
     else:
-        return cosslownie(no, units).replace(u"jeden tysiąc", u"tysiąc",1).encode("utf-8")
+        return cosslownie(no, units, plec=gender).replace(u"jeden tysiąc", u"tysiąc",1).encode("utf-8")
 
 # This one tiny simply removes diactrics (lower case only). This function
 # must be defined even if your language doesn't use diactrics (like English),
