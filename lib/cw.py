@@ -132,16 +132,18 @@ def sine_array(hz, peak, sampleRate=44100,length=1.0):
     return Numeric.resize(sine_array_onecycle(hz, peak), (int(sampleRate*length),))
 
 
-##def play(text, wpm=25, farnsworth=None, weight=None, pitch=800, volume=1, sampleRate=44100):
-##    s= pygame.sndarray.make_sound( cw(text, wpm, farnsworth, weight, pitch, volume, sampleRate) )
-##    c = s.play()
-##    while c.get_busy() == True:
-##        pygame.time.wait(25)
-##
-##if __name__ == '__main__':
-##    import pygame
-##    pygame.mixer.pre_init(44100,-16,2,1024)
-##    pygame.mixer.init(44100,-16,2,1024)
-##    #pygame.init()
-##    play("vvv= test")
-##
+def play(text, wpm=25, farnsworth=None, weight=None, pitch=800, volume=1, sampleRate=44100):
+    s= pygame.sndarray.make_sound( cw(text, wpm, farnsworth, weight, pitch, volume, sampleRate) )
+    # uncomment this line if you hear cw playing twice.
+    s = pygame.sndarray.make_sound(pygame.sndarray.array(s)[:len(pygame.sndarray.array(s))/2])
+    c = s.play()
+    while c.get_busy() == True:
+        pygame.time.wait(25)
+
+if __name__ == '__main__':
+    import pygame
+    pygame.mixer.pre_init(44100,-16,2,1024)
+    pygame.mixer.init(44100,-16,2,1024)
+    #pygame.init()
+    play("vvv= test")
+

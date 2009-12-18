@@ -51,6 +51,10 @@ serialPort = None
 
 from lib.cw import *
 
+# Pygame has a bug which effects in playing cw twice. set pygameBug=1
+
+pygameBug = 1
+
 helloMsg = ["tu","eksperymentalna","automatyczna_stacja_pogodowa",\
     "sp6yre",cw("sp6yre"),"lokator","jo81ld"]
 goodbyeMsg = ["_","tu","sp6yre",cw("sp6yre")]
@@ -58,6 +62,9 @@ goodbyeMsg = ["_","tu","sp6yre",cw("sp6yre")]
 # This one informes which modules will be used by SR0WX. These *must*
 # be stored as an array (possibly as a tuple, too).
 modules = ["metar","taf","meteoalarm","imgw_hydro","gopr_lawiny","hscr_laviny","sunriset"]
+
+# You can also start selected modules via commandline, ie:
+# python sr0wx.py metar,taf,sunriset
 
 # =====================
 # Modules configuration

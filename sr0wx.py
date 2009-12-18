@@ -125,6 +125,8 @@ for el in data:
             if not os.path.isfile(config.lang+"/"+el+".ogg"):
                 debug.log("CORE", "couldn't find %s"%(config.lang+"/"+el+".ogg"), 3)
                 soundSamples[el] = pygame.sndarray.make_sound( cw.cw("^") )
+                if config.pygameBug==1:
+                    soundSamples[el] = pygame.sndarray.make_sound(pygame.sndarray.array(soundSamples[el])[:len(pygame.sndarray.array(soundSamples[el]))/2])
             else: soundSamples[el] = pygame.mixer.Sound(config.lang+"/"+el+".ogg")
 
 # If programme configuration specifies CTCSS subtone frequency this tone
@@ -165,7 +167,10 @@ for el in data:
         if "upper" in dir(el):
             voiceChannel = soundSamples[el].play()
         elif "upper" not in dir(el):
-            voiceChannel = pygame.sndarray.make_sound(el).play()
+            sound = pygame.sndarray.make_sound(el)
+            if config.pygameBug == 1:
+                sound = pygame.sndarray.make_sound(pygame.sndarray.array(sound)[:len(pygame.sndarray.array(sound))/2])
+            voiceChannel = sound.play()
         while voiceChannel.get_busy():
             pygame.time.Clock().tick(25)
 
