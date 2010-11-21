@@ -61,7 +61,7 @@ goodbyeMsg = ["_","tu","sp6yre",cw("sp6yre")]
 
 # This one informes which modules will be used by SR0WX. These *must*
 # be stored as an array (possibly as a tuple, too).
-modules = ["metar","taf","meteoalarm","imgw_hydro","gopr_lawiny","hscr_laviny","sunriset"]
+modules = ["metar","meteoalarm","imgw_hydro","gopr_lawiny","hscr_laviny","sunriset"]
 
 # You can also start selected modules via commandline, ie:
 # python sr0wx.py metar,taf,sunriset
