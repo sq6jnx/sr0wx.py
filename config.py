@@ -33,9 +33,9 @@ CTCSSVolume = 0.1
 # Here you can define serial port for PTT (default is ``None``) and baud rate.
 # Refer your TRX manual.
 
-serialPort = None
-#serialPort     = '/dev/ttyS0'
-#serialBaudRate = 9600
+#serialPort = None
+serialPort     = '/dev/ttyS0'
+serialBaudRate = 9600
 
 # Welcome and Goodbye messages. Quite easy, too. It's just a playlist of files
 # which will be played as a welcome message. Remember -- don't write ``.ogg``
@@ -56,12 +56,12 @@ from lib.cw import *
 pygameBug = 1
 
 helloMsg = ["tu","eksperymentalna","automatyczna_stacja_pogodowa",\
-    "sp6yre",cw("sp6yre"),"lokator","jo81ld"]
-goodbyeMsg = ["_","tu","sp6yre",cw("sp6yre")]
+    "sp6yre",cw("sp6yre"),]#"lokator","jo81ld"]
+goodbyeMsg = ["_","tu","sp6yre",cw("sp6yre qra jo81mc")]
 
 # This one informes which modules will be used by SR0WX. These *must*
 # be stored as an array (possibly as a tuple, too).
-modules = ["metar","meteoalarm","imgw_hydro","gopr_lawiny","hscr_laviny","sunriset"]
+modules = ["metar","taf","meteoalarm"]#,"imgw_hydro","gopr_lawiny","hscr_laviny","sunriset"]
 
 # You can also start selected modules via commandline, ie:
 # python sr0wx.py metar,taf,sunriset
@@ -92,13 +92,14 @@ debug = m()
 # * [1] Hint/Information, i like to say something, but I don't expect you to listen.
 # * [0] Debug, all information only interesting for programmers (verbose).
 #
-# Normally all debug informations are stored (level 0), but you can change it here:
+# Normally all debug informations are stored (level 0), but you can change it here. Setting this to None is the most pythonic way to disable writing to file.
 
-debug.writeLevel = 0
+debug.writeLevel = None
 
-# You can also show on screen debug infos of specified level (or higher):
+# You can also show on screen debug infos of specified (or higher) level.
+# What comes to stdout should be sent by cron.
 
-debug.showLevel  = 1
+debug.showLevel  = 3
 
 # ------
 # metar

@@ -31,7 +31,8 @@ def getData(l):
         tomorrow = getAwareness(config.region, tomorrow=True)
 
     if today== "" and tomorrow== "":
-        data["data"] = " ".join( (lang.meteoalarmNoAwareness, lang.meteoalarmRegions[config.region]) )
+        #data["data"] = " ".join( (lang.meteoalarmNoAwareness, lang.meteoalarmRegions[config.region]) )
+        pass # silence is golden
     elif today!= "" and tomorrow=="":
         data["data"] =  " ".join( (lang.meteoalarmAwareness, lang.meteoalarmRegions[config.region], lang.today, today) )
         data["needCTCSS"] = True

@@ -187,7 +187,8 @@ class taf:
 
         if address== None:
            #address = "http://140.90.128.70/pub/data/forecasts/taf/stations/%ICAO%.TXT"
-           address = "http://204.227.127.33/metars/index.php?station_ids=%ICAO%&std_trans=standard&hoursStr=most+recent+only&chk_tafs=on&submitmet=Submit"
+           #address = "http://204.227.127.33/metars/index.php?station_ids=%ICAO%&std_trans=standard&hoursStr=most+recent+only&chk_tafs=on&submitmet=Submit"
+           address = "http://aviationweather.gov/adds/tafs/index.php?station_ids=%ICAO%&std_trans=standard&hoursStr=most+recent+only&chk_tafs=on&submitmet=Submit"
 
         if ICAO is not None:
             self.ICAO=ICAO
