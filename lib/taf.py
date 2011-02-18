@@ -211,9 +211,9 @@ class taf:
         _cavok   = re.compile("CAVOK")
         _nsw     = re.compile("NSW")
 
-        _valid = re.compile('TAF|TEMPO|B(E)?CMG|PROB|GRADU|RAPID')
+        _valid = re.compile('^TAF\ |TEMPO|B(E)?CMG|PROB|GRADU|RAPID|%s'%ICAO)
         for line in report:
-            if _valid.search(line) is not None or ICAO in line:
+            if _valid.search(line) is not None:
                 TAFFound = True
                 tl = {"period":"", "wind":"", "vis":"", "weather":"",
                     "skyCnd":"", "temp":"", "press":"", "cavok":"", "nsw":""} #, "change":None}
@@ -228,8 +228,6 @@ class taf:
                     tl["cavok"]  = (tl["cavok"] + " " +  " ".join((self.flatten(_cavok.findall(word)) or ""  ))).strip()
                     tl["nsw"]    = (tl["nsw"]   + " " +  " ".join((self.flatten(_nsw.findall(word)) or "" ))).strip()
 
-
-  
                     # tl["skyCnd"]= tl["skyCnd"]+ " ".join( (_skyCnd.findall(word)) )
 					
                 self.tafData.append(tl)
@@ -369,7 +367,8 @@ class taf:
                      int(wind[wind.index('V')-1]),
                      int(wind[wind.index('V')+1]) ]
         else:
-            if direction[0]<>"VRB":
+            print direction
+            if direction<>[] and direction[0]<>"VRB":
                 return ([int(direction[0])] or [None])
             else:
                 return ["VRB"]
@@ -434,7 +433,8 @@ class taf:
                                 elif self._WeatherConditions[k][elem][0]!="" and self._WeatherConditions[k][elem][0] not in wx[0]:
                                     wx[0] = " ".join( (wx[0], self._WeatherConditions[k][elem][0]) )
 
-        rv= " ".join( ( rv, " ".join( (wx) ) ) )
+            rv= " ".join( ( rv, " ".join( (wx) ) ) )
+        print '***',rv
         return rv
 
 

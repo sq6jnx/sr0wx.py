@@ -99,7 +99,7 @@ debug.writeLevel = None
 # You can also show on screen debug infos of specified (or higher) level.
 # What comes to stdout should be sent by cron.
 
-debug.showLevel  = 3
+debug.showLevel  = 0
 
 # ------
 # metar
@@ -147,7 +147,7 @@ metar.visibilityMiles        = 0
 metar.humidity             = 1
 metar.pressureHPa          = 1
 ## metar.pressureMMHg      = 1
-## metar.weather              = 1
+metar.weather              = 1
 ## metar.clouds               = 1
 metar.lastUpdate           = 1
 
