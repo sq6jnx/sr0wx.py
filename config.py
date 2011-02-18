@@ -61,7 +61,7 @@ goodbyeMsg = ["_","tu","sp6yre",cw("sp6yre qra jo81mc")]
 
 # This one informes which modules will be used by SR0WX. These *must*
 # be stored as an array (possibly as a tuple, too).
-modules = ["metar","taf","meteoalarm"]#,"imgw_hydro","gopr_lawiny","hscr_laviny","sunriset"]
+modules = ["metar","taf","meteoalarm"]#,"gopr_lawiny","hscr_laviny","sunriset"]
 
 # You can also start selected modules via commandline, ie:
 # python sr0wx.py metar,taf,sunriset
@@ -254,31 +254,6 @@ zagrozenia_imgw = m()
 # "su": "przedgorza_sudeckiego_i_sudetow",
 # "eb": "powiatu_elblaskiego"
 
-# -----------
-# imgw-hydro
-# -----------
-
-imgw_hydro = m()
-
-# Nie chce mi się pisać po angielsku. Nie ma to chyba większego 
-# sensu, z racji tego, że IMGW podaje informacje hydro tylko dla
-# regionu Polski. Dane są pobierane ze strony 
-# [http://pogodynka.pl/hydrobiuletyn.php], jednak nazwy wodowskazów
-# są z pewnych względów zmodyfikowane na potrzeby modułu.
-#
-# Najlepszym sposobem na sprawdzenie jakie wodowskazy są dostępne
-# jest wpisanie jakiejś niepoprawnej nazwy wodowskazu (np. potocznej 
-# nazwy określającej część ciała poniżej pleców), np:
-# 
-# imgw_hydro.wodowskazy = ['uda']
-#
-# moduł zwróci błąd, ale wyświetli dostępne nazwy. Nazwy wodowskazów
-# powinny być w formie Pythonowej tablicy.
-
-imgw_hydro.wodowskazy = ['chalupki', 'miedonia', 'kozle', 'krapkowice', 'opole', 'ujscie_nysy', 'trestno', 'brzeg_dolny', 'malczyce', 'scinawa', 'glogow', 'klodzko', 'skorogoszcz', 'jarnoltow', 'piatnica', 'osetno', 'zagan', 'zgorzelec', 'gubin']
-
-imgw_hydro.podajStan = 1
-imgw_hydro.podajTendencje = 0 
 
 # -------------
 # imgw_prognoza

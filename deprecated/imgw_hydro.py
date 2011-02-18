@@ -1,6 +1,12 @@
 #!/usr/bin/python -tt
 # -*- coding: utf-8 -*-
 
+#
+# TEN MODUŁ JEST PRZESTARZAŁY A IMGW NIE PODAJE JUZ DANYCH W TYM FORMACIE
+#
+# NALEZY KORZYSTAC Z MODUŁU imgw_podest
+#
+
 from config import imgw_hydro as config
 
 import os
