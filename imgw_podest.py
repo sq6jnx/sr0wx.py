@@ -107,7 +107,7 @@ def getData(l):
         #try:
         w = pobierzDaneWodowskazu(wodowskaz)
         if w['przekroczenieStanu']=='ostrzegawczy':
-            stanyOstrzegawcze+=' rzeka %s wodowskaz %s'%(format(w['rzeka']),format(w['nazwa']),)
+            stanyOstrzegawcze+=' wodowskaz %s %s'%(format(w['rzeka']),format(w['nazwa']),)
         elif w['przekroczenieStanu']=='alarmowy':
             stanyAlarmowe+=' rzeka %s wodowskaz %s'%(format(w['rzeka']),format(w['nazwa']),)
         #except:
