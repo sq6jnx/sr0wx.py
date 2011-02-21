@@ -367,7 +367,6 @@ class taf:
                      int(wind[wind.index('V')-1]),
                      int(wind[wind.index('V')+1]) ]
         else:
-            print direction
             if direction<>[] and direction[0]<>"VRB":
                 return ([int(direction[0])] or [None])
             else:
@@ -434,7 +433,6 @@ class taf:
                                     wx[0] = " ".join( (wx[0], self._WeatherConditions[k][elem][0]) )
 
             rv= " ".join( ( rv, " ".join( (wx) ) ) )
-        print '***',rv
         return rv
 
 

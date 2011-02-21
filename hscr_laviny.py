@@ -92,7 +92,7 @@ def getData(l):
 
     # Profile i szczególnie niebezpieczne wystawy niezaimplementowane.
 
-    data["data"] = lang.removeDiacritics(data["data"])
+    data["data"] = lang.removeDiacritics(lang.hscr_welcome+' _ '+data["data"])
 
     return data	
 
