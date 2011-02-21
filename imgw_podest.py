@@ -1,12 +1,10 @@
 #!/usr/bin/python -tt
 # -*- coding: utf-8 -*-
 
-from config import imgw_podest as config
 
 # TODO: sprawdzanie, dla których wodowskazów możemy czytać komunikaty 
 
 import os
-import debug
 import urllib
 import re
 import unicodedata
@@ -76,7 +74,7 @@ def pobierzDaneWodowskazu(wodowskaz):
         wodowskaz = wodowskaz.split('.')[1] # pozbywamy się numeru regionu
     dane = wodowskazy[wodowskaz] # po co cały czas mieszaćs słownikiem
     
-    return {#'numer':wodowskaz,
+    return {'numer':wodowskaz,
         'nazwa':flatten(_wodowskaz.findall(dane)),
         'rzeka':flatten(_rzeka.findall(dane)),
         'stan':flatten(_stan.findall(dane)),
@@ -158,12 +156,20 @@ def podajListeWodowskazow(region):
         print "'%s.%s',   # Nazwa: %s, rzeka: %s"%(str(region), w['numer'], w['nazwa'], w['rzeka'])
 
 if __name__ == '__main__':
+    class DummyDebug:
+        def log(self,module,message,buglevel=None):
+            print message
+
+    debug = DummyDebug()
     import sys
     if len(sys.argv)==2 and int(sys.argv[1]) in range(1,14+1):
         zaladujRegion(int(sys.argv[1]))
         podajListeWodowskazow(int(sys.argv[1]))
     else:
         show_help()
+else:
+    import debug
+    from config import imgw_podest as config
 
 
 

@@ -2,4 +2,7 @@
 docs/.svn/*
 pl/.svn/*
 lib/.svn/*
-*pyc
+*.pyc
+*.py~
+*.log
+*.swp
