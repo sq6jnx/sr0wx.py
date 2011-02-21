@@ -345,5 +345,6 @@ avalancheLevel = ['']+[i+' stopien_zagrozenia_lawinowego' for i in ['pierwszy', 
 gopr_tendention = ['', '', 'tendencja_spadkowa', 'tendencja_wzrostowa']
 info_at = 'komunikat_z_dnia'
 
+hscr_welcome= "komunikat czeskiej_sluzby_ratownictwa_gorskiego"
 hscr_region = {"K": "w_karkonoszach obowiazuje", "J": "w_jesionikach_i_masywie_snieznika obowiazuje"}
 hscr_tendention = ['', '', 'tendencja_spadkowa', 'tendencja_wzrostowa']
