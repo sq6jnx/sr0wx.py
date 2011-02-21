@@ -12,7 +12,7 @@ import unicodedata
 import pl.pl as lang
 
 def format(string):
-    return unicodedata.normalize('NFKD', unicode(string, 'utf-8')).\
+    return unicodedata.normalize('NFKD', unicode(string.replace('ł','l').replace('Ł','l'), 'utf-8')).\
         encode('ascii','ignore').strip().lower().\
         replace(' ', '_').replace('-','_').replace('.','')
 
@@ -72,7 +72,7 @@ def pobierzDaneWodowskazu(wodowskaz):
     global wodowskazy
     if '.' in wodowskaz:
         wodowskaz = wodowskaz.split('.')[1] # pozbywamy się numeru regionu
-    dane = wodowskazy[wodowskaz] # po co cały czas mieszaćs słownikiem
+    dane = wodowskazy[wodowskaz] # po co cały czas mieszać słownikiem
     
     return {'numer':wodowskaz,
         'nazwa':flatten(_wodowskaz.findall(dane)),
@@ -104,6 +104,24 @@ def getData(l):
             zaladujRegion(region)
         #try:
         w = pobierzDaneWodowskazu(wodowskaz)
+        
+        # Chłyt debugowy sprawdzjący, czy mamy wszytkie sample: wszystkie rzeki
+        # przełączamy na stan ostrzegawczy -- nie zapomnij wyłączyć!
+        # w['przekroczenieStanu']='alarmowy'
+        # Koniec chłytu
+
+        # Repolonizacja nazw rzek:
+        if w['nazwa'] == 'Kudowa Zdrój - Zakrze':
+            w['nazwa']='kudowa_zdroj_zakrze'
+        elif w['nazwa']=='Opole - Groszowice':
+            w['nazwa']='opole_groszowice'
+        elif w['nazwa']=='Ślęża':
+            w['nazwa']='slez_a'
+
+        # Jeśli rzeka nazywa się tak samo jak miejscowosc (dotyczy małych rzeczułek)
+        if w['nazwa']==w['rzeka']:
+            w['rzeka']=''
+
         if w['przekroczenieStanu']=='ostrzegawczy':
             stanyOstrzegawcze+=' wodowskaz %s %s'%(format(w['rzeka']),format(w['nazwa']),)
         elif w['przekroczenieStanu']=='alarmowy':
@@ -113,7 +131,7 @@ def getData(l):
 
 
     if stanyOstrzegawcze+stanyAlarmowe!='':
-        data['data'] += 'komunikat_hydrologiczny imgw _ '
+        data['data'] += 'komunikat_hydrologiczny_imgw _ '
 
         if stanyAlarmowe!='':
     # Sprawdzenie dla których wodowskazów mamy przekroczone stany alarmowe -- włącz ctcss
