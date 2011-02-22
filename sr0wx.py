@@ -1,6 +1,18 @@
 #!/usr/bin/python -tt
 # -*- coding: utf-8 -*-
-
+# 
+# Copyright 2009-2011 Michal Sadowski (sq6jnx at hamradio dot pl).
+#  
+# Future versions of this software will probably be licensed under
+# some open source license, but this experimental version is not.
+# Copying and distribution without the author's explicit permission.
+# is not allowed.
+# 
+# Przyszle wersje tego oprogramowania beda prawdopodobnie udostepniane
+# na jednej z open source'owych licencji, jednakze ta, eksperymentalna
+# wersja nie jest. Kopiowanie i dystrybuowanie tego oprogramowania bez
+# wyraznej zgody autora jest zabronione.
+# 
 #
 # ********
 # sr0wx.py
@@ -60,7 +72,20 @@ import debug, traceback
 # so it will be possible to find out how long script was running.
 
 debug.log("CORE", "sr0wx.py started")
-
+debug.log("LEGAL","")
+debug.log("LEGAL"," Copyright 2009-2011 Michal Sadowski (sq6jnx at hamradio dot pl).")
+debug.log("LEGAL","")
+debug.log("LEGAL"," Future versions of this software will probably be licensed under")
+debug.log("LEGAL"," some open source license, but this experimental version is not.")
+debug.log("LEGAL"," Copying and distribution without the author's explicit permission.")
+debug.log("LEGAL"," is not allowed.")
+debug.log("LEGAL","")
+debug.log("LEGAL"," Przyszle wersje tego oprogramowania beda prawdopodobnie udostepniane")
+debug.log("LEGAL"," na jednej z open source'owych licencji, jednakze ta, eksperymentalna")
+debug.log("LEGAL"," wersja nie jest. Kopiowanie i dystrybuowanie tego oprogramowania bez")
+debug.log("LEGAL"," wyraznej zgody autora jest zabronione.")
+debug.log("LEGAL","")
+# 
 # All datas returned by SR0WX modules will be stored in ``data`` variable.
 
 data = " "

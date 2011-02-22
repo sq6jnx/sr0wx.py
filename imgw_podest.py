@@ -1,5 +1,18 @@
 #!/usr/bin/python -tt
 # -*- coding: utf-8 -*-
+# 
+# Copyright 2009-2011 Michal Sadowski (sq6jnx at hamradio dot pl).
+#  
+# Future versions of this software will probably be licensed under
+# some open source license, but this experimental version is not.
+# Copying and distribution without the author's explicit permission.
+# is not allowed.
+# 
+# Przyszle wersje tego oprogramowania beda prawdopodobnie udostepniane
+# na jednej z open source'owych licencji, jednakze ta, eksperymentalna
+# wersja nie jest. Kopiowanie i dystrybuowanie tego oprogramowania bez
+# wyraznej zgody autora jest zabronione.
+# 
 
 
 # TODO: sprawdzanie, dla których wodowskazów możemy czytać komunikaty 
