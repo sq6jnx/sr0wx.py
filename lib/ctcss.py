@@ -1,3 +1,16 @@
+# 
+# Copyright 2009-2011 Michal Sadowski (sq6jnx at hamradio dot pl).
+#  
+# Future versions of this software will probably be licensed under
+# some open source license, but this experimental version is not.
+# Copying and distribution without the author's explicit permission.
+# is not allowed.
+# 
+# Przyszle wersje tego oprogramowania beda prawdopodobnie udostepniane
+# na jednej z open source'owych licencji, jednakze ta, eksperymentalna
+# wersja nie jest. Kopiowanie i dystrybuowanie tego oprogramowania bez
+# wyraznej zgody autora jest zabronione.
+# 
 # This is list of IARU Region I CTCSS tones
 # (http://hamradio.pl/sq9jdo/_Kurs/Kurs%20operatora/CTCSS/system_ctcss.html).
 # Please, do not modify this if you're living in Region I.
