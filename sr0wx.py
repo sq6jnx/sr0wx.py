@@ -1,17 +1,21 @@
 #!/usr/bin/python -tt
 # -*- coding: utf-8 -*-
-# 
-# Copyright 2009-2011 Michal Sadowski (sq6jnx at hamradio dot pl).
-#  
-# Future versions of this software will probably be licensed under
-# some open source license, but this experimental version is not.
-# Copying and distribution without the author's explicit permission.
-# is not allowed.
-# 
-# Przyszle wersje tego oprogramowania beda prawdopodobnie udostepniane
-# na jednej z open source'owych licencji, jednakze ta, eksperymentalna
-# wersja nie jest. Kopiowanie i dystrybuowanie tego oprogramowania bez
-# wyraznej zgody autora jest zabronione.
+#
+#   Copyright 2009-2011 Michal Sadowski (sq6jnx at hamradio dot pl)
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+ 
 # 
 #
 # ********
@@ -73,18 +77,20 @@ import debug, traceback
 
 debug.log("CORE", "sr0wx.py started")
 debug.log("LEGAL","")
-debug.log("LEGAL"," Copyright 2009-2011 Michal Sadowski (sq6jnx at hamradio dot pl).")
+debug.log("LEGAL","Copyright 2009-2011 Michal Sadowski (sq6jnx at hamradio dot pl)")
 debug.log("LEGAL","")
-debug.log("LEGAL"," Future versions of this software will probably be licensed under")
-debug.log("LEGAL"," some open source license, but this experimental version is not.")
-debug.log("LEGAL"," Copying and distribution without the author's explicit permission.")
-debug.log("LEGAL"," is not allowed.")
+debug.log("LEGAL","Licensed under the Apache License, Version 2.0 (the "License");")
+debug.log("LEGAL","you may not use this file except in compliance with the License.")
+debug.log("LEGAL","You may obtain a copy of the License at")
 debug.log("LEGAL","")
-debug.log("LEGAL"," Przyszle wersje tego oprogramowania beda prawdopodobnie udostepniane")
-debug.log("LEGAL"," na jednej z open source'owych licencji, jednakze ta, eksperymentalna")
-debug.log("LEGAL"," wersja nie jest. Kopiowanie i dystrybuowanie tego oprogramowania bez")
-debug.log("LEGAL"," wyraznej zgody autora jest zabronione.")
+debug.log("LEGAL","    http://www.apache.org/licenses/LICENSE-2.0")
 debug.log("LEGAL","")
+debug.log("LEGAL","Unless required by applicable law or agreed to in writing, software")
+debug.log("LEGAL","distributed under the License is distributed on an \"AS IS\" BASIS,")
+debug.log("LEGAL","WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.")
+debug.log("LEGAL","See the License for the specific language governing permissions and")
+debug.log("LEGAL","limitations under the License.")
+
 # 
 # All datas returned by SR0WX modules will be stored in ``data`` variable.
 
