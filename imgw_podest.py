@@ -135,11 +135,13 @@ def getData(l):
         # Jeśli rzeka nazywa się tak samo jak miejscowosc (dotyczy małych rzeczułek)
         if w['nazwa']==w['rzeka']:
             w['rzeka']=''
+        else:
+            w['rzeka']=' '.join([format(r) for r in w['rzeka'].split('->')])
 
         if w['przekroczenieStanu']=='ostrzegawczy':
-            stanyOstrzegawcze+=' wodowskaz %s %s'%(format(w['rzeka']),format(w['nazwa']),)
+            stanyOstrzegawcze+=' wodowskaz %s %s'%(w['rzeka'],format(w['nazwa']),)
         elif w['przekroczenieStanu']=='alarmowy':
-            stanyAlarmowe+=' rzeka %s wodowskaz %s'%(format(w['rzeka']),format(w['nazwa']),)
+            stanyAlarmowe+=' rzeka %s wodowskaz %s'%(w['rzeka'],format(w['nazwa']),)
         #except:
         #    debug.log("IMGW-HYDRO", 'Nie udało się przeparsować danych %s.'%wodowskaz, buglevel=3)
 
