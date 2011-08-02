@@ -90,7 +90,7 @@ def pobierzDaneWodowskazu(wodowskaz):
     
     return {'numer':wodowskaz,
         'nazwa':flatten(_wodowskaz.findall(dane)),
-        'rzeka':flatten(_rzeka.findall(dane)),
+        'rzeka':flatten(_rzeka.findall(dane)).split('->')[0],
         'stan':flatten(_stan.findall(dane)),
         'nnw':flatten(_nnw.findall(dane)),
         'ssw':flatten(_ssw.findall(dane)),
@@ -103,8 +103,8 @@ def pobierzDaneWodowskazu(wodowskaz):
 def getData(l):
     data = {"data":"", "needCTCSS":False, "allOK":True}
 
-    stanyOstrzegawcze = ""
-    stanyAlarmowe = ""
+    stanyOstrzegawcze = {}
+    stanyAlarmowe = {}
 
     # Sprawdzenie w config jakie regiony będziemy spawdzać. Wodowskazy zapisane
     # są jako region.wodowskaz, np. rzeka Bystrzyca wodowskaz Jarnołtów będzie
@@ -114,14 +114,13 @@ def getData(l):
     for wodowskaz in config.wodowskazy:
         region = wodowskaz.split('.')[0]
         if region not in zaladowaneRegiony:
-            zaladowaneRegiony.append(region)
             zaladujRegion(region)
-        #try:
+            zaladowaneRegiony.append(region)
         w = pobierzDaneWodowskazu(wodowskaz)
         
         # Chłyt debugowy sprawdzjący, czy mamy wszytkie sample: wszystkie rzeki
         # przełączamy na stan ostrzegawczy -- nie zapomnij wyłączyć!
-        # w['przekroczenieStanu']='alarmowy'
+        #w['przekroczenieStanu']='alarmowy'
         # Koniec chłytu
 
         # Repolonizacja nazw rzek:
@@ -132,30 +131,40 @@ def getData(l):
         elif w['nazwa']=='Ślęża':
             w['nazwa']='slez_a'
 
-        # Jeśli rzeka nazywa się tak samo jak miejscowosc (dotyczy małych rzeczułek)
-        if w['nazwa']==w['rzeka']:
-            w['rzeka']=''
-        else:
-            w['rzeka']=' '.join([format(r) for r in w['rzeka'].split('->')])
-
         if w['przekroczenieStanu']=='ostrzegawczy':
-            stanyOstrzegawcze+=' wodowskaz %s %s'%(w['rzeka'],format(w['nazwa']),)
+            if not stanyOstrzegawcze.has_key(w['rzeka']):
+                stanyOstrzegawcze[w['rzeka']]=[w['nazwa']]
+            else:
+                stanyOstrzegawcze[w['rzeka']].append(w['nazwa'])
         elif w['przekroczenieStanu']=='alarmowy':
-            stanyAlarmowe+=' rzeka %s wodowskaz %s'%(w['rzeka'],format(w['nazwa']),)
-        #except:
-        #    debug.log("IMGW-HYDRO", 'Nie udało się przeparsować danych %s.'%wodowskaz, buglevel=3)
+            if not stanyAlarmowe.has_key(w['rzeka']):
+                stanyAlarmowe[w['rzeka']]=[w['nazwa']]
+            else:
+                stanyAlarmowe[w['rzeka']].append(w['nazwa'])
 
 
-    if stanyOstrzegawcze+stanyAlarmowe!='':
+#            stanyOstrzegawcze+=' wodowskaz %s %s'%(w['rzeka'],format(w['nazwa']),)
+#        elif w['przekroczenieStanu']=='alarmowy':
+#            stanyAlarmowe+=' rzeka %s wodowskaz %s'%(w['rzeka'],format(w['nazwa']),)
+
+    if stanyOstrzegawcze!={} or stanyAlarmowe!={}:
         data['data'] += 'komunikat_hydrologiczny_imgw _ '
 
-        if stanyAlarmowe!='':
-    # Sprawdzenie dla których wodowskazów mamy przekroczone stany alarmowe -- włącz ctcss
+        if stanyAlarmowe!={}:
+            # Sprawdzenie dla których wodowskazów mamy przekroczone 
+            # stany alarmowe -- włącz ctcss
             data['needCTCSS']=True
-            data['data']+=' przekroczenia_stanow_alarmowych '+stanyAlarmowe
+            data['data']+=' przekroczenia_stanow_alarmowych '
+            for rzeka in sorted(stanyAlarmowe.keys()):
+                data['data']+='rzeka %s wodowskaz %s '%(format(rzeka), \
+                    " wodowskaz ".join([format(w) for w in sorted(stanyAlarmowe[rzeka])]),)
 
-        if stanyOstrzegawcze!='':
-            data['data']+=' przekroczenia_stanow_ostrzegawczych '+stanyOstrzegawcze
+        if stanyOstrzegawcze!={}:
+            data['data']+='_ przekroczenia_stanow_ostrzegawczych '
+            for rzeka in sorted(stanyOstrzegawcze.keys()):
+                data['data']+='rzeka %s wodowskaz %s '%(format(rzeka), \
+                    " wodowskaz ".join([format(w) for w in sorted(stanyOstrzegawcze[rzeka])]),)
+
 
     debug.log("IMGW-HYDRO", "finished...")
 
@@ -204,6 +213,3 @@ if __name__ == '__main__':
 else:
     import debug
     from config import imgw_podest as config
-
-
-
