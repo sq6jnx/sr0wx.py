@@ -16,59 +16,11 @@
 #   limitations under the License.
 #
 
+fake_gettext = lambda(s): s
+_ = fake_gettext
+
 #from config import y_weather as config
 
-yahoo_conditions = {
-'0':  'traba_powietrzna',            # tornado
-'1':  'burza_tropikalna',            # tropical storm
-'2':  'huragan',                     # hurricane
-'3':  'silne_burze',                 # severe thunderstorms
-'4':  'burza',                       # thunderstorms
-'5':  'deszcz snieg',                # mixed rain and snow
-'6':  'marznace_opady deszczu',      # mixed rain and sleet
-'7':  'marznace_opady sniegu',       # mixed snow and sleet
-'8':  'marznace_opady deszczu',      # freezing drizzle
-'9':  'mrzawka',                     # drizzle
-'10': 'marznacy deszcz',             # freezing rain
-'11': 'przelotne_opady deszczu',     # showers
-'12': 'przelotne_opady deszczu',     # showers
-'13': 'przelotne_opady sniegu',      # snow flurries
-'14': 'przelotne_opady sniegu',      # light snow showers
-'15': 'zawieje_i_zamiecie_sniezne',  # blowing snow
-'16': 'snieg',                       # snow
-'17': 'zamiec',                      # hail
-'18': 'snieg deszcz',                # sleet
-'19': 'pyl',                         # dust
-'20': 'mgla',                        # foggy
-'21': 'smog',                        # haze
-'22': 'smog',                        # smoky
-'23': 'silny_wiatr',                 # blustery
-'24': 'silny_wiatr',                 # windy
-'25': 'przymrozki',                  # cold
-'26': 'zachmurzenie_calkowite',      # cloudy
-'27': 'zachmurzenie_umiarkowane',    # mostly cloudy (night)
-'28': 'zachmurzenie_umiarkowane',    # mostly cloudy (day)
-'29': 'czesciowe zachmurzenie',      # partly cloudy (night)
-'30': 'czesciowe zachmurzenie',      # partly cloudy (day)
-'31': 'bezchmurnie',                 # clear (night)
-'32': 'bezchmurnie',                 # sunny
-'33': 'slabe zachmurzenie',          # fair (night)
-'34': 'slabe zachmurzenie',          # fair (day)
-'35': 'deszcz',                      # mixed rain and hail
-'36': 'wysokie_temperatury',         # hot
-'37': 'burza',                       # isolated thunderstorms
-'38': 'burza',                       # scattered thunderstorms
-'39': 'burza',                       # scattered thunderstorms
-'40': 'deszcz',                      # scattered showers
-'41': 'intensywne_opady sniegu',     # heavy snow
-'42': 'snieg',                       # scattered snow showers
-'43': 'intensywne_opady sniegu',     # heavy snow
-'44': 'czesciowe zachmurzenie',      # partly cloudy
-'45': 'burza',                       # thundershowers
-'46': 'mzawka',                      # snow showers
-'47': 'burze',                       # isolated thundershowers
-'3200': '',                          # not available
-}
 
 # For debugging purposes:
 
@@ -85,19 +37,17 @@ def my_import(name):
         mod = getattr(mod, comp)
     return mod
 
-def getText(nodelist):
-    rc = []
-    for node in nodelist:
-        if node.nodeType == node.TEXT_NODE:
-            rc.append(node.data)
-    return ''.join(rc)
-
 # Taken from http://developer.yahoo.com/python/python-xml.html (SLIGHTLY modified)
 # simple and elegant, but I HATE XML!
 
 import urllib
 from xml.dom import minidom
-    
+
+import datetime
+
+format_date_time = lambda s: datetime.datetime.strptime(s, '%a, %d %b %Y %I:%M %p %Z')
+format_date= lambda s: datetime.datetime.strptime(s, '%d %b %Y')
+kmph2mps = lambda s: round(float(s)*(5.0/18.0))
 
 def weather_for_zip(zip_code):
     WEATHER_URL = 'http://weather.yahooapis.com/forecastrss?w=%s&u=c'
@@ -109,25 +59,86 @@ def weather_for_zip(zip_code):
     forecasts = []
     for node in dom.getElementsByTagNameNS(WEATHER_NS, 'forecast'):
         forecasts.append({
-            'date': node.getAttribute('date'),
-            'low': node.getAttribute('low'),
-            'high': node.getAttribute('high'),
-            'condition': node.getAttribute('text')
+            'date': format_date(node.getAttribute('date')),
+            'low': int(node.getAttribute('low')),
+            'high': int(node.getAttribute('high')),
+            #'condition': node.getAttribute('text')
+            'condition': int(node.getAttribute('code'))
         })
     ycondition = dom.getElementsByTagNameNS(WEATHER_NS, 'condition')[0]
+    wind = dom.getElementsByTagNameNS(WEATHER_NS, 'wind')[0]
+    atmosphere = dom.getElementsByTagNameNS(WEATHER_NS, 'atmosphere')[0]
+
     return {
-        'current_condition': ycondition.getAttribute('text'),
-        'current_temp': ycondition.getAttribute('temp'),
+        #'current_condition': ycondition.getAttribute('text'),
+        'pub_date': format_date_time(dom.getElementsByTagName('pubDate')[0].firstChild.data),
+        'current_conditions': int(ycondition.getAttribute('code')),
+        'current_temp': int(ycondition.getAttribute('temp')),
+	'wind_chill': int(wind.getAttribute('chill')),
+        'wind_direction': int(wind.getAttribute('direction')),
+        'wind_speed': float(kmph2mps(wind.getAttribute('speed'))),
+        'humidity': atmosphere.getAttribute('humidity'),
+        'visibility': atmosphere.getAttribute('visibility'),
+        'pressure': float(atmosphere.getAttribute('pressure')),
+        'tendention': atmosphere.getAttribute('rising'),
         'forecasts': forecasts,
-        'title': dom.getElementsByTagName('title')[0].firstChild.data
+        #'title': dom.getElementsByTagName('title')[0].firstChild.data
     }
 
 
 def getData(l):
+    rv = {'data':''}
     print weather_for_zip(487947)
 
-    global lang
-    lang = my_import(l+"."+l)
+    w = weather_for_zip(487947)
+
+    import pl.pl as lang
+
+    data = {
+	'PUB_DATE_HOUR':  lang.readISODT(str(w['pub_date'])),
+	'CURR_TEMP': lang.cardinal(w['current_temp'], lang.C),
+	'HUMIDITY': lang.cardinal(int(float(w['humidity'])), lang.percent), 
+	'CURRENT_CONDITION': yahoo_conditions[str(w['current_conditions'])], 
+	'WIND_DIR_NEWS': '', 
+	'WIN_DIR_DEG': lang.cardinal(w['wind_direction'], lang.deg),
+	'WIND_SPEED': lang.cardinal(int(w['wind_speed']), lang.mPs),
+	'VISIBILITY_KM': '', #lang.cardinal(w['visibility'], lang.km),                     '' =>  None == nieograniczona
+	'PRESSURE': lang.cardinal(int(w['pressure']), lang.hPa),
+	'PRESSURE_TENDENTION': ['tendencja_spadkowa','', 'tendencja_wzrostowa'][int(w['tendention'])],
+	'TEMP_WIND_CHILL': lang.cardinal(w['wind_chill'], lang.C),
+
+	'FORECAST0_CONDITION': '',
+	'FORECAST0_MIN_TEMP': lang.cardinal(w['forecasts'][0]['low'], lang.C),
+	'FORECAST0_MAX_TEMP': lang.cardinal(w['forecasts'][0]['high'], lang.C),
+
+	'FORECAST1_CONDITION': '',
+	'FORECAST1_MIN_TEMP': lang.cardinal(w['forecasts'][1]['low'], lang.C),
+	'FORECAST1_MAX_TEMP': lang.cardinal(w['forecasts'][1]['high'], lang.C),
+}
+
+    komunikat = """stan_pogody_z_dnia {PUB_DATE_HOUR} _ temperatura 
+	{CURR_TEMP} wilgotnosc {HUMIDITY} 
+	{CURRENT_CONDITION} _ kierunek_wiatru {WIND_DIR_NEWS} 
+	{WIN_DIR_DEG} predkosc_wiatru {WIND_SPEED} _
+	cisnienie {PRESSURE} {PRESSURE_TENDENTION}
+	temepatura_odczuwalna {TEMP_WIND_CHILL}
+
+	prognoza_na_nastepne piec godzin 
+	{FORECAST0_CONDITION} temperatura od {FORECAST0_MIN_TEMP} do
+	{FORECAST0_MAX_TEMP} 
+
+        _
+
+	nastepnie {FORECAST1_CONDITION} temperatura od 
+	{FORECAST1_MIN_TEMP} do {FORECAST1_MAX_TEMP} 
+    """.format(**data)
+
+    rv['data']=lang.removeDiacritics(komunikat)
+    return rv
+
+
+    #global lang
+    #lang = my_import(l+"."+l)
 
     return data
 

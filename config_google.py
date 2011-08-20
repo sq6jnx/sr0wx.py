@@ -13,9 +13,9 @@ lang = "pl_google"
 
 pygameBug = 1
 
-helloMsg = ["tu_eksperymentalna_automatyczna_stacja_pogodowa",\
+helloMsg = ["tu","eksperymentalna_automatyczna_stacja_pogodowa",\
     "sp6yre",]#"lokator","jo81ld"]
-goodbyeMsg = ["_","tu","sp6yre",]
+goodbyeMsg = ["_","tu","sp6yre"]
 
 modules = ["y_weather"]
 
