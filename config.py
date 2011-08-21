@@ -24,7 +24,7 @@ class m:
     pass
 
 y_weather = m()
-y_weather.zipcode = 487947
+y_weather.zipcode = 526363
 # it would be nice to give one ability to parse it via template engine
 # http://wiki.python.org/moin/Templating
 y_weather.template = """stan_pogody_z_dnia {PUB_DATE_HOUR} _ temperatura 
