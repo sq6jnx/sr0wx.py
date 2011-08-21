@@ -30,7 +30,7 @@ download_list = [
 ["listopada"], ["grudnia"],
 
 
-["jeden"],
+["zero zero"], ["jeden"],
 ["dwa"], ["trzy"], ["cztery"], ["pięć"], ["sześć"],
 ["siedem"], ["osiem"], ["dziewięć"], ["dziesięć"],
 ["jedenaście"], ["dwanaście"], ["trzynaście"],
@@ -69,7 +69,7 @@ download_list = [
 ["widoczność"], ["kilometr"], ["kilometry"],
 ["kilometrów"], ["temperatura odczuwalna"],
 ["prognoza na następne"], ["godzin"],["godzina"],
-["godziny"], ["temperatura od"], ["do"],
+["godziny"], ["temperatura od"],
 
 ["pierwsza"],
 ["druga"],
@@ -102,10 +102,10 @@ download_list = [
 ["hektopaskali"],
 ["tendencja spadkowa"],
 ["tendencja wzrostowa"],
-["temepatura odczuwalna"],
-["od"],
-["tu"],
-["do"],
+["temperatura odczuwalna"],
+["temperatura minimalna"],
+["tu Stanisław Paweł 6 Jokohama, Roman, Ewa", 'tu_sp6yre'],
+["maksymalna"],
 ["następnie"],
 
 ]

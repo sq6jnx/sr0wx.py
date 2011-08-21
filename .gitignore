@@ -1,6 +1,7 @@
 .svn/*
 docs/.svn/*
 pl/.svn/*
+pl_google/*.ogg
 lib/.svn/*
 *.pyc
 *.py~

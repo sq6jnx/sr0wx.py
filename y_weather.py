@@ -19,7 +19,7 @@
 fake_gettext = lambda(s): s
 _ = fake_gettext
 
-#from config import y_weather as config
+from config import y_weather as config
 
 
 # For debugging purposes:
@@ -27,7 +27,6 @@ _ = fake_gettext
 import debug
 import urllib2
 
-# It will store ``metar`` language module.
 lang = None
 
 def my_import(name):
@@ -87,59 +86,36 @@ def weather_for_zip(zip_code):
 
 
 def getData(l):
-    rv = {'data':''}
-    print weather_for_zip(487947)
+    rv = {'data':'', "needCTCSS":False }
 
-    w = weather_for_zip(487947)
+    lang = my_import(l+"."+l)
+    conditions = lang.y_weather.conditions
 
-    import pl.pl as lang
+    w = weather_for_zip(config.zipcode)
 
     data = {
 	'PUB_DATE_HOUR':  lang.readISODT(str(w['pub_date'])),
 	'CURR_TEMP': lang.cardinal(w['current_temp'], lang.C),
 	'HUMIDITY': lang.cardinal(int(float(w['humidity'])), lang.percent), 
-	'CURRENT_CONDITION': yahoo_conditions[str(w['current_conditions'])], 
+	'CURRENT_CONDITION': conditions[str(w['current_conditions'])], 
 	'WIND_DIR_NEWS': '', 
 	'WIN_DIR_DEG': lang.cardinal(w['wind_direction'], lang.deg),
 	'WIND_SPEED': lang.cardinal(int(w['wind_speed']), lang.mPs),
 	'VISIBILITY_KM': '', #lang.cardinal(w['visibility'], lang.km),                     '' =>  None == nieograniczona
 	'PRESSURE': lang.cardinal(int(w['pressure']), lang.hPa),
-	'PRESSURE_TENDENTION': ['tendencja_spadkowa','', 'tendencja_wzrostowa'][int(w['tendention'])],
+	'PRESSURE_TENDENTION': lang.tendention[int(w['tendention'])],
 	'TEMP_WIND_CHILL': lang.cardinal(w['wind_chill'], lang.C),
 
 	'FORECAST0_CONDITION': '',
 	'FORECAST0_MIN_TEMP': lang.cardinal(w['forecasts'][0]['low'], lang.C),
+	'FORECAST0_MIN_TEMP_SHORT': lang.cardinal(w['forecasts'][0]['low']),
 	'FORECAST0_MAX_TEMP': lang.cardinal(w['forecasts'][0]['high'], lang.C),
 
 	'FORECAST1_CONDITION': '',
 	'FORECAST1_MIN_TEMP': lang.cardinal(w['forecasts'][1]['low'], lang.C),
+	'FORECAST1_MIN_TEMP_SHORT': lang.cardinal(w['forecasts'][1]['low']),
 	'FORECAST1_MAX_TEMP': lang.cardinal(w['forecasts'][1]['high'], lang.C),
 }
 
-    komunikat = """stan_pogody_z_dnia {PUB_DATE_HOUR} _ temperatura 
-	{CURR_TEMP} wilgotnosc {HUMIDITY} 
-	{CURRENT_CONDITION} _ kierunek_wiatru {WIND_DIR_NEWS} 
-	{WIN_DIR_DEG} predkosc_wiatru {WIND_SPEED} _
-	cisnienie {PRESSURE} {PRESSURE_TENDENTION}
-	temepatura_odczuwalna {TEMP_WIND_CHILL}
-
-	prognoza_na_nastepne piec godzin 
-	{FORECAST0_CONDITION} temperatura od {FORECAST0_MIN_TEMP} do
-	{FORECAST0_MAX_TEMP} 
-
-        _
-
-	nastepnie {FORECAST1_CONDITION} temperatura od 
-	{FORECAST1_MIN_TEMP} do {FORECAST1_MAX_TEMP} 
-    """.format(**data)
-
-    rv['data']=lang.removeDiacritics(komunikat)
+    rv['data']=lang.removeDiacritics(config.template.format(**data))
     return rv
-
-
-    #global lang
-    #lang = my_import(l+"."+l)
-
-    return data
-
-getData('pl')
