@@ -13,6 +13,7 @@ download_list = [
 # say... and save output file as...
 ["tu eksperymentalna automatyczna stacja pogodowa k",],
 ["ę. Stanisław Paweł 6 Jokohama - Roman, Ewa", "sp6yre"],
+["ę. stanisław kłebek 6 jadwiga natalia kłebek ", "sq6jnq"],
 
 ["stan pogody z dnia k",],
 
@@ -105,6 +106,7 @@ download_list = [
 ["temperatura odczuwalna"],
 ["temperatura minimalna"],
 ["tu Stanisław Paweł 6 Jokohama, Roman, Ewa", 'tu_sp6yre'],
+["tu stanisław kłebek 6 jadwiga natalia kłebek k", 'tu_sq6jnq'],
 ["maksymalna"],
 ["następnie"],
 

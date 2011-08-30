@@ -1,5 +1,6 @@
 #!/usr/bin/python -tt
 # -*- coding: utf-8 -*-
+
 #   Copyright 2009-2011 Michal Sadowski (sq6jnx at hamradio dot pl)
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
@@ -192,11 +193,23 @@ Lista wodowskazów danej zlewni dostępna po podaniu parametru:
 Mapę zlewni można zobaczyć na stronie:
 http://www.pogodynka.pl/polska/podest/"""
 
+def bezpiecznaNazwa(s):
+    """Zwraca "bezpieczną" nazwę dla nazwy danej rzeki/danego
+    wodowskazu. Ze względu na to, że w Polsce zarówno płynie
+    rzeka Ślęza jak i Ślęża oznaczany jest każdy niełaciński
+    znak"""
+    return s.lower().replace(u'ą',u'a_')#.replace(u'ć',u'c_').\
+        #replace(u'ę',u'e_').replace(u'ł',u'l_').\
+        #replace(u'ń',u'n_').replace(u'ó',u'o_').\
+        #replace(u'ś',u's_').replace(u'ź',u'x_').\
+        #replace(u'ż',u'z_').replace(u' ',u'')
 
 def podajListeWodowskazow(region):
+    rv = []
     for wodowskaz in wodowskazy.keys():
         w = pobierzDaneWodowskazu(wodowskaz)
-        print "'%s.%s',   # Nazwa: %s, rzeka: %s"%(str(region), w['numer'], w['nazwa'], w['rzeka'])
+        rv.append(w)
+    return rv
 
 if __name__ == '__main__':
     class DummyDebug:
@@ -205,9 +218,29 @@ if __name__ == '__main__':
 
     debug = DummyDebug()
     import sys
-    if len(sys.argv)==2 and int(sys.argv[1]) in range(1,14+1):
-        zaladujRegion(int(sys.argv[1]))
-        podajListeWodowskazow(int(sys.argv[1]))
+    # tak, wiem, że można to zrobić bardziej elegancko (getopt), ale dla 2
+    # opcji nie ma chyba sensu...
+    if len(sys.argv)==3 and sys.argv[1]=='gen' and int(sys.argv[2]) in range(1,14+1):
+        region = sys.argv[2]
+        # generowanie listy słów słownika; ostatnie słowo (rozielone spacją)
+        # jest nazwą pliku docelowego
+        frazy = ['komunikat hydrologiczny imgw', u'przekroczenia stanów ostrzegawczych',
+            u'przekroczenia stanów alarmowych', 'rzeka', 'wodowskaz']
+
+        zaladujRegion(int(region))
+        for w in podajListeWodowskazow(int(region)):
+            frazy.append(w['rzeka'])
+            frazy.append(w['nazwa'])
+
+        for fraza in set(frazy):
+            print fraza
+            print "%s %s"%(fraza, bezpiecznaNazwa(fraza),)
+    elif len(sys.argv)==2 and int(sys.argv[1]) in range(1,14+1):
+        # podaje listę wodowskazów w danym regionie (danej zlewni)
+        region = sys.argv[1]
+        zaladujRegion(int(region))
+        for w in podajListeWodowskazow(int(region)):
+            print "'%s.%s',   # Nazwa: %s, rzeka: %s"%(region, w['numer'], w['nazwa'], w['rzeka'])
     else:
         show_help()
 else:
