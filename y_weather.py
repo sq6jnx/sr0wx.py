@@ -21,7 +21,6 @@ _ = fake_gettext
 
 from config import y_weather as config
 
-
 # For debugging purposes:
 
 import debug

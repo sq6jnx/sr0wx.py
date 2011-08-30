@@ -296,53 +296,53 @@ class m:
 
 y_weather = m()
 y_weather.conditions = {
-'0':  _('traba_powietrzna'),            # tornado
-'1':  _('burza_tropikalna'),            # tropical storm
-'2':  _('huragan'),                     # hurricane
-'3':  _('silne_burze'),                 # severe thunderstorms
-'4':  _('burza'),                       # thunderstorms
-'5':  _('deszcz snieg'),                # mixed rain and snow
-'6':  _('marznace_opady deszczu'),      # mixed rain and sleet
-'7':  _('marznace_opady sniegu'),       # mixed snow and sleet
-'8':  _('marznace_opady deszczu'),      # freezing drizzle
-'9':  _('mrzawka'),                     # drizzle
-'10': _('marznacy deszcz'),             # freezing rain
-'11': _('przelotne_opady deszczu'),     # showers
-'12': _('przelotne_opady deszczu'),     # showers
-'13': _('przelotne_opady sniegu'),      # snow flurries
-'14': _('przelotne_opady sniegu'),      # light snow showers
-'15': _('zawieje_i_zamiecie_sniezne'),  # blowing snow
-'16': _('snieg'),                       # snow
-'17': _('zamiec'),                      # hail
-'18': _('snieg deszcz'),                # sleet
-'19': _('pyl'),                         # dust
-'20': _('mgla'),                        # foggy
-'21': _('smog'),                        # haze
-'22': _('smog'),                        # smoky
-'23': _('silny_wiatr'),                 # blustery
-'24': _('silny_wiatr'),                 # windy
-'25': _('przymrozki'),                  # cold
-'26': _('zachmurzenie_calkowite'),      # cloudy
-'27': _('zachmurzenie_umiarkowane'),    # mostly cloudy (night)
-'28': _('zachmurzenie_umiarkowane'),    # mostly cloudy (day)
-'29': _('czesciowe_zachmurzenie'),      # partly cloudy (night)
-'30': _('czesciowe_zachmurzenie'),      # partly cloudy (day)
-'31': _('bezchmurnie'),                 # clear (night)
-'32': _('bezchmurnie'),                 # sunny
-'33': _('slabe zachmurzenie'),          # fair (night)
-'34': _('slabe zachmurzenie'),          # fair (day)
-'35': _('deszcz'),                      # mixed rain and hail
-'36': _('wysokie_temperatury'),         # hot
-'37': _('burza'),                       # isolated thunderstorms
-'38': _('burza'),                       # scattered thunderstorms
-'39': _('burza'),                       # scattered thunderstorms
-'40': _('deszcz'),                      # scattered showers
-'41': _('intensywne_opady sniegu'),     # heavy snow
-'42': _('snieg'),                       # scattered snow showers
-'43': _('intensywne_opady sniegu'),     # heavy snow
-'44': _('czesciowe zachmurzenie'),      # partly cloudy
-'45': _('burza'),                       # thundershowers
-'46': _('mzawka'),                      # snow showers
-'47': _('burze'),                       # isolated thundershowers
-'3200': '',                          # not available
+    '0':  'tornado',                     # tornado
+    '1':  'burza tropikalna',            # tropical storm
+    '2':  'huragan',                     # hurricane
+    '3':  'silne burze',                 # severe thunderstorms
+    '4':  'burza',                       # thunderstorms
+    '5':  'deszcz ze śniegiem',          # mixed rain and snow
+    '6':  'deszcz i deszcz ze śniegiem', # mixed rain and sleet
+    '7':  'śnieg i deszcz ze śniegiem',  # mixed snow and sleet
+    '8':  'marznąca mżawka',             # freezing drizzle
+    '9':  'mżawka',                      # drizzle
+    '10': 'marznący deszcz',             # freezing rain
+    '11': 'deszcz',                      # showers
+    '12': 'deszcz',                      # showers
+    '13': 'śnieg',                       # snow flurries
+    '14': 'słaby śnieg',                 # light snow showers
+    '15': 'zawieje śnieżne',             # blowing snow
+    '16': 'śnieg',                       # snow
+    '17': 'grad',                        # hail
+    '18': 'deszcz ze śniegiem',          # sleet
+    '19': 'pył',                         # dust
+    '20': 'zamglenia',                   # foggy
+    '21': 'mgła',                        # haze
+    '22': 'smog',                        # smoky
+    '23': 'silny wiatr',                 # blustery
+    '24': 'wietrznie',                   # windy
+    '25': 'przymrozki',                  # cold
+    '26': 'pochmurno',                   # cloudy
+    '27': 'pochmurno',                   # mostly cloudy (night)
+    '28': 'pochmurno',                   # mostly cloudy (day)
+    '29': 'częściowe zachmurzenie',      # partly cloudy (night)
+    '30': 'częściowe zachmurzenie',      # partly cloudy (day)
+    '31': 'bezchmurnie',                 # clear (night)
+    '32': 'bezchmurnie',                 # sunny
+    '33': 'słabe zachmurzenie',          # fair (night)
+    '34': 'słabe zachmurzenie',          # fair (day)
+    '35': 'deszcz i grad',               # mixed rain and hail
+    '36': 'wysokie temperatury',         # hot
+    '37': 'burza',                       # isolated thunderstorms
+    '38': 'burza',                       # scattered thunderstorms
+    '39': 'burza',                       # scattered thunderstorms
+    '40': 'przelotne opady',             # scattered showers
+    '41': 'intensywne opady śniegu',     # heavy snow
+    '42': 'przelotne opady śniegu',      # scattered snow showers
+    '43': 'intensywne opady śniegu',     # heavy snow
+    '44': 'częściowe zachmurzenie',      # partly cloudy
+    '45': 'burza',                       # thundershowers
+    '46': 'śnieg',                       # snow showers
+    '47': 'burza',                       # isolated thundershowers
+    '3200': '',                          # not available
 }

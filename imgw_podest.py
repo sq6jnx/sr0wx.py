@@ -65,7 +65,9 @@ def zaladujRegion(region):
 
     Korzystamy tutaj z faktu, że 1. Hash tables w JS mają składnię identyczną do pythonowych
     słowników; 2. W pliku są 2 słowniki a nas interesuje tylko pierwszy; 3. Python potrafi 
-    interpretować sam siebie :)"""
+    interpretować sam siebie :)
+
+    2011-08-30: trzeba to jak najszybciej przerobić na JSON, eval is evil!"""
 
     global wodowskazy
 
@@ -143,11 +145,6 @@ def getData(l):
             else:
                 stanyAlarmowe[w['rzeka']].append(w['nazwa'])
 
-
-#            stanyOstrzegawcze+=' wodowskaz %s %s'%(w['rzeka'],format(w['nazwa']),)
-#        elif w['przekroczenieStanu']=='alarmowy':
-#            stanyAlarmowe+=' rzeka %s wodowskaz %s'%(w['rzeka'],format(w['nazwa']),)
-
     if stanyOstrzegawcze!={} or stanyAlarmowe!={}:
         data['data'] += 'komunikat_hydrologiczny_imgw _ '
 
@@ -165,7 +162,6 @@ def getData(l):
             for rzeka in sorted(stanyOstrzegawcze.keys()):
                 data['data']+='rzeka %s wodowskaz %s '%(format(rzeka), \
                     " wodowskaz ".join([format(w) for w in sorted(stanyOstrzegawcze[rzeka])]),)
-
 
     debug.log("IMGW-HYDRO", "finished...")
 
@@ -198,11 +194,12 @@ def bezpiecznaNazwa(s):
     wodowskazu. Ze względu na to, że w Polsce zarówno płynie
     rzeka Ślęza jak i Ślęża oznaczany jest każdy niełaciński
     znak"""
-    return s.lower().replace(u'ą',u'a_')#.replace(u'ć',u'c_').\
-        #replace(u'ę',u'e_').replace(u'ł',u'l_').\
-        #replace(u'ń',u'n_').replace(u'ó',u'o_').\
-        #replace(u'ś',u's_').replace(u'ź',u'x_').\
-        #replace(u'ż',u'z_').replace(u' ',u'')
+    return unicode(s, 'utf-8').lower().replace(u'ą',u'a_').replace(u'ć',u'c_').\
+        replace(u'ę',u'e_').replace(u'ł',u'l_').\
+        replace(u'ń',u'n_').replace(u'ó',u'o_').\
+        replace(u'ś',u's_').replace(u'ź',u'x_').\
+        replace(u'ż',u'z_').replace(u' ',u'_').\
+        replace(u'-',u'_')
 
 def podajListeWodowskazow(region):
     rv = []
@@ -214,7 +211,7 @@ def podajListeWodowskazow(region):
 if __name__ == '__main__':
     class DummyDebug:
         def log(self,module,message,buglevel=None):
-            print message
+            pass
 
     debug = DummyDebug()
     import sys
@@ -224,17 +221,37 @@ if __name__ == '__main__':
         region = sys.argv[2]
         # generowanie listy słów słownika; ostatnie słowo (rozielone spacją)
         # jest nazwą pliku docelowego
-        frazy = ['komunikat hydrologiczny imgw', u'przekroczenia stanów ostrzegawczych',
-            u'przekroczenia stanów alarmowych', 'rzeka', 'wodowskaz']
+	
+        print """#!/usr/bin/python
+# -*- coding: utf-8 -*-
 
-        zaladujRegion(int(region))
+# Caution! I am not responsible for using these samples. Use at your own risk
+# Google, Inc. is the copyright holder of samples downloaded with this tool.
+
+# Generated automatically by imgw_podest.py. Feel free to modify it SLIGHTLY.
+
+LANGUAGE = 'pl'
+
+START_MARKER = 'ę. '
+END_MARKER = ' k'
+
+CUT_START = 0.9
+CUT_END=0.7
+
+download_list = [ """
+        frazy = ['komunikat hydrologiczny imgw', 'przekroczenia stanów ostrzegawczych',
+            'przekroczenia stanów alarmowych', 'rzeka', 'wodowskaz']
+        for fraza in set(frazy):
+            print "\t['%s', '%s'],"%(unicode(fraza,'utf-8'), format(fraza),)
+
+        frazy=[]
+	zaladujRegion(int(region))
         for w in podajListeWodowskazow(int(region)):
             frazy.append(w['rzeka'])
             frazy.append(w['nazwa'])
-
         for fraza in set(frazy):
-            print fraza
-            print "%s %s"%(fraza, bezpiecznaNazwa(fraza),)
+            print "    ['%s', '%s'],"%(unicode(fraza,'utf-8'), bezpiecznaNazwa(fraza),)
+	print ']'
     elif len(sys.argv)==2 and int(sys.argv[1]) in range(1,14+1):
         # podaje listę wodowskazów w danym regionie (danej zlewni)
         region = sys.argv[1]

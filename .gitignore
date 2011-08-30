@@ -2,6 +2,7 @@
 docs/.svn/*
 pl/.svn/*
 pl_google/*.ogg
+pl_google/google_tts_downloader.py
 lib/.svn/*
 *.pyc
 *.py~
