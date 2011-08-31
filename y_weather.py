@@ -96,7 +96,7 @@ def getData(l):
 	'PUB_DATE_HOUR':  lang.readISODT(str(w['pub_date'])),
 	'CURR_TEMP': lang.cardinal(w['current_temp'], lang.C),
 	'HUMIDITY': lang.cardinal(int(float(w['humidity'])), lang.percent), 
-	'CURRENT_CONDITION': conditions[str(w['current_conditions'])], 
+	'CURRENT_CONDITION': conditions[str(w['current_conditions'])].replace(' ','_'), 
 	'WIND_DIR_NEWS': '', 
 	'WIN_DIR_DEG': lang.cardinal(w['wind_direction'], lang.deg),
 	'WIND_SPEED': lang.cardinal(int(w['wind_speed']), lang.mPs),

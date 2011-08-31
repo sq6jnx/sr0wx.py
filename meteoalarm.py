@@ -64,7 +64,8 @@ def getAwareness(region, tomorrow=False):
 # tommorow = False -- awareness for today
 # tommorow = True  -- awareness for tommorow
     r =   re.compile('intranet/images/aw(\d[01]?)([0234]).jpg')
-    url = "http://www.meteoalarm.eu/area.asp?lang=EN&ShowDate="+\
+    url = "http://www.meteoalarm.eu/index3.php?area=%s&day=%s&lang=EN
+lang=EN&ShowDate="+\
         ("tomorrow"*tomorrow)+"&area="+str(region)
 
     a = ""

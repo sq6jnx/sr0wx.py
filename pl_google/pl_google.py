@@ -346,3 +346,38 @@ y_weather.conditions = {
     '47': 'burza',                       # isolated thundershowers
     '3200': '',                          # not available
 }
+
+
+# These dictionaries are used by meteoalarm module.
+meteoalarmAwarenesses = [
+    "brak_zagrozen",
+    "silny_wiatr",
+    "snieg_lub_oblodzenie",
+    "burze",
+    "mgly",
+    "wysokie_temperatury",
+    "niskie_temperatury",
+    "zjawiska_strefy_brzegowej",
+    "pozary_lasow",
+    "lawiny",
+    "intensywne_opady deszczu",
+    "inne_zagrozenia"]
+meteoalarmAwarenessLvl = [
+    "nieokreslony",
+    "",
+    "niski",
+    "sredni",
+    "wysoki"]
+
+meteoalarmAwarenessLevel = "poziom_zagrozenia"
+meteoalarmRegions = {
+    483: "łódzkiego", 479:"śląskiego", 482:"świętokrzyskiego",
+    477:"dolnoslaskiego", 485:"kujawsko_pomorskiego", 487:"lubelskiego",
+    474:"lubuskiego", 480:"malopolskiego", 489:"mazowieckiego", 478:"opolskiego",
+    481:"podkarpackiego", 488:"podlaskiego",476:"pomorskiego", 
+    486:"warminsko_mazurskiego", 484:"wielkopolskiego", 475:"zachodniopomorskiego" }
+
+meteoalarmAwareness   = "zagrozenia_meteorologiczne dla_wojewodztwa"
+meteoalarmNoAwareness = "brak_zagrozen_meteorologicznych dla_wojewodztwa"
+today    = "dzis"
+tomorrow = "jutro"
