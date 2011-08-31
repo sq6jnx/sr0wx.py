@@ -18,7 +18,7 @@ helloMsg = ["tu_eksperymentalna_automatyczna_stacja_pogodowa",\
     "sp6yre",]#"lokator","jo81ld"]
 goodbyeMsg = ["_","tu_sp6yre",]
 
-modules = ["y_weather"]
+modules = ["imgw_podest", "y_weather"]
 
 class m:
     pass
@@ -42,6 +42,10 @@ y_weather.template = """stan_pogody_z_dnia {PUB_DATE_HOUR} _ temperatura
     {FORECAST1_MIN_TEMP_SHORT} maksymalna {FORECAST1_MAX_TEMP} 
     """
 
+
+imgw_podest = m()
+
+imgw_podest.wodowskazy = ["3.150160160"]
 
 debug = m()
 debug.writeLevel = None

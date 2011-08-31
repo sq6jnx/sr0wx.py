@@ -126,13 +126,8 @@ def getData(l):
         #w['przekroczenieStanu']='alarmowy'
         # Koniec chłytu
 
-        # Repolonizacja nazw rzek:
-        if w['nazwa'] == 'Kudowa Zdrój - Zakrze':
-            w['nazwa']='kudowa_zdroj_zakrze'
-        elif w['nazwa']=='Opole - Groszowice':
-            w['nazwa']='opole_groszowice'
-        elif w['nazwa']=='Ślęża':
-            w['nazwa']='slez_a'
+        w['rzeka']=bezpiecznaNazwa(w['rzeka'])
+        w['nazwa']=bezpiecznaNazwa(w['nazwa'])
 
         if w['przekroczenieStanu']=='ostrzegawczy':
             if not stanyOstrzegawcze.has_key(w['rzeka']):
@@ -154,8 +149,8 @@ def getData(l):
             data['needCTCSS']=True
             data['data']+=' przekroczenia_stanow_alarmowych '
             for rzeka in sorted(stanyAlarmowe.keys()):
-                data['data']+='rzeka %s wodowskaz %s '%(format(rzeka), \
-                    " wodowskaz ".join([format(w) for w in sorted(stanyAlarmowe[rzeka])]),)
+                data['data']+='rzeka %s wodowskaz %s '%(rzeka, \
+                    " wodowskaz ".join(sorted(stanyAlarmowe[rzeka])),)
 
         if stanyOstrzegawcze!={}:
             data['data']+='_ przekroczenia_stanow_ostrzegawczych '
@@ -250,7 +245,7 @@ download_list = [ """
             frazy.append(w['rzeka'])
             frazy.append(w['nazwa'])
         for fraza in set(frazy):
-            print "    ['%s', '%s'],"%(unicode(fraza,'utf-8'), bezpiecznaNazwa(fraza),)
+            print "    ['ę. %s', '%s'],"%(unicode(fraza,'utf-8'), bezpiecznaNazwa(fraza),)
 	print ']'
     elif len(sys.argv)==2 and int(sys.argv[1]) in range(1,14+1):
         # podaje listę wodowskazów w danym regionie (danej zlewni)
