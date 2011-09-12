@@ -21,10 +21,16 @@ CUT_SUFFIX = ' k'
 download_list = [
 # welcome and goodbye messages
 ["tu eksperymentalna automatyczna stacja pogodowa k",],
+["tu automatyczna stacja pogodowa powiatu brzeskiego"],
+
 ["ę. Stanisław Paweł 6 Jokohama - Roman, Ewa", "sp6yre"],
 ["ę. stanisław kłebek 6 jadwiga natalia kłebek ", "sq6jnq"],
+["ę. stanisław kłebek 6 adam cezary maria", "sq6acm"],
+
+
 ["tu Stanisław Paweł 6 Jokohama, Roman, Ewa", 'tu_sp6yre'],
 ["tu stanisław kłebek 6 jadwiga natalia kłebek k", 'tu_sq6jnq'],
+["tu stanisław kłebek 6 adam cezary maria", 'tu_sq6acm'],
 
 ["stan pogody z dnia k",],
 
