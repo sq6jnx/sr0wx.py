@@ -18,7 +18,7 @@ download_list = [
     ['ę. rzeka', 'rzeka'],
     ['ę. wodowskaz', 'wodowskaz'],
     ['ę. przekroczenia stanów alarmowych', 'przekroczenia_stanow_alarmowych'],
-    ['ę. komunikat hydrologiczny i emgjewu', 'komunikat_hydrologiczny_imgw'],
+    ['ę. komunikat hydrologiczny i em gje wu', 'komunikat_hydrologiczny_imgw'],
     ['ę. przekroczenia stanów ostrzegawczych', 'przekroczenia_stanow_ostrzegawczych'],
     ['ę. Gniechowice', 'gniechowice'],
     ['ę. Kamienica', 'kamienica'],

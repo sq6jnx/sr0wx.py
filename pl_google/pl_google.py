@@ -350,7 +350,7 @@ y_weather.conditions = {
 
 # These dictionaries are used by meteoalarm module.
 meteoalarmAwarenesses = [
-    "brak_zagrozen",
+    "",
     "silny_wiatr",
     "snieg_lub_oblodzenie",
     "burze",
@@ -371,13 +371,25 @@ meteoalarmAwarenessLvl = [
 
 meteoalarmAwarenessLevel = "poziom_zagrozenia"
 meteoalarmRegions = {
-    483: "łódzkiego", 479:"śląskiego", 482:"świętokrzyskiego",
-    477:"dolnoslaskiego", 485:"kujawsko_pomorskiego", 487:"lubelskiego",
-    474:"lubuskiego", 480:"malopolskiego", 489:"mazowieckiego", 478:"opolskiego",
-    481:"podkarpackiego", 488:"podlaskiego",476:"pomorskiego", 
-    486:"warminsko_mazurskiego", 484:"wielkopolskiego", 475:"zachodniopomorskiego" }
+    'PL001':"mazowieckiego", 
+    'PL002':"lubuskiego", 
+    'PL003':"zachodniopomorskiego",
+    'PL004':"pomorskiego", 
+    'PL005':"dolnoslaskiego", 
+    'PL006':"opolskiego",
+    'PL007':"śląskiego", 
+    'PL008':"malopolskiego", 
+    'PL009':"podkarpackiego", 
+    'PL010':"świętokrzyskiego",
+    'PL011':"łódzkiego", 
+    'PL012':"wielkopolskiego", 
+    'PL013':"kujawsko_pomorskiego", 
+    'PL014':"warminsko_mazurskiego", 
+    'PL015':"lubelskiego",
+    'PL016':"podlaskiego",
+    'IE003':"dolnoslaskiego",
+}
 
-meteoalarmAwareness   = "zagrozenia_meteorologiczne dla_wojewodztwa"
-meteoalarmNoAwareness = "brak_zagrozen_meteorologicznych dla_wojewodztwa"
+meteoalarmAwareness   = "zagrozenia_meteorologiczne_dla_wojewodztwa"
 today    = "dzis"
 tomorrow = "jutro"

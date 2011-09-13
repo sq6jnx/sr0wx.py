@@ -130,4 +130,44 @@ download_list = [
 ['ypsylon', 'y'], # wł. Ypsilon
 ['zygmunt', 'z'],
 
+# Sample potrzebne dla modułu meteoalarm (cała Polska)
+
+["ę.  zagrożenia meteorologiczne dla województwa", 'zagrozenia_meteorologiczne_dla_wojewodztwa'],
+["ę.  mazowieckiego"],
+["ę.  lubuskiego"],
+["ę.  zachodniopomorskiego"],
+["ę.  pomorskiego"],
+["ę.  dolnośląskiego"],
+["ę.  opolskiego"],
+["ę.  śląskiego"],
+["ę.  małopolskiego"],
+["ę.  podkarpackiego"],
+["ę.  świętokrzyskiego"],
+["ę.  łódzkiego"],
+["ę.  wielkopolskiego"],
+["ę.  kujawsko-pomorskiego"],
+["ę.  warminsko-mazurskiego"],
+["ę.  lubelskiego"],
+["ę.  podlaskiego"],
+["ę.  dziś"],
+["ę.  jutro"],
+["ę.  silny wiatr"],
+["ę.  śnieg lub oblodzenie"],
+["ę.  burze"],
+["ę.  mgły"],
+["ę.  wysokie temperatury"],
+["ę.  niskie temperatury"],
+["ę.  zjawiska strefy brzegowej"],
+["ę.  pożary lasów"],
+["ę.  lawiny"],
+["ę.  intensywne opady deszczu"],
+["ę.  inne zagrożenia"],
+["ę.  poziom zagrożenia"],
+["ę.  nieokreślony"],
+["ę.  niski"],
+["ę.  średni"],
+["ę.  wysoki"],
+
+
+
 ]
