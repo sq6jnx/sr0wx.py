@@ -1,0 +1,228 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Modules &mdash; sr0wx.py v0.1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="sr0wx.py v0.1 documentation" href="index.html" />
+    <link rel="next" title="Core configuration" href="core_config.html" />
+    <link rel="prev" title="What is needed to run sr0wx?" href="what_is_needed.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="core_config.html" title="Core configuration"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="what_is_needed.html" title="What is needed to run sr0wx?"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">sr0wx.py v0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="modules">
+<h1>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h1>
+<p><tt class="docutils literal"><span class="pre">sr0wx.py</span></tt> is nothing without its modules. Here you can find short list of them:</p>
+<div class="section" id="language-modules">
+<h2>Language modules<a class="headerlink" href="#language-modules" title="Permalink to this headline">¶</a></h2>
+<p>Language modules are needed to tell <tt class="docutils literal"><span class="pre">sr0wx.py</span></tt> how to speak in your language.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="8%" />
+<col width="92%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Code</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>pl</td>
+<td>First (and poorly implemented) language. Utilizes previously recorded samples</td>
+</tr>
+<tr><td>pl_google</td>
+<td>Second impression, utilizes <tt class="docutils literal"><span class="pre">translate.google.com</span></tt> samples. As of 2011-09-05 still in alpha-stage.</td>
+</tr>
+</tbody>
+</table>
+<p>We&#8217;re currently looking for czech and german native
+speakers/programmers to help us develop these languages (as we&#8217;re going
+to run a station on polish/czech/german border). If you&#8217;d like to develop
+your language (any language, even klingon) you&#8217;re are very welcome.</p>
+</div>
+<div class="section" id="data-modules">
+<h2>Data modules<a class="headerlink" href="#data-modules" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="86%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>metar</td>
+<td>Current weather conditions on the nearest international airport</td>
+</tr>
+<tr><td>taf</td>
+<td>Short-term weather forecast from nearest international airport
+weather service</td>
+</tr>
+<tr><td>meteoalarm</td>
+<td>Regional meteo awarenesses as listed on <tt class="docutils literal"><span class="pre">www.meteoalarm.eu</span></tt></td>
+</tr>
+<tr><td>imgw_podest</td>
+<td>Hydrological awarenesses for Poland (via www.pogodynka.pl/podest)</td>
+</tr>
+<tr><td>y_weather</td>
+<td>World-wide weather forecast from Yahoo! Weather</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="library-modules">
+<h2>Library modules<a class="headerlink" href="#library-modules" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="6%" />
+<col width="94%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>cw</td>
+<td>CW sound generation (jak to napisać że na potrzeby znamiennika stajci automatycznej?)</td>
+</tr>
+<tr><td>ctcss</td>
+<td>CTCSS tone generation</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="utility-modules">
+<h2>Utility modules<a class="headerlink" href="#utility-modules" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="78%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Name</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>google_downloader</td>
+<td>Utility to download all needed samples from
+<tt class="docutils literal"><span class="pre">translate.google.com</span></tt> instead of recording and cutting them</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="more-modules">
+<h2>More modules<a class="headerlink" href="#more-modules" title="Permalink to this headline">¶</a></h2>
+<p>If you&#8217;d like to write your own module please fill in the gaps in <strong>module
+description template</strong>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Modules</a><ul>
+<li><a class="reference internal" href="#language-modules">Language modules</a></li>
+<li><a class="reference internal" href="#data-modules">Data modules</a></li>
+<li><a class="reference internal" href="#library-modules">Library modules</a></li>
+<li><a class="reference internal" href="#utility-modules">Utility modules</a></li>
+<li><a class="reference internal" href="#more-modules">More modules</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="what_is_needed.html"
+                        title="previous chapter">What is needed to run sr0wx?</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="core_config.html"
+                        title="next chapter">Core configuration</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/modules.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="core_config.html" title="Core configuration"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="what_is_needed.html" title="What is needed to run sr0wx?"
+             >previous</a> |</li>
+        <li><a href="index.html">sr0wx.py v0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, SQ6JNX.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+    </div>
+  </body>
+</html>

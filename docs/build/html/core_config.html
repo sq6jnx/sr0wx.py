@@ -1,0 +1,175 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Core configuration &mdash; sr0wx.py v0.1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="sr0wx.py v0.1 documentation" href="index.html" />
+    <link rel="next" title="dummy – A Dummy Module Description" href="foo_module.html" />
+    <link rel="prev" title="Modules" href="modules.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="foo_module.html" title="dummy – A Dummy Module Description"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="Modules"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">sr0wx.py v0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="core-configuration">
+<h1>Core configuration<a class="headerlink" href="#core-configuration" title="Permalink to this headline">¶</a></h1>
+<p>This is the place where you can find information about how to configure the
+<tt class="docutils literal"><span class="pre">core</span></tt> module of <tt class="docutils literal"><span class="pre">sr0wx.py</span></tt> project. This is actually my personal
+<tt class="docutils literal"><span class="pre">config.py</span></tt> with some additional informations.</p>
+<p>What you <strong>won&#8217;t</strong> find here is how to configure modules. Of course, you can
+find it on modules&#8217; description pages.</p>
+<p><strong>Warning</strong>: there are some things which I am not proud of. You can probably
+find them (and fix them!) on your own. If you will, please send me a patch.</p>
+<p>We can divide <tt class="docutils literal"><span class="pre">core</span></tt> part of <tt class="docutils literal"><span class="pre">sr0wx.py</span></tt> configuration into several, but
+very small, parts:</p>
+<p>First, CTCSS (aka subtone). This is going to be easy and self-explanatory:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">CTCSS</span> <span class="o">=</span> <span class="mf">88.8</span>
+<span class="n">playCTCSS</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">CTCSSVolume</span> <span class="o">=</span> <span class="mf">0.1</span>
+</pre></div>
+</div>
+<p>First line states, that station will be using CTCSS at 88.8 Hz (other possible
+values include whole spectrum of floating point numbers or character code from
+<tt class="docutils literal"><span class="pre">'A'</span></tt> to <tt class="docutils literal"><span class="pre">'AL'</span></tt>).</p>
+<p><tt class="docutils literal"><span class="pre">playCTCSS</span> <span class="pre">=</span> <span class="pre">False</span></tt> means, that CTCSS will be played in
+background <strong>only</strong> if any of modules (see below) will ask for it. Other
+values include <tt class="xref docutils literal"><span class="pre">True</span></tt> (CTCSS is played always) and <tt class="xref docutils literal"><span class="pre">None</span></tt> (never).</p>
+<p>Next we define how Push-To-Talk is pressed. We do it by sending an RTS signal
+(pin 7 on RS232) which is plugged as <tt class="docutils literal"><span class="pre">/dev/ttyS0</span></tt>. <tt class="docutils literal"><span class="pre">SerialBaudRate</span></tt> is not
+used at the moment, but may be usefull in future.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">serialPort</span>     <span class="o">=</span> <span class="s">&#39;/dev/ttyS0&#39;</span>
+<span class="n">serialBaudRate</span> <span class="o">=</span> <span class="mi">9600</span>
+</pre></div>
+</div>
+<p>As the station is going to speak polish using samples downloaded from Google
+Translator we define: (see languages page for mor info)</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">lang</span> <span class="o">=</span> <span class="s">&quot;pl_google&quot;</span>
+</pre></div>
+</div>
+<p>Next step is defining how the transmission starts and ends. These are
+so-called hello and goodbye messages. As the station is going to give its
+callsign in CW we import tiny module to translate text to morse code:</p>
+<div class="highlight-python"><pre>from lib.cw import *
+
+helloMsg = ["tu_eksperymentalna_automatyczna_stacja_pogodowa",\
+    "sp6yre",cw('sp6yre),]
+goodbyeMsg = ["_","tu_sp6yre",]</pre>
+</div>
+<p>Almost done. Defining which modules should be run at each start and in which
+order is self explanatory:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">modules</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;imgw_podest&quot;</span><span class="p">,</span> <span class="s">&quot;y_weather&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Actually, that&#8217;s all for the <tt class="docutils literal"><span class="pre">core</span></tt>. Next lines (and this is probably 75% of
+the whole <tt class="docutils literal"><span class="pre">config.py</span></tt> are <strong>modules</strong> configuration. This starts from a
+dirty hack ...:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">m</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>... and usually looks like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">foo_module</span> <span class="o">=</span> <span class="n">m</span><span class="p">()</span>
+<span class="n">foo_module</span><span class="o">.</span><span class="n">option_1</span> <span class="o">=</span> <span class="s">&#39;bar&#39;</span>
+</pre></div>
+</div>
+<p>Last, but not least, recent versions on <tt class="docutils literal"><span class="pre">PyGame</span></tt> and/or <tt class="docutils literal"><span class="pre">Numeric</span></tt> have a
+bug which makes CW and CTCSS played twice as fast as it should be and at
+doubled frequency. We try to cope with it with:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">pygameBug</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Oh, almost forget. The values <strong>must</strong> be written in the <tt class="docutils literal"><span class="pre">config</span></tt> file.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="modules.html"
+                        title="previous chapter">Modules</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="foo_module.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">dummy</span></tt> &#8211; A Dummy Module Description</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/core_config.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="foo_module.html" title="dummy – A Dummy Module Description"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="modules.html" title="Modules"
+             >previous</a> |</li>
+        <li><a href="index.html">sr0wx.py v0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, SQ6JNX.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+    </div>
+  </body>
+</html>
