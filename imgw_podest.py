@@ -245,7 +245,7 @@ download_list = [ """
             frazy.append(w['rzeka'])
             frazy.append(w['nazwa'])
         for fraza in set(frazy):
-            print "    ['ę. %s', '%s'],"%(unicode(fraza,'utf-8'), bezpiecznaNazwa(fraza),)
+            print u"    ['ę. %s', '%s'],"%(unicode(fraza,'utf-8'), bezpiecznaNazwa(fraza),)
 	print ']'
     elif len(sys.argv)==2 and int(sys.argv[1]) in range(1,14+1):
         # podaje listę wodowskazów w danym regionie (danej zlewni)
