@@ -194,7 +194,8 @@ def bezpiecznaNazwa(s):
         replace(u'ń',u'n_').replace(u'ó',u'o_').\
         replace(u'ś',u's_').replace(u'ź',u'x_').\
         replace(u'ż',u'z_').replace(u' ',u'_').\
-        replace(u'-',u'_')
+        replace(u'-',u'_').replace(u'(',u'').\
+        replace(u')',u'')
 
 def podajListeWodowskazow(region):
     rv = []
@@ -237,7 +238,8 @@ download_list = [ """
         frazy = ['komunikat hydrologiczny imgw', 'przekroczenia stanów ostrzegawczych',
             'przekroczenia stanów alarmowych', 'rzeka', 'wodowskaz']
         for fraza in set(frazy):
-            print "\t['%s', '%s'],"%(unicode(fraza,'utf-8'), format(fraza),)
+            print "\t['%s', '%s'],"%(fraza, format(fraza),)
+            #print "\t['%s', '%s'],"%(unicode(fraza,'utf-8'), format(fraza),)
 
         frazy=[]
 	zaladujRegion(int(region))
@@ -245,7 +247,7 @@ download_list = [ """
             frazy.append(w['rzeka'])
             frazy.append(w['nazwa'])
         for fraza in set(frazy):
-            print u"    ['ę. %s', '%s'],"%(unicode(fraza,'utf-8'), bezpiecznaNazwa(fraza),)
+            print "\t['ę. %s', '%s'],"%(fraza, str(bezpiecznaNazwa(fraza)),)
 	print ']'
     elif len(sys.argv)==2 and int(sys.argv[1]) in range(1,14+1):
         # podaje listę wodowskazów w danym regionie (danej zlewni)
