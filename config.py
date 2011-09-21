@@ -19,6 +19,7 @@ helloMsg = ["tu_eksperymentalna_automatyczna_stacja_pogodowa",\
 goodbyeMsg = ["_","tu_sp6yre",]
 
 modules = ["y_weather", "meteoalarm", "imgw_podest"]
+modules = ["sms_qst"]
 
 class m:
     pass
@@ -42,6 +43,24 @@ y_weather.template = """stan_pogody_z_dnia {PUB_DATE_HOUR} _ temperatura
     {FORECAST1_MIN_TEMP_SHORT} maksymalna {FORECAST1_MAX_TEMP} _
     """
 
+# ----------
+# sms_qst
+# ----------
+
+sms_qst = m()
+sms_qst.max_sim_capacity = 255
+sms_qst.db_file = 'sms_qst.sqlite' # or ':memory:' for on-memory db
+sms_qst.temp_file = '/tmp/sms_qst.wav'
+sms_qst.leave_messages_on_sim = True # You can delete or leave SMS on SIMCard after reading
+# command in subprocess.Popen form
+sms_qst.tts_command = ['/usr/bin/espeak', '-a', '200', '-p', '64', 
+    '-s', '170', '{MESSAGE}', '-g', '10', '-v', 'pl', '-w', 
+    sms_qst.temp_file,]
+sms_qst.template = """komunikat_specjalny_od {CALL} _ {MESSAGE} _ 
+    powtarzam_komunikat _ {MESSAGE}"""
+sms_qst.authorized_senders = {
+   '+48501805277': 'sq6jnx',
+   '+48603186430': 'sq6jnq' }
 
 debug = m()
 debug.writeLevel = None

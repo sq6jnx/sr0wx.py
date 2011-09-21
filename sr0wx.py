@@ -152,6 +152,8 @@ debug.log("CORE", "playing sound samples")
 soundSamples = {}
 for el in data:
     if "upper" in dir(el):
+        if el[0:7]=='file://':
+            soundSamples[el] = pygame.mixer.Sound(el[7:])
         if el is not "_" and el not in soundSamples:
             if not os.path.isfile(config.lang+"/"+el+".ogg"):
                 debug.log("CORE", "couldn't find %s"%(config.lang+"/"+el+".ogg"), 3)

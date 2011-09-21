@@ -285,6 +285,17 @@ def readHourLen(hour):
     mm = (ss-hh*3600)/60
     return removeDiacritics(" ".join( (cardinal(hh, hrs, gender='F'), cardinal(mm, mns, gender='F')) ))
 
+def readCallsign(call):
+    rv = ''
+    for c in call.lower():
+        if c in 'abcdefghijklmnopqrstuvwxyz':
+            rv=rv+c+' '
+        elif c in '0123456789':
+            rv=rv+removeDiacritics(cardinal(int(c)))+' '
+        elif c=='/':
+            rv=rv+'lamane '
+    
+    return rv
 
 # ##########################################
 #

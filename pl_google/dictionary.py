@@ -99,6 +99,11 @@ download_list = [
 ["temperatura minimalna"], ["maksymalna"],
 ["następnie"],
 
+# sms_qst
+
+['komunikat specjalny od'],
+['powtarzam komunikat'],
+
 # literowanie polskie wg. "Krótkofalarstwo i radiokomunikacja - poradnik", 
 # Łukasz Komsta SQ8QED, Wydawnictwa Komunikacji i Łączności Warszawa, 2001,
 # str. 130 (z drobnymi modyfikacjami fonetycznymi)
@@ -108,18 +113,18 @@ download_list = [
 ['celina', 'c'],
 ['dorota', 'd'],
 ['edward', 'e'],
-['franciszek', 'f'],
+['franciszek k', 'f'],
 ['gustaw', 'g'],
-['henryk', 'h'],
+['henryk k', 'h'],
 ['irena', 'i'],
 ['józef', 'j'],
 ['karol', 'k'],
-['ludwik', 'l'],
-['marek', 'm'],
+['ludwik k', 'l'],
+['marek k', 'm'],
 ['natalia', 'n'],
 ['olga', 'o'],
 ['paweł', 'p'],
-['kłebek', 'q'], # wł. Quebec
+['kłebek k', 'q'], # wł. Quebec
 ['roman', 'r'],
 ['stefan', 's'],
 ['tadeusz', 't'],
@@ -129,6 +134,7 @@ download_list = [
 ['xawery', 'x'],
 ['ypsylon', 'y'], # wł. Ypsilon
 ['zygmunt', 'z'],
+['łamane'],
 
 # Sample potrzebne dla modułu meteoalarm (cała Polska)
 

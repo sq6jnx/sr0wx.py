@@ -8,4 +8,5 @@ lib/.svn/*
 *.py~
 *.log
 *.swp
+*.sqlite
 doc/build/doctrees*
