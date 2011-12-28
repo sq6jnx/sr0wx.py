@@ -136,8 +136,66 @@ def getData(l):
 
     return data
 
+def show_help():
+    print u"""
+Uruchamiając ten skrypt z linii komend możesz wygenerować w łatwy sposób 
+fragment słownika sr0wx dla rzek i wodowskazów wskazanych w pliku config.py
+
+Należy uruchomić prospect_mp podając jako parametr gen., np.
+
+python prospect_mp.py gen > pl_google/prospect_mp_dict.py
+
+a następnie
+
+python google_tts_downloader.py prospect_mp_dict.py
+
+aby dociągnąć niezbędne pliki."""
 
 if __name__ == '__main__':
-    lang = 'pl'
-    print pobierzOstrzezenia('biala', 'TUBI')
+    class DummyDebug:
+        def log(self,module,message,buglevel=None):
+            pass
 
+    debug = DummyDebug()
+    import sys
+    # tak, wiem, że można to zrobić bardziej elegancko (getopt), ale dla 2
+    # opcji nie ma chyba sensu...
+    if len(sys.argv)==2 and sys.argv[1]=='gen':
+        from config import prospect_mp as config
+        
+        # generowanie listy słów słownika; ostatnie słowo (rozielone spacją)
+        # jest nazwą pliku docelowego
+	
+        print """#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+# Caution! I am not responsible for using these samples. Use at your own risk
+# Google, Inc. is the copyright holder of samples downloaded with this tool.
+
+# Generated automatically by imgw_podest.py. Feel free to modify it SLIGHTLY.
+
+LANGUAGE = 'pl'
+
+START_MARKER = 'ę. '
+END_MARKER = ' k'
+
+CUT_START = 0.9
+CUT_END=0.7
+
+download_list = [ """
+
+        frazy = []
+        for wpis in config.wodowskazy:
+            frazy.append(wpis[1])
+            frazy.append(wpis[2])
+
+        for fraza in set(frazy):
+            print "\t['ę. %s', '%s'],"%(fraza, str(bezpiecznaNazwa(fraza)),)
+
+
+        print """'lokalny komunikat hydrologiczny', 'przekroczenia stanów ostrzegawczych',
+            'przekroczenia stanów alarmowych', 'rzeka', 'wodowskaz',"""
+
+	print ']'
+    else:
+        show_help()
