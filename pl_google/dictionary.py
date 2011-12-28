@@ -93,7 +93,10 @@ download_list = [
 ["dziewiętnasta"], ["dwudziesta"],
 
 ["kierunek wiatru"], ["metr na sekundę"], ["metry na sekundę"],
-["metrów na sekunde"], ["ciśnienie"], ["hektopaskal"],
+["metrów na sekunde"], 
+["kilometr na godzinę"], ["kilometry na godzinę"], ["kilometrów na godzinę"],
+
+["ciśnienie"], ["hektopaskal"],
 ["hektopaskale"], ["hektopaskali"], ["tendencja spadkowa"],
 ["tendencja wzrostowa"], ["temperatura odczuwalna"],
 ["temperatura minimalna"], ["maksymalna"],
@@ -174,6 +177,22 @@ download_list = [
 ["ę.  średni"],
 ["ę.  wysoki"],
 
+# Sample dla WorldWeatherOnline
 
+['bezchmurnie'], ['burza'], ['burza śnieżna'], ['częściowe zachmurzenie'],
+['grad'], ['Intensywne opady śniegu'], ['lokalna przelotna marznąca mżawka'],
+['lokalne burze'], ['lokalne przelotne opady deszczu'],
+['lokalny słaby deszcz'], ['marznąca mgła'], ['marznąca mżawka'], ['mgła'],
+['mżawka'], ['opady śniegu'], ['pochmurno'], ['przelotne opady deszczu'],
+['przelotne ulewy'], ['słabe opady marznącego deszczu'],
+['słabe opady śniegu'], ['słabe opady śniegu z deszczem'],
+['słabe opady śniegu ziarnistego'], ['słabe przelotne opady deszczu'],
+['słaby deszcz'], ['śnieg'], ['śnieg z deszczem'],
+['ulewny deszcz'], ['ulewy'],
+['umiarkowane lub ciężkie opady śniegu z deszczem'],
+['umiarkowane opady deszczu'], ['umiarkowane opady marznącego deszczu'],
+['umiarkowane opady śniegu'], ['umiarkowane opady śniegu z deszczem'],
+['umiarkowane opady śniegu ziarnistego'], ['zachmurzenie całkowite'],
+['zamglenia'], ['zamieć śnieżna'], ['pokrywa chmur'],
 
 ]

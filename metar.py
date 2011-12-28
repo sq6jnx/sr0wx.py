@@ -76,6 +76,7 @@ def getLocalTimeFromISO(isoDT, timeZone=config.timeZone):
 # into its full-word representation, ie. "nothern northern eastern". This
 # is used by METAR module.
 
+# TODO: need to find better place for this function
 def direction(dir, short=False):
     global lang
     _dir = ""

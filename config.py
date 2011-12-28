@@ -16,10 +16,9 @@ pygameBug = 1
 
 helloMsg = ["tu_eksperymentalna_automatyczna_stacja_pogodowa",\
     "sp6yre",]#"lokator","jo81ld"]
-goodbyeMsg = ["_","tu_sp6yre",]
+goodbyeMsg = ["_","tu_sp6yre",cw('sp6yre')]
 
-modules = ["y_weather", "meteoalarm", "imgw_podest"]
-#modules = ["prospect_mp"]
+modules = ["worldweatheronline", "meteoalarm", "imgw_podest", "prospect_mp", "y_weather"]
 
 class m:
     pass
@@ -293,3 +292,28 @@ imgw_podest.wodowskazy = [
 '3.152150050',   # Nazwa: Nietków, rzeka: Odra
 '3.152150130',   # Nazwa: Cigacice, rzeka: Odra
 ]
+
+# world weather online
+
+world_weather_online = m()
+world_weather_online.api_key = '4bd98a1060131251112011'
+world_weather_online.latitude = 52.71
+world_weather_online.longitude=19.11
+world_weather_online.template = """stan_pogody_z_dnia {OBSERVATION_TIME} 
+    _ {CURRENT_WEATHER}
+    temperatura {CURRENT_TEMP_C} wilgotnosc {CURRENT_HUMIDITY} 
+    _ kierunek_wiatru {CURRENT_WIND_DIR} 
+    {CURRENT_WIND_DIR_DEG} predkosc_wiatru {CURRENT_WIND_SPEED_MPS} 
+    {CURRENT_WIND_SPEED_KMPH} _ cisnienie {CURRENT_PRESSURE} 
+    pokrywa_chmur {CURRENT_CLOUDCOVER} _
+    
+    prognoza_na_nastepne piec godzin 
+    {FCAST0_WEATHER} temperatura_minimalna
+    {FCAST0_TEMP_MIN_C} maksymalna {FCAST0_TEMP_MAX_C} 
+    kierunek_wiatru {FCAST0_WIND_DIR} {FCAST0_WIND_DIR_DEG} predkosc_wiatru 
+    {FCAST0_WIND_SPEED_MPS} {FCAST0_WIND_SPEED_KMPH}
+    
+    _ jutro {FCAST1_WEATHER} temperatura_minimalna
+    {FCAST1_TEMP_MIN_C} maksymalna {FCAST1_TEMP_MAX_C} kierunek_wiatru 
+    {FCAST1_WIND_DIR} {FCAST1_WIND_DIR_DEG} predkosc_wiatru 
+    {FCAST1_WIND_SPEED_MPS} {FCAST1_WIND_SPEED_KMPH} _ """
