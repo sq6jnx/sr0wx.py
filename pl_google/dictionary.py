@@ -174,6 +174,22 @@ download_list = [
 ["ę.  średni"],
 ["ę.  wysoki"],
 
-
+# podest_mp -- lokalne komunikaty hydrologiczne
+["lokalny komunikat hydrologiczny"],
+['przekroczenia stanów ostrzegawczych'],
+['przekroczenia stanów alarmowych'], ['rzeka'], ['wodowskaz'],
+#['biała'], ['biecz'], ['breń'], ['breń stary'], ['budzisz'],
+#['bystrzyca'], ['czaszyn'], ['gawluszowice'], ['glinik'],
+#['golanka'], ['grybów'], ['iwierzyce'], ['jasiołka'],
+#['jasło'], ['jedlicze'], ['kąty'], ['kotań'], ['kozodrza'],
+#['łączki kucharskie'], ['łosie'], ['łososina'], ['majscowa'],
+#['nowosielce'], ['nowy żmigród'], ['okonin'], ['osiek jasielski'],
+#['osława'], ['pielnica'], ['pleśna'], ['pławna'], ['podborze'],
+#['potok zgórski'], ['przeclaw'], ['ropa'], ['sadkowa góra'],
+#['san'], ['sanok'], ['sielec'], ['skoloszyn'], ['szczepańcowa'],
+#['szymbark'], ['tarnowiec'], ['tarnów'], ['trzczcinica'],
+#['tuchów'], ['ulica mickiewicza'], ['wielopolka'], ['wisłoka'],
+#['wisła'], ['wisłoka'], ['wola mielceka'], ['wronowice'],
+#['zabrnie'], ['zaduszniki'], ['zagorzyce'], ['ziempiniów'],
 
 ]
