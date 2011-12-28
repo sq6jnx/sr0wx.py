@@ -371,7 +371,7 @@ meteoalarmAwarenesses = [
     "zjawiska_strefy_brzegowej",
     "pozary_lasow",
     "lawiny",
-    "intensywne_opady deszczu",
+    "intensywne_opady_deszczu",
     "inne_zagrozenia"]
 meteoalarmAwarenessLvl = [
     "nieokreslony",
