@@ -81,6 +81,8 @@ hrs = ["","godziny","godzin"]
 hPa = ["hektopaskal", "hektopaskale", "hektopaskali"]
 percent = [u"procent",u"procent",u"procent"]
 mPs    = ["metr_na_sekunde", "metry_na_sekunde", "metrow_na_sekunde"]
+kmPh   = ["kilometr_na_godzine", "kilometry_na_godzine", "kilometrow_na_godzine"]
+MiPh   = ["", "", ""] # miles per hour -- not used
 windStrength  = "sila_wiatru"
 deg = [u"stopien","stopnie","stopni"]
 C   = ["stopien_celsjusza", "stopnie_celsjusza", "stopni_celsjusza"]
@@ -215,10 +217,14 @@ w odpowiednim przypadku. Obsługuje liczby ujemne."""
 # This one tiny simply removes diactrics (lower case only). This function
 # must be defined even if your language doesn't use diactrics (like English),
 # for example as a simple ``return text``.
-def removeDiacritics(text):
-    return text.replace("ą","a").replace("ć","c").replace("ę","e").\
+def removeDiacritics(text, remove_spaces=False):
+    rv= text.replace("ą","a").replace("ć","c").replace("ę","e").\
         replace("ł","l").replace("ń","n").replace("ó","o").replace("ś","s").\
         replace("ź","z").replace("ż","z")
+    if remove_spaces==False:
+        return rv
+    else:
+        return rv.replace(' ','_')
 
 # The last one changes ISO structured date time into word representation.
 # It doesn't return year value.
@@ -285,6 +291,17 @@ def readHourLen(hour):
     mm = (ss-hh*3600)/60
     return removeDiacritics(" ".join( (cardinal(hh, hrs, gender='F'), cardinal(mm, mns, gender='F')) ))
 
+def readCallsign(call):
+    rv = ''
+    for c in call.lower():
+        if c in 'abcdefghijklmnopqrstuvwxyz':
+            rv=rv+c+' '
+        elif c in '0123456789':
+            rv=rv+removeDiacritics(cardinal(int(c)))+' '
+        elif c=='/':
+            rv=rv+'lamane '
+    
+    return rv
 
 # ##########################################
 #
@@ -360,7 +377,7 @@ meteoalarmAwarenesses = [
     "zjawiska_strefy_brzegowej",
     "pozary_lasow",
     "lawiny",
-    "intensywne_opady deszczu",
+    "intensywne_opady_deszczu",
     "inne_zagrozenia"]
 meteoalarmAwarenessLvl = [
     "nieokreslony",
@@ -393,3 +410,64 @@ meteoalarmRegions = {
 meteoalarmAwareness   = "zagrozenia_meteorologiczne_dla_wojewodztwa"
 today    = "dzis"
 tomorrow = "jutro"
+
+
+# World Weather Online
+
+
+wwo_weather_codes = {
+    '113':'bezchmurnie', # Clear/Sunny
+    '116':'częściowe zachmurzenie', # Partly Cloudy
+    '119':'pochmurno', # Cloudy
+    '122':'zachmurzenie całkowite', # Overcast
+    '143':'zamglenia', # Mist
+    '176':'lokalne przelotne opady deszczu', # Patchy rain nearby
+    '179':'śnieg', # Patchy snow nearby
+    '182':'śnieg z deszczem', # Patchy sleet nearby
+    '185':'lokalna przelotna marznąca mżawka', # Patchy freezing drizzle nearby
+    '200':'lokalne burze', # Thundery outbreaks in nearby
+    '227':'zamieć śnieżna', # Blowing snow
+    '230':'zamieć śnieżna', # Blizzard
+    '248':'mgła', # Fog
+    '260':'marznąca mgła', # Freezing fog
+    '263':'mżawka', # Patchy light drizzle
+    '266':'mżawka', # Light drizzle
+    '281':'marznąca mżawka', # Freezing drizzle
+    '284':'marznąca mżawka', # Heavy freezing drizzle
+    '293':'lokalny słaby deszcz', # Patchy light rain
+    '296':'słaby deszcz', # Light rain
+    '299':'przelotne opady deszczu', # Moderate rain at times
+    '302':'umiarkowane opady deszczu', # Moderate rain
+    '305':'przelotne ulewy', # Heavy rain at times
+    '308':'ulewy', # Heavy rain
+    '311':'słabe opady marznącego deszczu', # Light freezing rain
+    '314':'umiarkowane opady marznącego deszczu', # Moderate or Heavy freezing rain
+    '317':'słabe opady śniegu z deszczem', # Light sleet
+    '320':'umiarkowane lub ciężkie opady śniegu z deszczem', # Moderate or heavy sleet
+    '323':'słabe opady śniegu', # Patchy light snow
+    '326':'słabe opady śniegu', # Light snow
+    '329':'umiarkowane opady śniegu', # Patchy moderate snow
+    '332':'umiarkowane opady śniegu', # Moderate snow
+    '335':'opady śniegu', # Patchy heavy snow
+    '338':'intensywne_opady_sniegu', # Heavy snow
+    '350':'grad', # Ice pellets
+    '353':'słabe przelotne opady deszczu', # Light rain shower
+    '356':'przelotne opady deszczu', # Moderate or heavy rain shower
+    '359':'ulewny deszcz', # Torrential rain shower
+    '362':'słabe opady śniegu z deszczem', # Light sleet showers
+    '365':'umiarkowane opady śniegu z deszczem', # Moderate or heavy sleet showers
+    '368':'słabe opady śniegu', # Light snow showers
+    '371':'umiarkowane opady śniegu', # Moderate or heavy snow showers
+    '374':'słabe opady śniegu ziarnistego', # Light showers of ice pellets
+    '377':'umiarkowane opady śniegu ziarnistego', # Moderate or heavy showers of ice pellets
+    '386':'burza', # Patchy light rain in area with thunder
+    '389':'burza', # Moderate or heavy rain in area with thunder
+    '392':'burza śnieżna', # Patchy light snow in area with thunder
+    '395':'burza śnieżna', # Moderate or heavy snow in area with thunder
+}
+
+
+hscr_welcome = "komunikat_czeskiej_sluzby_ratownictwa_gorskiego"
+hscr_region = {"K": "w_karkonoszach obowiazuje", "J": "w_jesionikach_i_masywie_snieznika obowiazuje"}
+avalancheLevel = ['']+[i+' stopien_zagrozenia_lawinowego' for i in ['pierwszy', 'drugi', 'trzeci', 'czwarty', 'piaty_najwyzszy'] ]
+hscr_tendention = ['', '', 'tendencja_spadkowa', 'tendencja_wzrostowa']

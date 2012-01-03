@@ -80,7 +80,8 @@ download_list = [
 ["kierunek wiatr"], ["północny"], ["północno"], ["wschodni"],
 ["wschodnio"], ["zachodni"], ["zachodnio"], ["południowy"],
 ["południowo"], ["wilgotność"], ["procent"], ["prędkość wiatru"],
-["metr na sekundę"], ["metrów na sekundę"], ["stopni"],
+["metr na sekundę"], ["metrów na sekundę"], 
+["stopień"],["stopnie"],["stopni"],
 ["widoczność"], ["kilometr"], ["kilometry"],
 ["kilometrów"], ["temperatura odczuwalna"],
 ["prognoza na następne"], ["godzin"],["godzina"],
@@ -93,11 +94,19 @@ download_list = [
 ["dziewiętnasta"], ["dwudziesta"],
 
 ["kierunek wiatru"], ["metr na sekundę"], ["metry na sekundę"],
-["metrów na sekunde"], ["ciśnienie"], ["hektopaskal"],
+["metrów na sekunde"], 
+["kilometr na godzinę"], ["kilometry na godzinę"], ["kilometrów na godzinę"],
+
+["ciśnienie"], ["hektopaskal"],
 ["hektopaskale"], ["hektopaskali"], ["tendencja spadkowa"],
 ["tendencja wzrostowa"], ["temperatura odczuwalna"],
 ["temperatura minimalna"], ["maksymalna"],
 ["następnie"],
+
+# sms_qst
+
+['komunikat specjalny od'],
+['powtarzam komunikat'],
 
 # literowanie polskie wg. "Krótkofalarstwo i radiokomunikacja - poradnik", 
 # Łukasz Komsta SQ8QED, Wydawnictwa Komunikacji i Łączności Warszawa, 2001,
@@ -108,18 +117,18 @@ download_list = [
 ['celina', 'c'],
 ['dorota', 'd'],
 ['edward', 'e'],
-['franciszek', 'f'],
+['franciszek k', 'f'],
 ['gustaw', 'g'],
-['henryk', 'h'],
+['henryk k', 'h'],
 ['irena', 'i'],
 ['józef', 'j'],
 ['karol', 'k'],
-['ludwik', 'l'],
-['marek', 'm'],
+['ludwik k', 'l'],
+['marek k', 'm'],
 ['natalia', 'n'],
 ['olga', 'o'],
 ['paweł', 'p'],
-['kłebek', 'q'], # wł. Quebec
+['kłebek k', 'q'], # wł. Quebec
 ['roman', 'r'],
 ['stefan', 's'],
 ['tadeusz', 't'],
@@ -129,6 +138,7 @@ download_list = [
 ['xawery', 'x'],
 ['ypsylon', 'y'], # wł. Ypsilon
 ['zygmunt', 'z'],
+['łamane'],
 
 # Sample potrzebne dla modułu meteoalarm (cała Polska)
 
@@ -168,6 +178,30 @@ download_list = [
 ["ę.  średni"],
 ["ę.  wysoki"],
 
+# Sample dla WorldWeatherOnline
 
+['bezchmurnie'], ['burza'], ['burza śnieżna'], ['częściowe zachmurzenie'],
+['grad'], ['Intensywne opady śniegu'], ['lokalna przelotna marznąca mżawka'],
+['lokalne burze'], ['lokalne przelotne opady deszczu'],
+['lokalny słaby deszcz'], ['marznąca mgła'], ['marznąca mżawka'], ['mgła'],
+['mżawka'], ['opady śniegu'], ['pochmurno'], ['przelotne opady deszczu'],
+['przelotne ulewy'], ['słabe opady marznącego deszczu'],
+['słabe opady śniegu'], ['słabe opady śniegu z deszczem'],
+['słabe opady śniegu ziarnistego'], ['słabe przelotne opady deszczu'],
+['słaby deszcz'], ['śnieg'], ['śnieg z deszczem'],
+['ulewny deszcz'], ['ulewy'],
+['umiarkowane lub ciężkie opady śniegu z deszczem'],
+['umiarkowane opady deszczu'], ['umiarkowane opady marznącego deszczu'],
+['umiarkowane opady śniegu'], ['umiarkowane opady śniegu z deszczem'],
+['umiarkowane opady śniegu ziarnistego'], ['zachmurzenie całkowite'],
+['zamglenia'], ['zamieć śnieżna'], ['pokrywa chmur'],
+
+# Sample dla hscr_laviny
+
+['komunikat czeskiej służby ratownictwa górskiego'],
+['w karkonoszach'],['w jesionikach i masywie śnieżnika'], ['obowiązuje'],
+["pierwszy"],["drugi"],["trzeci"],["czwarty"],
+["piąty, najwyższy", 'piaty_najwyzszy'], ['stopień zagrożenia lawinowego'],
+['tendencja wzrostowa'],['tendencja spadkowa'],
 
 ]
