@@ -466,3 +466,8 @@ wwo_weather_codes = {
     '395':'burza śnieżna', # Moderate or heavy snow in area with thunder
 }
 
+
+hscr_welcome = "komunikat_czeskiej_sluzby_ratownictwa_gorskiego"
+hscr_region = {"K": "w_karkonoszach obowiazuje", "J": "w_jesionikach_i_masywie_snieznika obowiazuje"}
+avalancheLevel = ['']+[i+' stopien_zagrozenia_lawinowego' for i in ['pierwszy', 'drugi', 'trzeci', 'czwarty', 'piaty_najwyzszy'] ]
+hscr_tendention = ['', '', 'tendencja_spadkowa', 'tendencja_wzrostowa']
