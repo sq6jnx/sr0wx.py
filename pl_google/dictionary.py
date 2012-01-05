@@ -204,4 +204,14 @@ download_list = [
 ["piąty, najwyższy", 'piaty_najwyzszy'], ['stopień zagrożenia lawinowego'],
 ['tendencja wzrostowa'],['tendencja spadkowa'],
 
+# Sample dla gopr_laviny
+
+['ę.  komunikat górskiego ochotniczego pogotowia ratunkowego'],
+["ę.  w karkonoszach"], ["w regionie babiej góry"],
+["w pieninach"], ["w bieszczadach"], ["ę.  obowiązuje"],
+["pierwszy"],["drugi"],["trzeci"],["czwarty"],
+["ę. piąty, najwyższy", 'piaty_najwyzszy'], ['ę.  stopień zagrożenia lawinowego'],
+['tendencja wzrostowa'],['tendencja spadkowa'],
+
+
 ]
