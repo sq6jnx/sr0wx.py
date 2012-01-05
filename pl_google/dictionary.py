@@ -196,4 +196,22 @@ download_list = [
 ['umiarkowane opady śniegu ziarnistego'], ['zachmurzenie całkowite'],
 ['zamglenia'], ['zamieć śnieżna'], ['pokrywa chmur'],
 
+# Sample dla hscr_laviny
+
+['komunikat czeskiej służby ratownictwa górskiego'],
+['w karkonoszach'],['w jesionikach i masywie śnieżnika'], ['obowiązuje'],
+["pierwszy"],["drugi"],["trzeci"],["czwarty"],
+["piąty, najwyższy", 'piaty_najwyzszy'], ['stopień zagrożenia lawinowego'],
+['tendencja wzrostowa'],['tendencja spadkowa'],
+
+# Sample dla gopr_laviny
+
+['ę.  komunikat górskiego ochotniczego pogotowia ratunkowego'],
+["ę.  w karkonoszach"], ["w regionie babiej góry"],
+["w pieninach"], ["w bieszczadach"], ["ę.  obowiązuje"],
+["pierwszy"],["drugi"],["trzeci"],["czwarty"],
+["ę. piąty, najwyższy", 'piaty_najwyzszy'], ['ę.  stopień zagrożenia lawinowego'],
+['tendencja wzrostowa'],['tendencja spadkowa'],
+
+
 ]

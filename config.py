@@ -317,3 +317,24 @@ world_weather_online.template = """stan_pogody_z_dnia {OBSERVATION_TIME}
     {FCAST1_TEMP_MIN_C} maksymalna {FCAST1_TEMP_MAX_C} kierunek_wiatru 
     {FCAST1_WIND_DIR} {FCAST1_WIND_DIR_DEG} predkosc_wiatru 
     {FCAST1_WIND_SPEED_MPS} {FCAST1_WIND_SPEED_KMPH} _ """
+
+
+# -------------
+# gopr_lawiny
+# -------------
+
+gopr_lawiny = m()
+
+# GOPR podzielił Polskę na następujące regiony:
+# 1 - Karkonosze
+# 2 - Śnieżnik Kłodzki
+# 3 - Babia Góra
+# 4 - Pieniny
+# 5 - Bieszczady
+#
+# Niestety, dla Śnieżnika Kłodzkiego odsyła na stronę Horska Sluzba CZ, dla Pienin nie podaje komunikatów wogóle.
+# Zagrożenia dla Tatr podaje TOPR.
+
+gopr_lawiny.region = 1
+gopr_lawiny.podajTendencje = 1
+gopr_lawiny.podajWystawe = 1 # not yet implemented
