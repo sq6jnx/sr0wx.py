@@ -29,11 +29,12 @@ dictionary = my_import(sys.argv[1][0:-3]) # cut .py!
 
 for word in dictionary.download_list:
     phrase = word[0]
-    if len(word)==1:
-        filename = phrase.replace(' ','_').replace("ą","a").replace("ć","c").replace("ę","e").\
-		replace("ł","l").replace("ń","n").replace("ó","o").replace("ś","s").\
-		replace("ź","z").replace("ż","z")
-        if phrase[0:3]=="ę.":
+    if dictionary.LANGUAGE=='pl' and len(word)==1:
+        filename = phrase.replace(' ','_').replace("ą","a").\
+                replace("ć","c").replace("ę","e").replace("ł","l").\
+                replace("ń","n").replace("ó","o").replace("ś","s").\
+                replace("ź","z").replace("ż","z")
+        if phrase[0:3]==u"ę.":
             filename=filename[4:]
         if phrase[-1] == "k":
             filename = filename[0:-2]
@@ -42,12 +43,13 @@ for word in dictionary.download_list:
 
     if not os.path.exists("%s.ogg"%filename):
         start, end = (0,0.4575)
-        if phrase[0:3]=="ę.":
+        if dictionary.LANGUAGE=='pl' and phrase[0:3]==u"ę.":
             start = 0.5
-        if phrase[-1] == "k":
+        if dictionary.LANGUAGE=='pl' and phrase[-1] == "k":
             end = 0.73
 
-        url = "\"http://translate.google.com/translate_tts?tl=pl&q=%s\""%urllib.quote_plus(phrase+" .")
+        url = u"\"http://translate.google.com/translate_tts?tl=%s&q=%s\""%\
+                (dictionary.LANGUAGE,urllib.quote_plus(phrase+" ."))
         os.system("wget -q -U \"Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6\" -O %s.mp3 %s"%(filename,url))
         os.system("lame --decode %s.mp3 %s.wav"%(filename,filename))
         length = float(subprocess.Popen(["soxi", "-D", "%s.wav"%filename], stdout=subprocess.PIPE).communicate()[0])
