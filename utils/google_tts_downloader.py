@@ -34,7 +34,7 @@ for word in dictionary.download_list:
                 replace("ć","c").replace("ę","e").replace("ł","l").\
                 replace("ń","n").replace("ó","o").replace("ś","s").\
                 replace("ź","z").replace("ż","z")
-        if phrase[0:3]==u"ę.":
+        if phrase[0:3]=="ę.":
             filename=filename[4:]
         if phrase[-1] == "k":
             filename = filename[0:-2]
@@ -43,7 +43,7 @@ for word in dictionary.download_list:
 
     if not os.path.exists("%s.ogg"%filename):
         start, end = (0,0.4575)
-        if dictionary.LANGUAGE=='pl' and phrase[0:3]==u"ę.":
+        if dictionary.LANGUAGE=='pl' and phrase[0:3]=="ę.":
             start = 0.5
         if dictionary.LANGUAGE=='pl' and phrase[-1] == "k":
             end = 0.73

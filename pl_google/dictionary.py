@@ -213,5 +213,17 @@ download_list = [
 ["ę. piąty, najwyższy", 'piaty_najwyzszy'], ['ę.  stopień zagrożenia lawinowego'],
 ['tendencja wzrostowa'],['tendencja spadkowa'],
 
+# Sample dla povodi_cz
+
+['komunikat czeskiego instytutu hydrometeorologicznego'],
+['rzeka'], ['wodowskaz'],
+['ę. stopień czuwania',             'stopien_czuwania',],
+['ę. stopień gotowości',            'stopien_gotowosci',],
+['ę. stopień zagrożenia',           'stopien_zagrozenia',],
+['ę. stopień ekstremalnych powodzi','stopien_ekstremalnych_powodzi'],
+
+
+# niektóre czeskie nazwy dla povodi_cz (głównie przygraniczne) na potrzeby
+# SP6TPW i przez niego przetłumaczone. Dzięki, Grzegorz!
 
 ]

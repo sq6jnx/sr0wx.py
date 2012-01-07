@@ -57,10 +57,12 @@ awareness_levels = {
         }
 
 def downloadFile(url):
+    """Returns contents of file available via URL"""
     webFile = urllib.urlopen(url)
     return webFile.read()
 
 def my_import(name):
+    """Imports module which name is given as a ``name`` parameter"""
     mod = __import__(name)
     components = name.split('.')
     for comp in components[1:]:
@@ -68,22 +70,25 @@ def my_import(name):
     return mod
 
 def getData(l):
+    global lang
+    lang = my_import(l+"."+l)
     data = {"data":"", "needCTCSS":False, "allOK":True}
+    
 
-    regions = get_config_regions()
+    conf_regions = get_config_regions()
     
     if not os.path.exists('povodi_cz.json'):
-        regions = generate_json(regions=regions.keys(), dont_save=False)
+        regions = generate_json(regions=regions.keys(), dont_save=True)
     else:
         regions = json.loads(unicode(open('povodi_cz.json','r').read(),'utf-8'))
 
     awarenesses = {}
 
-    for region in regions.keys():
+    for region in conf_regions.keys():
         for river in regions[region]:
             for station in regions[region][river].keys():
                 station_name, level = regions[region][river][station]
-                if level>0:
+                if level>0 and station in conf_regions[region]:
                     if not awarenesses.has_key(str(level)):
                         awarenesses[str(level)]={}
                     if not awarenesses[str(level)].has_key(safe_name(river)):
@@ -91,19 +96,16 @@ def getData(l):
                     awarenesses[str(level)][safe_name(river)].\
                           append(safe_name(regions[region][river][station][0]))
 
-    awalvls = ['','stopien_czuwania','stopien_gotowosci','stopien_zagrozenia',
-            'stopien_ekstremalnych_powodzi']
-
     if awarenesses!={}:
-        data['data']+= 'komunikat_hydrologiczny_czeskiego_instytutu_hydrometeorologicznego'
+        data['data']+= lang.povodi_cz_welcome
         for level in sorted(awarenesses.keys())[::-1]:
             if level>1:
                 data['needCTCSS']=True
-            data['data']+=' '+awalvls[int(level)]
+            data['data']+=' '+lang.awalvls[int(level)]
             for river in sorted(awarenesses[level].keys()):
-                data['data']+=' '+'rzeka'+' '+river
+                data['data']+=' '+lang.river+' '+river
                 for station in sorted(awarenesses[level][river]):
-                    data['data']+=' '+'wodowskaz'+' '+station
+                    data['data']+=' '+lang.station+' '+station
 
     debug.log("POVODI_CZ", "finished...")
     return data
@@ -136,8 +138,8 @@ def get_region(region):
     html =BeautifulSoup.BeautifulSoup(downloadFile(url%region))
     rv = {}
 
-    #try:
-    if 1==1:
+    try:
+    #if 1==1:
         for station in html.findAll('div'):
             if station.has_key('id') and 'text' in station['id']:
                 r1, r2 = station.findAll('table')
@@ -154,32 +156,31 @@ def get_region(region):
                     level = '-1'
                 else:
                     level = r2[1]
-                #try:
-                if 1==1:
+                try:
+                #if 1==1:
                     if not rv.has_key(river):
                         rv[river]={}
                     rv[river][stid]=[station, awareness_levels[level]]
                     # debug trick: WE are steering water levels
-                    from random import uniform
-                    level = int(uniform(1,5))
-                    rv[river][stid]=[station, int(uniform(1,5))]
+                    #from random import uniform
+                    #level = int(uniform(1,5))
+                    #rv[river][stid]=[station, int(uniform(1,5))]
                     # end of trick
-                #except:
-                else:
+                except:
+                #else:
                     debug.log('POVODI_CZ', ("Couldn't parse region %s "\
                             + "river %s station %s data. Original "\
                             + "awareness info is "
                             +" (%s)")%(region,river,station,str(r2)),
                                 buglevel=5)
         pass
-    #except:
-    else:
+    except:
+    #else:
         debug.log('POVODI_CZ', "Couldn't parse region %s data"%region,\
                 buglevel=5)
         pass
 
     return rv
-
 
 def generate_json(regions=None, dont_save=False):
     """Generates povodi_cz.json file and returns its contents (dictionary).

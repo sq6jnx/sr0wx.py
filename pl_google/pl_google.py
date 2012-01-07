@@ -472,8 +472,22 @@ hscr_region = {"K": "w_karkonoszach obowiazuje", "J": "w_jesionikach_i_masywie_s
 avalancheLevel = ['']+[i+' stopien_zagrozenia_lawinowego' for i in ['pierwszy', 'drugi', 'trzeci', 'czwarty', 'piaty_najwyzszy'] ]
 hscr_tendention = ['', '', 'tendencja_spadkowa', 'tendencja_wzrostowa']
 
-# GOPR_laviny
+# GOPR_lawiny
 gopr_welcome = 'komunikat_gorskiego_ochotniczego_pogotowia_ratunkowego'
 gopr_region = ["", "w_karkonoszach obowiazuje", "", "w_regionie_babiej_gory obowiazuje", "w_pieninach obowiazuje", "w_bieszczadach obowiazuje"]
 avalancheLevel = ['']+[i+' stopien_zagrozenia_lawinowego' for i in ['pierwszy', 'drugi', 'trzeci', 'czwarty', 'piaty najwyzszy'] ]
 gopr_tendention = ['', '', 'tendencja_spadkowa', 'tendencja_wzrostowa']
+
+# povodi_cz
+
+# awareness levels for povodi_cz
+povodi_cz_welcome = 'komunikat_czeskiego_instytutu_hydrometeorologicznego'
+awalvls = ['',
+    'stopien_czuwania',              # bdelosť            State of Alert
+    'stopien_gotowosci',             # pohotovosť         State of Emergency
+    'stopien_zagrozenia',            # ohrozenie          State of Danger
+    'stopien_ekstremalnych_powodzi'  # extrémna povodeň   extreme flood
+    ]
+
+river = 'rzeka'
+station = 'wodowskaz'
