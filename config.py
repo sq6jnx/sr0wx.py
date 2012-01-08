@@ -338,3 +338,17 @@ gopr_lawiny = m()
 gopr_lawiny.region = 1
 gopr_lawiny.podajTendencje = 1
 gopr_lawiny.podajWystawe = 1 # not yet implemented
+
+# -------------
+# ibles
+# ------------
+
+# Numer swojej strefy najłatwiej sprawdzić na
+# http://bazapozarow.ibles.pl/zagrozenie/ . Możesz podać jedną lub kilka stref,
+# którymi jesteś zainteresowany; w tym drugim przypadku odczytane zostanie
+# najwyższe z występujących zagrożenie nawet jeśli w strefie "obok" zagrożenie
+# nie występuje. Ważne, aby numery stref podać w tablicy.
+
+ibles = m()
+ibles.strefy = [38,]
+
