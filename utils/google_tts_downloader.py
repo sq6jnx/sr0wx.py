@@ -27,6 +27,11 @@ def my_import(name):
 
 dictionary = my_import(sys.argv[1][0:-3]) # cut .py!
 
+if len(sys.argv)==3 and sys.argv[2]=='force':
+    use_force=True
+else:
+    use_force=False
+
 for word in dictionary.download_list:
     phrase = word[0]
     if dictionary.LANGUAGE=='pl' and len(word)==1:
@@ -40,6 +45,9 @@ for word in dictionary.download_list:
             filename = filename[0:-2]
     else:
         filename = word[1]
+
+    if use_force and os.path.exists("%s.ogg"%filename):
+        os.remove(filename+".ogg")
 
     if not os.path.exists("%s.ogg"%filename):
         start, end = (0,0.4575)

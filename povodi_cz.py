@@ -72,7 +72,7 @@ def getData(l):
         for river in regions[region]:
             for station in regions[region][river].keys():
                 station_name, level = regions[region][river][station]
-                if level>0:
+                if [region,station] in config.stations and level>0:
                     if not awarenesses.has_key(str(level)):
                         awarenesses[str(level)]={}
                     if not awarenesses[str(level)].has_key(safe_name(river)):
@@ -93,6 +93,11 @@ def getData(l):
                 data['data']+=' '+'rzeka'+' '+river
                 for station in sorted(awarenesses[level][river]):
                     data['data']+=' '+'wodowskaz'+' '+station
+
+
+    if os.path.exists('povodi_cz.json'):
+        os.remove('povodi_cz.json')
+
 
     debug.log("POVODI_CZ", "finished...")
     return data
@@ -163,11 +168,11 @@ def get_region(region):
                             buglevel=5)
 
                 if level=='':
-                    level='0'
+                    level=0
                 elif level=='?':
-                    level=str(-1)
+                    level=-1
                 else:
-                    level=str(int(level))
+                    level=int(level)
                
                 #print '|'.join( (region,_map, str(stid),river, station, level) )
 
@@ -175,9 +180,9 @@ def get_region(region):
                     rv[river]={}
                 rv[river][stid]=[station, level]
                 # debug trick: WE are steering water levels
-                from random import uniform
-                level = int(uniform(1,5))
-                rv[river][stid]=[station, int(uniform(1,5))]
+                #from random import uniform
+                #level = int(uniform(1,5))
+                #rv[river][stid]=[station, int(uniform(1,5))]
                 # end of trick
     #except:
     else:
@@ -274,7 +279,8 @@ download_list = [ """
 
     for phrase in phrases:
         print u"    [\"%s\", \"%s\"], # %s"%\
-                (phrase, safe_name(phrase),phrase)
+                (unicode(phrase,'utf-8'), safe_name(phrase),\
+                unicode(phrase,'utf-8'))
 
     print u']'
 
