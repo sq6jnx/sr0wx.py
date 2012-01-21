@@ -874,3 +874,17 @@ povodi_cz.stations = [
 #    ['pvl3','SPOO'],	# Ševcovský potok, station Obora V
 #]
 
+# -------------
+# hscr_laviny
+# -------------
+
+hscr_laviny = m()
+
+# HS CR gives avalanche awarenesses for two regions: Krkonoše and Jeseníky.
+# As a reference we use a little bit strange shorthand for these, so any
+# string which matches "Krkonoše" or "Jeseníky" is valid, i.e. "Krk" or "Jesen".
+
+#hscr_laviny.region = "Krkono"
+hscr_laviny.region = "Jesen"
+hscr_laviny.giveTendention = 1
+hscr_laviny.giveExposition = 1   # not yet implemented
