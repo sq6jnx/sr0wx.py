@@ -45,24 +45,11 @@ def safe_name(s):
         replace(u'Ř','r_').replace(u'Š','s_').replace(u'Č','c_').\
         replace(u'Ž','z_').lower().replace(' ','_').replace(u'–','_')
 
-awareness_levels = {
-        '-1':-1, # information is not available, station offline
-        ';?':-1, # information is not available (st. broke down?)
-        ';':  0, # 0  (State of Normal)
-        ';1': 1, # 1  (State of Alert)
-        ';2': 2, # 2  (State of Emergency)     # not verified!
-        ';3': 3, # 3  (State of Danger)        # not verified!
-        ';4': 4, # 3! (State of Extreme Flood) # not verified!
-        # couldn't verify `drought`!
-        }
-
 def downloadFile(url):
-    """Returns contents of file available via URL"""
     webFile = urllib.urlopen(url)
     return webFile.read()
 
 def my_import(name):
-    """Imports module which name is given as a ``name`` parameter"""
     mod = __import__(name)
     components = name.split('.')
     for comp in components[1:]:
@@ -70,25 +57,22 @@ def my_import(name):
     return mod
 
 def getData(l):
-    global lang
-    lang = my_import(l+"."+l)
     data = {"data":"", "needCTCSS":False, "allOK":True}
-    
 
-    conf_regions = get_config_regions()
+    regions = get_config_regions()
     
     if not os.path.exists('povodi_cz.json'):
-        regions = generate_json(regions=regions.keys(), dont_save=True)
+        regions = generate_json(regions=regions.keys(), dont_save=False)
     else:
         regions = json.loads(unicode(open('povodi_cz.json','r').read(),'utf-8'))
 
     awarenesses = {}
 
-    for region in conf_regions.keys():
+    for region in regions.keys():
         for river in regions[region]:
             for station in regions[region][river].keys():
                 station_name, level = regions[region][river][station]
-                if level>0 and station in conf_regions[region]:
+                if level>0:
                     if not awarenesses.has_key(str(level)):
                         awarenesses[str(level)]={}
                     if not awarenesses[str(level)].has_key(safe_name(river)):
@@ -96,16 +80,19 @@ def getData(l):
                     awarenesses[str(level)][safe_name(river)].\
                           append(safe_name(regions[region][river][station][0]))
 
+    awalvls = ['','stopien_czuwania','stopien_gotowosci','stopien_zagrozenia',
+            'stopien_ekstremalnych_powodzi']
+
     if awarenesses!={}:
-        data['data']+= lang.povodi_cz_welcome
+        data['data']+= 'komunikat_hydrologiczny_czeskiego_instytutu_hydrometeorologicznego'
         for level in sorted(awarenesses.keys())[::-1]:
             if level>1:
                 data['needCTCSS']=True
-            data['data']+=' '+lang.awalvls[int(level)]
+            data['data']+=' '+awalvls[int(level)]
             for river in sorted(awarenesses[level].keys()):
-                data['data']+=' '+lang.river+' '+river
+                data['data']+=' '+'rzeka'+' '+river
                 for station in sorted(awarenesses[level][river]):
-                    data['data']+=' '+lang.station+' '+station
+                    data['data']+=' '+'wodowskaz'+' '+station
 
     debug.log("POVODI_CZ", "finished...")
     return data
@@ -134,53 +121,72 @@ def get_region(region):
         rv[river][(station_id, station)]=awareness_level
     """
 
-    url = 'http://www.%s.cz/portal/sap/en/mapa_vse.htm'
-    html =BeautifulSoup.BeautifulSoup(downloadFile(url%region))
-    rv = {}
+    url = 'http://www.%s.cz/portal/sap/en/mapa_%s.htm'
+    region, _map = region[0:3], region[3]
+    #print url%(region,_map)
 
-    try:
-    #if 1==1:
+    # there are moments in a turtle's life that a turtle has
+    # to smack someone's face: 
+    html_file = downloadFile(url%(region,_map)).replace('-href','href').\
+            replace('chaset','charset')
+
+    html =BeautifulSoup.BeautifulSoup(html_file)
+    rv = {}
+    river=None
+
+    #try:
+    if 1==1:
         for station in html.findAll('div'):
             if station.has_key('id') and 'text' in station['id']:
                 r1, r2 = station.findAll('table')
-                r1=r1.findAll('td')[0].text.split('&nbsp')
-                r2=r2.findAll('td')[0].text.split('&nbsp')
-                # We're almost done. What we have is:
-                # r1 = [u'', u';Moravice', u';LG Val\u0161ov']
-                # r2 = [u'Flood level:', u';', u';']
-                # so now it's easy to see that:
                 stid= station['id'][4:] # station id
-                river = r1[1][1:]
-                station=r1[2][4:]
-                if 'porucha stanice' in r2[0]:
-                    level = '-1'
-                else:
-                    level = r2[1]
+                river=str(r1.findAll('tr')[0].findAll('td')[0].\
+                        findAll('font')[0]).split('&nbsp;')[1][0:-7]
+
+                station=str(r1.findAll('tr')[0].findAll('td')[0].
+                        findAll('font')[1]).split('&nbsp;')[1][0:-7]
+                station=station.replace('LG ','')
+
                 try:
-                #if 1==1:
-                    if not rv.has_key(river):
-                        rv[river]={}
-                    rv[river][stid]=[station, awareness_levels[level]]
-                    # debug trick: WE are steering water levels
-                    #from random import uniform
-                    #level = int(uniform(1,5))
-                    #rv[river][stid]=[station, int(uniform(1,5))]
-                    # end of trick
+                    if "Chyba" in str(r1.findAll('tr')[1].findAll('tr')[0]):
+                        level='-2'
+                    elif "Porucha" in str(r1.findAll('tr')[1].findAll('tr')[0]):
+                        level='-1'
+                    elif "porucha" in str(r1.findAll('tr')[1].findAll('tr')[0]):
+                        level='-1'
+                    else:
+                        level=str(r1.findAll('tr')[1].findAll('tr')[0].\
+                                findAll('font')[0].findAll('b')[0])[3:-4]
                 except:
-                #else:
-                    debug.log('POVODI_CZ', ("Couldn't parse region %s "\
-                            + "river %s station %s data. Original "\
-                            + "awareness info is "
-                            +" (%s)")%(region,river,station,str(r2)),
-                                buglevel=5)
-        pass
-    except:
-    #else:
-        debug.log('POVODI_CZ', "Couldn't parse region %s data"%region,\
+                    debug.log('POVODI_CZ',
+                            str(r1.findAll('tr')[1].findAll('tr')[0]),
+                            buglevel=5)
+
+                if level=='':
+                    level='0'
+                elif level=='?':
+                    level=str(-1)
+                else:
+                    level=str(int(level))
+               
+                #print '|'.join( (region,_map, str(stid),river, station, level) )
+
+                if not rv.has_key(river):
+                    rv[river]={}
+                rv[river][stid]=[station, level]
+                # debug trick: WE are steering water levels
+                from random import uniform
+                level = int(uniform(1,5))
+                rv[river][stid]=[station, int(uniform(1,5))]
+                # end of trick
+    #except:
+    else:
+        debug.log('POVODI_CZ', "Couldn't parse region %s%s data"%(region,_map),\
                 buglevel=5)
         pass
 
     return rv
+
 
 def generate_json(regions=None, dont_save=False):
     """Generates povodi_cz.json file and returns its contents (dictionary).
@@ -191,7 +197,12 @@ def generate_json(regions=None, dont_save=False):
     """
     rv = {}
     if regions is None:
-        regions=['poh','pla','pod','pmo','pvl']
+        regions=['poh1','poh2','poh3',
+                'pla1','pla2','pla3','pla4','pla5',
+                'pod1','pod2',
+                'pmo1','pmo2','pmo3',
+                'pvl1','pvl2','pvl3',
+                ]
 
     for region in regions:
         #try:
@@ -211,14 +222,15 @@ def generate_json(regions=None, dont_save=False):
 def generate_config():
     regions=generate_json(dont_save=True)
 
-    print 'povodi_cz.stations = ['
+    print u'povodi_cz.stations = ['
 
     for region in sorted(regions.keys()):
         for river in sorted(regions[region].keys()):
             for station in sorted(regions[region][river].keys()):
-                print "    ['%s','%s'],\t# %s, station %s"%\
-                        (region,station,river,regions[region][river][station][0])
-    print ']'
+                print u"    ['%s','%s'],\t# %s, station %s"%\
+                        (region,station,unicode(river,'utf-8'),\
+                        unicode(regions[region][river][station][0],'utf-8'),)
+    print u']'
 
 def get_config_regions():
     regions = {}
@@ -248,7 +260,7 @@ def generate_dictionary():
 # Caution! I am not responsible for using these samples. Use at your own risk
 # Google, Inc. is the copyright holder of samples downloaded with this tool.
 
-# Generated automatically by imgw_podest.py. Feel free to modify it SLIGHTLY.
+# Generated automatically by povodi_cz.py. Feel free to modify it SLIGHTLY.
 
 LANGUAGE = 'cs'
 
@@ -282,7 +294,6 @@ if __name__ == '__main__':
     elif len(sys.argv)==2 and sys.argv[1]=='conf':
         generate_config()
     #else:
-    #    show_stations()
     #    #show_help()
 else:
     from config import povodi_cz as config
