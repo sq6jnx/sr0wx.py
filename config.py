@@ -18,7 +18,13 @@ helloMsg = ["tu_eksperymentalna_automatyczna_stacja_pogodowa",\
     "sp6yre",]#"lokator","jo81ld"]
 goodbyeMsg = ["_","tu_sp6yre",cw('sp6yre')]
 
-modules = ["worldweatheronline", "meteoalarm", "imgw_podest", "prospect_mp", "y_weather"]
+modules = ["worldweatheronline", "meteoalarm", "prospect_mp",\
+        "y_weather","povodi_cz",'gopr_lawiny',
+        #"ibles_pl",'imieniny','sms_qst', "imgw_podest",'sunriset',
+        #'hscr_laviny'
+
+    ]
+
 
 class m:
     pass

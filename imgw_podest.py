@@ -1,7 +1,7 @@
 #!/usr/bin/python -tt
 # -*- coding: utf-8 -*-
 
-#   Copyright 2009-2011 Michal Sadowski (sq6jnx at hamradio dot pl)
+#   Copyright 2009-2012 Michal Sadowski (sq6jnx at hamradio dot pl)
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -22,14 +22,22 @@
 import os
 import urllib
 import re
-import unicodedata
 
-import pl.pl as lang
+def format(s):
+    """Zwraca "bezpieczną" nazwę dla nazwy danej rzeki/danego
+    wodowskazu. Ze względu na to, że w Polsce zarówno płynie
+    rzeka Ślęza jak i Ślęża oznaczany jest każdy niełaciński
+    znak"""
+    if str(s.__class__)=="<type 'str'>":
+        s=unicode(s, 'utf-8')
+    return s.lower().replace(u'ą',u'a_').replace(u'ć',u'c_').\
+        replace(u'ę',u'e_').replace(u'ł',u'l_').\
+        replace(u'ń',u'n_').replace(u'ó',u'o_').\
+        replace(u'ś',u's_').replace(u'ź',u'x_').\
+        replace(u'ż',u'z_').replace(u' ',u'_').\
+        replace(u'-',u'_').replace(u'(',u'').\
+        replace(u')',u'')
 
-def format(string):
-    return unicodedata.normalize('NFKD', unicode(string.replace('ł','l').replace('Ł','l'), 'utf-8')).\
-        encode('ascii','ignore').strip().lower().\
-        replace(' ', '_').replace('-','_').replace('.','')
 
 wodowskazy={}
 
