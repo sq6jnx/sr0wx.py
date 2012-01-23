@@ -887,3 +887,16 @@ hscr_laviny = m()
 hscr_laviny.region = "Jesen"
 hscr_laviny.giveTendention = 1
 hscr_laviny.giveExposition = 1   # not yet implemented
+
+
+# ------
+# wview
+# ------
+wview = m()
+wview.path = '/var/lib/wview/archive/wview-archive.sdb'
+wview.template = """stan_pogody_z_dnia {OBSERVATION_TIME} 
+    temperatura {CURRENT_TEMP_C} wilgotnosc {CURRENT_HUMIDITY} 
+    _ kierunek_wiatru 
+    {CURRENT_WIND_DIR_DEG} predkosc_wiatru {CURRENT_WIND_SPEED_MPS} 
+     _ cisnienie {CURRENT_PRESSURE} """
+    
