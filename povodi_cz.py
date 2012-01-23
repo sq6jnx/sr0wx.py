@@ -57,7 +57,8 @@ def my_import(name):
     return mod
 
 def getData(l):
-    data = {"data":"", "needCTCSS":False, "allOK":True}
+    data = {"data":"", "needCTCSS":False, "allOK":True,
+            "source":""} # given by welcome message
 
     regions = get_config_regions()
     

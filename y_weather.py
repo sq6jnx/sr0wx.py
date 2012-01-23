@@ -85,7 +85,7 @@ def weather_for_zip(zip_code):
 
 
 def getData(l):
-    rv = {'data':'', "needCTCSS":False }
+    rv = {'data':'', "needCTCSS":False,"source":"y_weather" }
 
     lang = my_import(l+"."+l)
     conditions = lang.y_weather.conditions

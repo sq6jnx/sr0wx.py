@@ -111,6 +111,7 @@ else:
     modules = config.modules
 
 needCTCSS = False
+sources = [config.source,]
 for m in modules:
     try:
         debug.log("CORE","starting %s..."%(m) )
@@ -118,6 +119,8 @@ for m in modules:
         moduleData = module.getData(config.lang)
         data = " ".join( (data, moduleData["data"]) )
         needCTCSS = needCTCSS or moduleData["needCTCSS"]
+        if moduleData["data"]!='' and moduleData.has_key('source'):
+            sources.append(moduleData['source'])
     except:
         exceptionType, exceptionValue, exceptionTraceback = sys.exc_info()
         debug.log("CORE", traceback.format_exc(),6)
@@ -125,7 +128,10 @@ for m in modules:
 # When all the modules finished its' work it's time to ``.split()`` returned
 # data. Every element of returned list is actually a filename of a sample.
 
-data = config.helloMsg + data.split() + config.goodbyeMsg
+data = config.helloMsg + data.split()
+if len(sources)>1:
+    data+= sources
+data+= config.goodbyeMsg
 
 # It's time to init ``pygame``'s mixer (and ``pygame``). Possibly defined
 # sound quality is far-too-good (44kHz 16bit, stereo), so you can change it.

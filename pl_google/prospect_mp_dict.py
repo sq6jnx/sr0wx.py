@@ -34,6 +34,7 @@ download_list = [
 	['ę. Majscowa', 'majscowa'],
 	['ę. Kotań', 'kotan_'],
 	['ę. Szymbark', 'szymbark'],
+        ['err wu de prospekt','rwd_prospect'],
 'lokalny komunikat hydrologiczny', 'przekroczenia stanów ostrzegawczych',
             'przekroczenia stanów alarmowych', 'rzeka', 'wodowskaz',
 ]

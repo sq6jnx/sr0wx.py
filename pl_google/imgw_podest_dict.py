@@ -15,6 +15,7 @@ CUT_START = 0.9
 CUT_END=0.7
 
 download_list = [ 
+    ['i em gje wu', 'imgw'],
     ['ę. rzeka', 'rzeka'],
     ['ę. wodowskaz', 'wodowskaz'],
     ['ę. przekroczenia stanów alarmowych', 'przekroczenia_stanow_alarmowych'],

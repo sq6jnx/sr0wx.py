@@ -48,7 +48,7 @@ kmph2mps = lambda s: int(round(float(s)*(5.0/18.0)))
 def getData(l):
     global lang
     lang = my_import(l+"."+l)
-    rv = {'data':'', "needCTCSS":False }
+    rv = {'data':'', "needCTCSS":False, "source":"worldweatheronline"}
 
     REQ_URL='http://free.worldweatheronline.com/feed/weather.ashx?q={LAT},{LON}&format=json&num_of_days=2&key={API_KEY}'
     params = {'LAT':str(config.latitude), 'LON':str(config.longitude),\

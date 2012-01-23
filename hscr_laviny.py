@@ -88,7 +88,8 @@ def getData(l):
     global lang
     lang = my_import(l+"."+l)
 
-    data = {"data":"", "needCTCSS":False, "debug":None, "allOK":True}
+    data = {"data":"", "needCTCSS":False, "debug":None, "allOK":True,
+            "source":""} # given by welcome message
 
     level, tendention, exposition, isActual, infoDT = getAwareness(config.region)
 

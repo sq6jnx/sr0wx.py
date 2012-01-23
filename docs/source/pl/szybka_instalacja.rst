@@ -127,6 +127,9 @@ Pozostaje jeszcze zezwolić naszemu użytkownikowi (zakładamy, że jest to
 maksimum na górę oraz włączyć kanał klawiszem ``M`` ("zapali" się "zielona
 lampka").
 
+Warto również w /boot/grub/grub.cfg zamienić set recordfail=1 na 0
+(skonsultować!)
+
 
 Instalacja dodatkowych pakietów
 -------------------------------

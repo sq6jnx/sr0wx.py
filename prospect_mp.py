@@ -63,11 +63,11 @@ def pobierzOstrzezenia(domena,stacja):
     #url = "http://www.biala.prospect.pl/wizualizacja/punkt_pomiarowy.php?"+\
     #      "prze=TUBI&rok=2010&miesiac=06&dzien=03&godzina=23&minuta=27"
 
-    url = "http://www.%s.prospect.pl/wizualizacja/punkt_pomiarowy.php?prze=%s"%(domena,stacja)
-    plik = downloadFile(url)
-    wynik = _przekroczenie.findall(plik)
 
     try:
+       url = "http://www.%s.prospect.pl/wizualizacja/punkt_pomiarowy.php?prze=%s"%(domena,stacja)
+       plik = downloadFile(url)
+       wynik = _przekroczenie.findall(plik)
        if wynik[0]==('Delta', ''):
            return None
        elif wynik[0][1] in ('ostrzegawczy','alarmowy'):
@@ -79,12 +79,13 @@ def pobierzOstrzezenia(domena,stacja):
     except:
         debug.log('PROSPECT-MP', u'Regex nie zwrócił oczekiwanych danych',\
                 buglevel=5)
-        raise
+        pass
         return None
 
 
 def getData(l):
-    data = {"data":"", "needCTCSS":False, "allOK":True}
+    data = {"data":"", "needCTCSS":False, "allOK":True, 
+            "source":"rwd_prospect"}
     
     if not os.path.exists('prospect_mp.json'):
         stany = generuj_json(nie_zapisuj=True)
@@ -108,6 +109,9 @@ def getData(l):
             for rzeka in sorted(stany['ostrzegawczy'].keys()):
                 data['data']+='rzeka %s wodowskaz %s '%(bezpiecznaNazwa(rzeka), \
                     " wodowskaz ".join(bezpiecznaNazwa(r) for r in sorted(stany['ostrzegawczy'][rzeka])),)
+
+    if os.path.exists('prospect_mp.json'):
+        os.remove('prospect_mp.json')
 
     debug.log("PODEST_MP", "finished...")
     return data
@@ -137,7 +141,7 @@ def generuj_slownik():
 # Caution! I am not responsible for using these samples. Use at your own risk
 # Google, Inc. is the copyright holder of samples downloaded with this tool.
 
-# Generated automatically by imgw_podest.py. Feel free to modify it SLIGHTLY.
+# Generated automatically by prospect_mp.py. Feel free to modify it SLIGHTLY.
 
 LANGUAGE = 'pl'
 
@@ -158,9 +162,10 @@ download_list = [ """
         print "\t['ę. %s', '%s'],"%(fraza, str(bezpiecznaNazwa(fraza)),)
 
 
-    print """'lokalny komunikat hydrologiczny', 'przekroczenia stanów ostrzegawczych',
-        'przekroczenia stanów alarmowych', 'rzeka', 'wodowskaz',
-        
+    print """['lokalny komunikat hydrologiczny]', 
+        ['przekroczenia stanów ostrzegawczych'],
+        ['przekroczenia stanów alarmowych'], ['rzeka'], ['wodowskaz'],
+        ['err wu de prospekt','rwd_prospect']
         ]"""
 
 

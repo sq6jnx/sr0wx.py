@@ -37,7 +37,8 @@ def getData(l):
     global lang
     lang = my_import(l+"."+l)
 
-    data = {"data":"", "needCTCSS":False, "debug":None, "allOK":True}
+    data = {"data":"", "needCTCSS":False, "debug":None, "allOK":True,
+            "source":"meteoalarm_eu"}
     
     today=tomorrow=""
     if config.showToday == True:

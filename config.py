@@ -16,15 +16,14 @@ pygameBug = 1
 
 helloMsg = ["tu_eksperymentalna_automatyczna_stacja_pogodowa",\
     "sp6yre",]#"lokator","jo81ld"]
+source = 'zrodlo'
 goodbyeMsg = ["_","tu_sp6yre",cw('sp6yre')]
 
 modules = ["worldweatheronline", "meteoalarm", "prospect_mp",\
         "y_weather","povodi_cz",'gopr_lawiny',
         #"ibles_pl",'imieniny','sms_qst', "imgw_podest",'sunriset',
         #'hscr_laviny'
-
     ]
-
 
 class m:
     pass
@@ -137,14 +136,14 @@ prospect_mp.wodowskazy = [
     ['jaslo',    'Ropa',          'Szymbark',          'SZRO'],
     ['jaslo',    'Jasiołka',      'Tarnowiec',         'TAJA'],
     ['jaslo',    'Ropa',          'Trzczcinica',       'TRRO'],
-    ['mielec',   'Wisłoka',       'Gawluszowice',      'GAWI'],
-    ['mielec',   'Potok Zgórski', 'Podborze',          'POPZ'],
-    ['mielec',   'Wisłoka',       'Przeclaw',          'PRWI'],
-    ['mielec',   'Breń Stary',    'Sadkowa Gora',      'SABR'],
-    ['mielec',   'Wisłoka',       'Wola Mielceka',     'WMWI'],
-    ['mielec',   'Breń',          'Zabrnie',           'ZABR'],
-    ['mielec',   'Wisła',         'Zaduszniki',        'ZAWI'],
-    ['mielec',   'Breń',          'Ziempiniów',        'ZIBR'],
+    #['mielec',   'Wisłoka',       'Gawluszowice',      'GAWI'],
+    #['mielec',   'Potok Zgórski', 'Podborze',          'POPZ'],
+    #['mielec',   'Wisłoka',       'Przeclaw',          'PRWI'],
+    #['mielec',   'Breń Stary',    'Sadkowa Gora',      'SABR'],
+    #['mielec',   'Wisłoka',       'Wola Mielceka',     'WMWI'],
+    #['mielec',   'Breń',          'Zabrnie',           'ZABR'],
+    #['mielec',   'Wisła',         'Zaduszniki',        'ZAWI'],
+    #['mielec',   'Breń',          'Ziempiniów',        'ZIBR'],
     ['ropczyce', 'Wielopolka',    'Glinik',            'GLWI'],
     ['ropczyce', 'Bystrzyca',     'Iwierzyce',         'IWBY'],
     ['ropczyce', 'Wielopolka',    'Kozodrza',          'KZWI'],
@@ -158,9 +157,9 @@ prospect_mp.wodowskazy = [
     ['biala',    'Biała',         'Tuchów',            'TUBI'],
     ['biala',    'Biała',         'Pleśna',            'PLBI'],
     ['biala',    'Biała',         'Tarnów',            'TABI'],
-    ['sanok',    'Osława',        'Czaszyn',           'CZOS'],
-    ['sanok',    'Pielnica',      'Nowosielce',        'NOPI'],
-    ['sanok',    'San',           'Sanok',             'SASA'],
+    #['sanok',    'Osława',        'Czaszyn',           'CZOS'],
+    #['sanok',    'Pielnica',      'Nowosielce',        'NOPI'],
+    #['sanok',    'San',           'Sanok',             'SASA'],
     ['lososina', 'Łososina',      'Wronowice',         'WRLO'],
 ]
 

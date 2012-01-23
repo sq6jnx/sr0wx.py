@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # 
-#   Copyright 2009-2011 Michal Sadowski (sq6jnx at hamradio dot pl)
+#   Copyright 2009-2012 Michal Sadowski (sq6jnx at hamradio dot pl)
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.

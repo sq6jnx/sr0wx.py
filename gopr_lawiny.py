@@ -64,7 +64,8 @@ def pobierzOstrzezenia(region):
         dt      = _date.findall(line)[0]
         now     = datetime.datetime.now()
         delta   = datetime.timedelta(hours=24)
-        infoDT  = datetime.datetime(int(dt[0]), int(dt[1]), int(dt[2]), int(dt[3]), int(dt[4]), int(dt[5]))
+        infoDT  = datetime.datetime(int(dt[0]), int(dt[1]), int(dt[2]),
+                int(dt[3]), int(dt[4]), int(dt[5]))
         if infoDT+delta<now:
                  aktualny = False
 
@@ -74,7 +75,8 @@ def getData(l):
     global lang
     lang = my_import(l+"."+l)
 
-    data = {"data":"", "needCTCSS":False, "debug":None, "allOK":True}
+    data = {"data":"", "needCTCSS":False, "debug":None, "allOK":True,
+            "source":""} # given by welcome message
 
     stopien, tendencja, wystawa = pobierzOstrzezenia(config.region)
 

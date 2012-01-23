@@ -61,6 +61,8 @@ download_list = [
 ["sześćset"], ["siedemset"], ["osiemset"], ["dziewięćset"],
 ["tysiąc"],
 
+["źródło"],
+
 # nazwy zjawisk pogodowych (dla Yahoo! Weather)
 ['bezchmurnie'], ['burza'], ['burza tropikalna'], ['częściowe zachmurzenie'],
 ['deszcz'], ['deszcz i deszcz ze śniegiem'], ['deszcz i grad'],
@@ -70,7 +72,7 @@ download_list = [
 ['pył'], ['silne burze'], ['silny wiatr'], ['słabe zachmurzenie'],
 ['słaby śnieg'], ['smog'], ['śnieg'], ['śnieg i deszcz ze śniegiem'],
 ['tornado'], ['wietrznie'], ['wysokie temperatury'], ['zamglenia'],
-['zawieje śnieżne'],
+['zawieje śnieżne'], ["jahu łeder","y_weather"],
 
 
 #
@@ -178,6 +180,8 @@ download_list = [
 ["ę.  średni"],
 ["ę.  wysoki"],
 
+["meteoalarm eeuu","meteoalarm_eu"],
+
 # Sample dla WorldWeatherOnline
 
 ['bezchmurnie'], ['burza'], ['burza śnieżna'], ['częściowe zachmurzenie'],
@@ -195,6 +199,7 @@ download_list = [
 ['umiarkowane opady śniegu'], ['umiarkowane opady śniegu z deszczem'],
 ['umiarkowane opady śniegu ziarnistego'], ['zachmurzenie całkowite'],
 ['zamglenia'], ['zamieć śnieżna'], ['pokrywa chmur'],
+['łorld łeder onlajn',"worldweatheronline"],
 
 # Sample dla hscr_laviny
 
@@ -202,7 +207,8 @@ download_list = [
 ['w karkonoszach'],['w jesionikach i masywie śnieżnika'], ['obowiązuje'],
 ["pierwszy"],["drugi"],["trzeci"],["czwarty"],
 ["piąty, najwyższy", 'piaty_najwyzszy'], ['stopień zagrożenia lawinowego'],
-['tendencja wzrostowa'],['tendencja spadkowa'],
+['tendencja wzrostowa'],['tendencja spadkowa'], 
+['służba górska republiki czeskiej','hscr'],
 
 # Sample dla gopr_laviny
 
@@ -210,8 +216,9 @@ download_list = [
 ["ę.  w karkonoszach"], ["w regionie babiej góry"],
 ["w pieninach"], ["w bieszczadach"], ["ę.  obowiązuje"],
 ["pierwszy"],["drugi"],["trzeci"],["czwarty"],
-["ę. piąty, najwyższy", 'piaty_najwyzszy'], ['ę.  stopień zagrożenia lawinowego'],
-['tendencja wzrostowa'],['tendencja spadkowa'],
+["ę. piąty, najwyższy", 'piaty_najwyzszy'], 
+['ę.  stopień zagrożenia lawinowego'],
+['tendencja wzrostowa'],['tendencja spadkowa'],['gopr'],
 
 # Sample dla povodi_cz
 
@@ -221,6 +228,7 @@ download_list = [
 ['ę. stopień gotowości',            'stopien_gotowosci',],
 ['ę. stopień zagrożenia',           'stopien_zagrozenia',],
 ['ę. stopień ekstremalnych powodzi','stopien_ekstremalnych_powodzi'],
+['czeski instytut hydrometeorologiczny']
 
 
 # niektóre czeskie nazwy dla povodi_cz (głównie przygraniczne) na potrzeby

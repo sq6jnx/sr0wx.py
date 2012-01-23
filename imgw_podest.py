@@ -112,7 +112,7 @@ def pobierzDaneWodowskazu(wodowskaz):
         'przekroczenieStanuStan':flatten(_przekroczenieStanuStan.findall(dane)),}
 
 def getData(l):
-    data = {"data":"", "needCTCSS":False, "allOK":True}
+    data = {"data":"", "needCTCSS":False, "allOK":True, "source":"imgw"}
 
     stanyOstrzegawcze = {}
     stanyAlarmowe = {}
@@ -242,15 +242,24 @@ END_MARKER = ' k'
 CUT_START = 0.9
 CUT_END=0.7
 
-download_list = [ """
-        frazy = ['komunikat hydrologiczny imgw', 'przekroczenia stanów ostrzegawczych',
-            'przekroczenia stanów alarmowych', 'rzeka', 'wodowskaz']
-        for fraza in set(frazy):
-            print "\t['%s', '%s'],"%(fraza, format(fraza),)
-            #print "\t['%s', '%s'],"%(unicode(fraza,'utf-8'), format(fraza),)
+download_list = [ 
 
-        frazy=[]
-	zaladujRegion(int(region))
+    ['ę. rzeka', 'rzeka'],
+    ['ę. wodowskaz', 'wodowskaz'],
+    ['ę. przekroczenia stanów alarmowych', 'przekroczenia_stanow_alarmowych'],
+    ['ę. komunikat hydrologiczny i em gje wu', 'komunikat_hydrologiczny_imgw'],
+    ['i em gje wu', 'imgw'],
+    ['ę. przekroczenia stanów ostrzegawczych', 'przekroczenia_stanow_ostrzegawczych'],
+
+"""
+        #frazy = ['komunikat hydrologiczny imgw', 'przekroczenia stanów ostrzegawczych',
+        #    'przekroczenia stanów alarmowych', 'rzeka', 'wodowskaz']
+        #for fraza in set(frazy):
+        #    print "\t['%s', '%s'],"%(fraza, format(fraza),)
+        #    #print "\t['%s', '%s'],"%(unicode(fraza,'utf-8'), format(fraza),)
+
+        #frazy=[]
+        zaladujRegion(int(region))
         for w in podajListeWodowskazow(int(region)):
             frazy.append(w['rzeka'])
             frazy.append(w['nazwa'])
