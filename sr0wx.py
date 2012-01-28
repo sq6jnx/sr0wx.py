@@ -77,7 +77,7 @@ import debug, traceback
 
 debug.log("CORE", "sr0wx.py started")
 debug.log("LEGAL","")
-debug.log("LEGAL","Copyright 2009-2011 Michal Sadowski (sq6jnx at hamradio dot pl)")
+debug.log("LEGAL","Copyright 2009-2012 Michal Sadowski (sq6jnx at hamradio dot pl)")
 debug.log("LEGAL","")
 debug.log("LEGAL","Licensed under the Apache License, Version 2.0 (the \"License\");")
 debug.log("LEGAL","you may not use this file except in compliance with the License.")
@@ -119,7 +119,8 @@ for m in modules:
         moduleData = module.getData(config.lang)
         data = " ".join( (data, moduleData["data"]) )
         needCTCSS = needCTCSS or moduleData["needCTCSS"]
-        if moduleData["data"]!='' and moduleData.has_key('source'):
+        if moduleData["data"]!='' and moduleData.has_key('source')\
+            and moduleData['source']!='':
             sources.append(moduleData['source'])
     except:
         exceptionType, exceptionValue, exceptionTraceback = sys.exc_info()
