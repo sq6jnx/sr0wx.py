@@ -68,6 +68,12 @@ limit 1;""")
 
     return c.fetchone()
 
+# Probably this is the beginning of the metcalc module for meteorological
+# calculations... we'll see.
+
+fahrenheit2celsius = lambda f: int((f-32)*(5/9.0)) #([°F] - 32) × 5/9
+miph2mps = lambda miph: int(miph*0.44704)
+
 def getData(l):
     rv = {'data':'', "needCTCSS":False,"source":"" }
 
@@ -98,12 +104,15 @@ def getData(l):
 
     data = {
     'OBSERVATION_TIME': lang.readISODT(w['dateTime']),
-    'CURRENT_TEMP_C': lang.cardinal(int(w['outTemp']), lang.C),
+    'CURRENT_TEMP_C': lang.cardinal(
+            fahrenheit2celsius(w['outTemp']), lang.C),
     'CURRENT_HUMIDITY': lang.cardinal(int(w['outHumidity']), lang.percent), 
     'CURRENT_WIND_DIR_DEG': lang.cardinal(w['windDir'] or 0, lang.deg),
-    'CURRENT_WIND_SPEED_MPS': lang.cardinal(int(w['windSpeed']), lang.mPs),
+    'CURRENT_WIND_SPEED_MPS': lang.cardinal(
+            miph2mps(w['windSpeed']), lang.mPs),
     'CURRENT_PRESSURE': lang.cardinal(int(w['pressure']), lang.hPa),
-    'TEMP_WIND_CHILL': lang.cardinal(int(w['windchill']), lang.C),
+    'TEMP_WIND_CHILL': lang.cardinal(
+            fahrenheit2celsius(w['windchill']), lang.C),
 }
 
     rv['data']=lang.removeDiacritics(config.template.format(**data))
