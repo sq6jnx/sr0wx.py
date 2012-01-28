@@ -15,12 +15,6 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 #
-# CAUTION!
-#
-# this is very alpha! I'm not checking if wview is configured as Imperial or
-# metric units, for me everything is in metric!
-#
-# CAUTION!
 
 fake_gettext = lambda(s): s
 _ = fake_gettext
@@ -71,8 +65,10 @@ limit 1;""")
 # Probably this is the beginning of the metcalc module for meteorological
 # calculations... we'll see.
 
-fahrenheit2celsius = lambda f: int((f-32)*(5/9.0)) #([°F] - 32) × 5/9
+fahrenheit2celsius = lambda f: int((f-32)*(5/9.0)) 
 miph2mps = lambda miph: int(miph*0.44704)
+inHg2hPa = lambda inHg2hPa: int(inHg2hPa*33.7685)
+
 
 def getData(l):
     rv = {'data':'', "needCTCSS":False,"source":"" }
@@ -82,7 +78,7 @@ def getData(l):
 
     # For sure, we will never use all of these, but I think it's OK to see what
     # other data we are able to use. Values which are used in code below had 
-    # been deleted from this menu (in alphabetical order):
+    # been deleted from this menu (in alphabetical-like order):
 
     # ET                    inHumidity              rxCheckPercent
     # UV                    inTemp                  soilMoist1
@@ -110,7 +106,8 @@ def getData(l):
     'CURRENT_WIND_DIR_DEG': lang.cardinal(w['windDir'] or 0, lang.deg),
     'CURRENT_WIND_SPEED_MPS': lang.cardinal(
             miph2mps(w['windSpeed']), lang.mPs),
-    'CURRENT_PRESSURE': lang.cardinal(int(w['pressure']), lang.hPa),
+    'CURRENT_PRESSURE': lang.cardinal(
+            inHg2hPa(w['pressure']), lang.hPa),
     'TEMP_WIND_CHILL': lang.cardinal(
             fahrenheit2celsius(w['windchill']), lang.C),
 }
