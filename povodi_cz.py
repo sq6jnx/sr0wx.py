@@ -95,10 +95,8 @@ def getData(l):
                 for station in sorted(awarenesses[level][river]):
                     data['data']+=' '+'wodowskaz'+' '+station
 
-
     if os.path.exists('povodi_cz.json'):
         os.remove('povodi_cz.json')
-
 
     debug.log("POVODI_CZ", "finished...")
     return data
@@ -159,6 +157,8 @@ def get_region(region):
                     elif "Porucha" in str(r1.findAll('tr')[1].findAll('tr')[0]):
                         level='-1'
                     elif "porucha" in str(r1.findAll('tr')[1].findAll('tr')[0]):
+                        level='-1'
+                    elif "ledem" in str(r1.findAll('tr')[1].findAll('tr')[0]):
                         level='-1'
                     else:
                         level=str(r1.findAll('tr')[1].findAll('tr')[0].\
@@ -300,6 +300,8 @@ if __name__ == '__main__':
         generate_dictionary()
     elif len(sys.argv)==2 and sys.argv[1]=='conf':
         generate_config()
+    elif len(sys.argv)==2 and sys.argv[1]=='json':
+        generate_json()
     #else:
     #    #show_help()
 else:
