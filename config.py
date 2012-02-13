@@ -337,8 +337,8 @@ gopr_lawiny = m()
 # 4 - Pieniny
 # 5 - Bieszczady
 #
-# Niestety, dla Śnieżnika Kłodzkiego odsyła na stronę Horska Sluzba CZ, dla Pienin nie podaje komunikatów wogóle.
-# Zagrożenia dla Tatr podaje TOPR.
+# Niestety, dla Śnieżnika Kłodzkiego odsyła na stronę Horska Sluzba CZ, dla 
+# Pienin nie podaje komunikatów wogóle. Zagrożenia dla Tatr podaje TOPR.
 
 gopr_lawiny.region = 1
 gopr_lawiny.podajTendencje = 1
