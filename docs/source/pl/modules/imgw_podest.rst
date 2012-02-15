@@ -1,7 +1,8 @@
 ``imgw_podest`` -- Ostrzeżenia hydrologiczne dla Polski
 =======================================================
 
-``imgw_podest`` podaje ostrzeżenia hydrologiczne dla obszaru całego kraju na postawie informacji IMGW.
+``imgw_podest`` podaje ostrzeżenia hydrologiczne dla obszaru całego kraju na 
+postawie informacji IMGW.
 
 Przeznaczenie
 -------------
@@ -27,11 +28,11 @@ Konfiguracja
 Konfiguracja ``imgw_podest`` do trywialnych nie należy, ale można przez nią
 przejść w ciągu kwadransa (no, może trzech).
 
-Po wejściu na stronę http://www.pogodynka.pl/polska/podest/ (i dalszych) zobaczysz mapę
-zlewni w Polsce. Zlokalizuj miejsce zainstalowania stacji na tej mapie i
-określ, wodowskazami z których zlewni będziesz zainteresowany. Po uruchomieniu 
-``python imgw_podest.py`` zobaczysz listę zlewni wykorzystywaną przez
-``imgw_podest``.
+Po wejściu na stronę http://www.pogodynka.pl/polska/podest/ (i dalszych) 
+zobaczysz mapę zlewni w Polsce. Zlokalizuj miejsce zainstalowania stacji na tej 
+mapie i, najlepiej, zanotuj nazwy interesujących cię wodowskazów.
+Po uruchomieniu ``python imgw_podest.py`` zobaczysz listę zlewni wykorzystywaną 
+przez ``imgw_podest``.
 
 Kolejnym krokiem jest wygenerowanie listy wodowskazów z listy zlewni, którymi
 jesteś zainteresowany: ::
@@ -39,7 +40,7 @@ jesteś zainteresowany: ::
    python imgw_podest.py 3
    python imgw_podest.py 4
 
-Wyjście tych poleceń musi się znaleźć w pliku ``config.py`` w miejscu
+Wyjście tych poleceń **musi** się znaleźć w pliku ``config.py`` w miejscu
 oznaczonym jak poniżej (w przypadku korzystania z kilku zlewni należy połączyć
 wszystkie listy): ::
 
@@ -51,7 +52,7 @@ wszystkie listy): ::
 
 Kolejnym krokiem jest zawężenie się do tylko tych wodowskazów, którymi jesteś
 zainteresowany. Można to zrobić na dwa sposoby: usuwając niepotrzebne wiersze
-(kiepsko) lub zakomentowując niepotrzebne znakiem ``#`` (lepiej), np.: ::
+(kiepsko) lub komentując niepotrzebne znakiem ``#`` (lepiej), np.: ::
 
     imgw_podest = m()
 
@@ -72,31 +73,23 @@ zainteresowany. Można to zrobić na dwa sposoby: usuwając niepotrzebne wiersze
 W ten sposób, pomimo przerośniętego pliku konfiguracyjnego, zyskujemy łatwość
 w aktualizowaniu listy wodowskazów.
 
-
-
-Z jakich bibliotek moduł korzysta? Całkiem standardowych, jak ``os`` i ``sys``?
-Jakichś jeszcze? Jeśli korzysta z ``bardzo_nietypowego_modulu`` napisz skąd go
-pobrać i w jakiej wersji był przez Ciebie testowany.
-
-Jeśli nie korzystasz z żadnych cudów napisz po porstu *nic niestandardowego*.
-
-
-Czy moduł jest w jakiś sposób konfigurowalny? Podaj przykłady, chociażby jak
-poniżej: ::
-
-  foo_module = m()
-  foo_module.zipcode = '01-234'
-  foo_module.hang_computer_on_init = True # True or False. None means "roll a dice"
-  foo_module.message = """
-  your_computer_will_be_assimilatted_in {RANDOM_NO_OF_SECONDS}
-  _ resistance_is_futile"""
-
-gdzie ``{RANDOM_NO_OF_SECONDS}`` jest zamieniane na liczbę sekund plus słowo
-*sekund* we właściwym przypadku.
-
 Zależności językowe
 --------------------
 
-Z jakich sampli dźwiękowych (słów, fraz) moduł korzysta? Czy i w jaki sposób
-można taką listę wygenerować? Podaj przykłady użycia.
+Po sporządzeniu listy interesujących Cię wodowskazów kolejnym krokiem jest
+wygenerowanie pliku słownika. Niestety, ``imgw_podest`` ma w obecnie
+(2012-02-15) wadę polegającą na tym, że w pliku słownika będą wszystkie nazwy
+używane w danej zlewni. Wspomniany plik słownika można wygenerować za 
+pomocą: ::
 
+    python imgw_podest gen 3
+
+Po "przepuszczeniu" go przez np. skrypt ściągający sample w kilka chwil mamy
+wszystkie potrzebne frazy gotowe do użytku.
+
+Uwaga!
+------
+
+W zależności od wybranej zlewni moduł pobiera całkiem znaczne ilości danych
+(nawet 300 kB). Weź to pod uwagę przy korzystaniu z łącz, przy których płacisz
+za każdy przesłany megabajt...
