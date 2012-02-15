@@ -258,7 +258,7 @@ download_list = [
         #    print "\t['%s', '%s'],"%(fraza, format(fraza),)
         #    #print "\t['%s', '%s'],"%(unicode(fraza,'utf-8'), format(fraza),)
 
-        #frazy=[]
+        frazy=[]
         zaladujRegion(int(region))
         for w in podajListeWodowskazow(int(region)):
             frazy.append(w['rzeka'])
