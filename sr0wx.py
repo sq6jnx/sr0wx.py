@@ -55,7 +55,7 @@
 import os,sys
 import pygame
 import time
-import config
+import getopt
 import lib.cw as cw
 import debug, traceback
 
@@ -105,10 +105,24 @@ data = " "
 #
 # Modules may be also given in commandline, separated by a comma.
 
-if len(sys.argv)>1:
-    modules = sys.argv[1].split(",")
+config=None
+try:                                
+    opts, args = getopt.getopt(sys.argv[1:], "c:", ["config="])
+except getopt.GetoptError:
+    pass
+for opt, arg in opts:
+    if opt in ("-c", "--config"):
+        if arg[-3:]=='.py':
+            arg=arg[:-3]
+        config = __import__(arg)
+
+if config is None:
+    import config
+
+if len(args)>0:
+    modules = args[0].split(",")
 else:
-    modules = config.modules
+    modules=config.modules
 
 needCTCSS = False
 sources = [config.source,]
@@ -185,7 +199,14 @@ if config.serialPort is not None:
     import serial
     try:
         ser = serial.Serial(config.serialPort, config.serialBaudRate)
-        ser.setRTS(1)
+        try:
+            if config.serialSignal=='DTR':
+                ser.setDTR(1)
+            else:
+                ser.setRTS(1)
+        except:
+            ser.setRTS(1)
+            pass
     except:
         debug.log("CORE", "Failed to open %s@%i"%(config.serialPort, config.serialBaudRate), 3)
 
