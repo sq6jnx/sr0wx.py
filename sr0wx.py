@@ -199,14 +199,10 @@ if config.serialPort is not None:
     import serial
     try:
         ser = serial.Serial(config.serialPort, config.serialBaudRate)
-        try:
-            if config.serialSignal=='DTR':
-                ser.setDTR(1)
-            else:
-                ser.setRTS(1)
-        except:
-            ser.setRTS(1)
-            pass
+	if config.serialSignal=='DTR':
+	    ser.setDTR(0); ser.setRTS(1)
+        else:
+	    ser.setDTR(1); ser.setRTS(0)
     except:
         debug.log("CORE", "Failed to open %s@%i"%(config.serialPort, config.serialBaudRate), 3)
 
