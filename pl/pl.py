@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # 
-#   Copyright 2009-2011 Michal Sadowski (sq6jnx at hamradio dot pl)
+#   Copyright 2009-2012 Michal Sadowski (sq6jnx at hamradio dot pl)
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 #
  
 # *********
-# pl/pl.py
+# pl_google/pl_google.py
 # *********
 #
 # This file defines language dependent functions and variables. Probably
@@ -73,54 +73,22 @@
 #
 # This dictionary is used by all SR0WX modules.
 
-# * *"weather report for ... "* (ie. 4 may 2009)
-weatherDate   =  "stan_pogody_z_dnia"
+fake_gettext = lambda(s): s
+_ = fake_gettext
 
-# * *"forecast for next ... hours"
-forecast = "prognoza_na_nastepne"
+# Units and grammar cases
 hrs = ["","godziny","godzin"]
-
-# * *"pressure ... hectopascals"*
-pressure      = "cisnienie"
 hPa = ["hektopaskal", "hektopaskale", "hektopaskali"]
-
-# * *"humidity ... percent"*
-humidity      = "wilgotnosc"
 percent = [u"procent",u"procent",u"procent"]
-
-# * *"wind speed ... meters per second / no wind"*
-windSpeed     = "predkosc_wiatru"
-windSpeedGusts = "w_porywach"
 mPs    = ["metr_na_sekunde", "metry_na_sekunde", "metrow_na_sekunde"]
-noWind = "bezwietrznie"
-wind   = "wiatr"
-
-# * *"wind strength ... Beaufort wind force scale"*
+kmPh   = ["kilometr_na_godzine", "kilometry_na_godzine", "kilometrow_na_godzine"]
+MiPh   = ["", "", ""] # miles per hour -- not used
 windStrength  = "sila_wiatru"
-B   = ["stopien_w_skali_beauforta", "stopnie_w_skali_beauforta", \
-    "stopni_w_skali_beauforta"]
-
-# * *"wind direction ... degrees / variable wind direction"*
-windDirection = "kierunek_wiatru"
 deg = [u"stopien","stopnie","stopni"]
-variableWindDirection = "zmienny"
-windVarying = "skrajne_kierunki_wiatru"
-
-# * *"temperarture ... centigrades"*
-# * *"dew point ... centigrades"*
-temperature = "temperatura"
-dewPoint    = "punkt_rosy"
 C   = ["stopien_celsjusza", "stopnie_celsjusza", "stopni_celsjusza"]
-
-# * *"visibility ... kilometers"*
-visibility = "widocznosc"
 km  = ["kilometr", "kilometry", u"kilometrow"]
-
-
-# * *"cloud cover" ... "sky clear"
-cloudCover = "zachmurzenie"
-clouds = {'SKC': 'bezchmurnie', 'FEW':'lekkie_zachmurzenie', 'SCT': 'zachmurzenie_umiarkowane',
-        'BKN': 'silne_zachmurzenie', 'OVC':'zachmurzenie_calkowite', 'NSC':""}
+mns = ["minuta","minuty","minut"]
+tendention = ['tendencja_spadkowa','', 'tendencja_wzrostowa']
 
 
 # We need also local names for directions to convert two- or three letters
@@ -130,38 +98,7 @@ directions = { "N": ("północno ",   "północny"),
                "W": ("zachodnio ",  "zachodni"),
                "S": ("południowo ", "południowy") }
 
-# These dictionaries are used by meteoalarm module.
-meteoalarmAwarenesses = ["brak_zagrozen","silny_wiatr","snieg_lub_oblodzenie","burze","mgly",
-    "wysokie_temperatury","niskie_temperatury","zjawiska_strefy_brzegowej",
-    "pozary_lasow","lawiny","intensywne_opady deszczu","inne_zagrozenia"]
-meteoalarmAwarenessLvl = ["nieokreslony","","niski","sredni","wysoki"]
-meteoalarmAwarenessLevel = "poziom_zagrozenia"
-meteoalarmRegions = {483: "łódzkiego", 479:"śląskiego", 482:"świętokrzyskiego",
-    477:"dolnoslaskiego", 485:"kujawsko_pomorskiego", 487:"lubelskiego",
-    474:"lubuskiego", 480:"malopolskiego", 489:"mazowieckiego", 478:"opolskiego",
-    481:"podkarpackiego", 488:"podlaskiego",476:"pomorskiego", 
-    486:"warminsko_mazurskiego", 484:"wielkopolskiego", 475:"zachodniopomorskiego" }
-meteoalarmAwareness   = "zagrozenia_meteorologiczne dla_wojewodztwa"
-meteoalarmNoAwareness = "brak_zagrozen_meteorologicznych dla_wojewodztwa"
-today    = "dzis"
-tomorrow = "jutro"
-
-
-
-# ----------------
-# common functions
-# ----------------
-#
-# Some of functions below were taken from dowgird[#]_ implementation, I've
-# made some changes.
-#
-# .. [#] http://code.google.com/p/pyliczba/ by dowgird
-#
-# dowgird's implementation uses some variables as dictionaries (not in Python
-# meaning). I don't like these variables, but functions are working very well
-# and this is most important.
-#
-
+# numbers
 jednostkiM = [u""] + u"jeden dwa trzy cztery pięć sześć siedem osiem dziewięć".split()
 jednostkiF = [u""] + u"jedną dwie trzy cztery pięć sześć siedem osiem dziewięć".split()
 dziesiatki = [u""] + u"""dziesięć dwadzieścia  trzydzieści czterdzieści
@@ -280,10 +217,14 @@ w odpowiednim przypadku. Obsługuje liczby ujemne."""
 # This one tiny simply removes diactrics (lower case only). This function
 # must be defined even if your language doesn't use diactrics (like English),
 # for example as a simple ``return text``.
-def removeDiacritics(text):
-    return text.replace("ą","a").replace("ć","c").replace("ę","e").\
+def removeDiacritics(text, remove_spaces=False):
+    rv= text.replace("ą","a").replace("ć","c").replace("ę","e").\
         replace("ł","l").replace("ń","n").replace("ó","o").replace("ś","s").\
         replace("ź","z").replace("ż","z")
+    if remove_spaces==False:
+        return rv
+    else:
+        return rv.replace(' ','_')
 
 # The last one changes ISO structured date time into word representation.
 # It doesn't return year value.
@@ -340,11 +281,6 @@ def readISODate(ISODate):
 
     return " ".join( (Dslownie, Mslownie) )
 
-sunrise = "wschod_slonca"
-sunset  = "zachod_slonca"
-dayLength = "dlugosc_dnia"
-
-mns = ["minuta","minuty","minut"]
 
 def readHour(dt):
     return removeDiacritics(readISODT('0000-00-00 '+str(dt.hour).rjust(2, '0')+':'+str(dt.minute).rjust(2, '0')+':00'))
@@ -355,12 +291,203 @@ def readHourLen(hour):
     mm = (ss-hh*3600)/60
     return removeDiacritics(" ".join( (cardinal(hh, hrs, gender='F'), cardinal(mm, mns, gender='F')) ))
 
+def readCallsign(call):
+    rv = ''
+    for c in call.lower():
+        if c in 'abcdefghijklmnopqrstuvwxyz':
+            rv=rv+c+' '
+        elif c in '0123456789':
+            rv=rv+removeDiacritics(cardinal(int(c)))+' '
+        elif c=='/':
+            rv=rv+'lamane '
+    
+    return rv
 
+# ##########################################
+#
+# module dependant words
+# #############################################
+
+class m:
+    pass
+
+y_weather = m()
+y_weather.conditions = {
+    '0':  'tornado',                     # tornado
+    '1':  'burza tropikalna',            # tropical storm
+    '2':  'huragan',                     # hurricane
+    '3':  'silne burze',                 # severe thunderstorms
+    '4':  'burza',                       # thunderstorms
+    '5':  'deszcz ze śniegiem',          # mixed rain and snow
+    '6':  'deszcz i deszcz ze śniegiem', # mixed rain and sleet
+    '7':  'śnieg i deszcz ze śniegiem',  # mixed snow and sleet
+    '8':  'marznąca mżawka',             # freezing drizzle
+    '9':  'mżawka',                      # drizzle
+    '10': 'marznący deszcz',             # freezing rain
+    '11': 'deszcz',                      # showers
+    '12': 'deszcz',                      # showers
+    '13': 'śnieg',                       # snow flurries
+    '14': 'słaby śnieg',                 # light snow showers
+    '15': 'zawieje śnieżne',             # blowing snow
+    '16': 'śnieg',                       # snow
+    '17': 'grad',                        # hail
+    '18': 'deszcz ze śniegiem',          # sleet
+    '19': 'pył',                         # dust
+    '20': 'zamglenia',                   # foggy
+    '21': 'mgła',                        # haze
+    '22': 'smog',                        # smoky
+    '23': 'silny wiatr',                 # blustery
+    '24': 'wietrznie',                   # windy
+    '25': 'przymrozki',                  # cold
+    '26': 'pochmurno',                   # cloudy
+    '27': 'pochmurno',                   # mostly cloudy (night)
+    '28': 'pochmurno',                   # mostly cloudy (day)
+    '29': 'częściowe zachmurzenie',      # partly cloudy (night)
+    '30': 'częściowe zachmurzenie',      # partly cloudy (day)
+    '31': 'bezchmurnie',                 # clear (night)
+    '32': 'bezchmurnie',                 # sunny
+    '33': 'słabe zachmurzenie',          # fair (night)
+    '34': 'słabe zachmurzenie',          # fair (day)
+    '35': 'deszcz i grad',               # mixed rain and hail
+    '36': 'wysokie temperatury',         # hot
+    '37': 'burza',                       # isolated thunderstorms
+    '38': 'burza',                       # scattered thunderstorms
+    '39': 'burza',                       # scattered thunderstorms
+    '40': 'przelotne opady',             # scattered showers
+    '41': 'intensywne opady śniegu',     # heavy snow
+    '42': 'przelotne opady śniegu',      # scattered snow showers
+    '43': 'intensywne opady śniegu',     # heavy snow
+    '44': 'częściowe zachmurzenie',      # partly cloudy
+    '45': 'burza',                       # thundershowers
+    '46': 'śnieg',                       # snow showers
+    '47': 'burza',                       # isolated thundershowers
+    '3200': '',                          # not available
+}
+
+
+# These dictionaries are used by meteoalarm module.
+meteoalarmAwarenesses = [
+    "",
+    "silny_wiatr",
+    "snieg_lub_oblodzenie",
+    "burze",
+    "mgly",
+    "wysokie_temperatury",
+    "niskie_temperatury",
+    "zjawiska_strefy_brzegowej",
+    "pozary_lasow",
+    "lawiny",
+    "intensywne_opady_deszczu",
+    "inne_zagrozenia"]
+meteoalarmAwarenessLvl = [
+    "nieokreslony",
+    "",
+    "niski",
+    "sredni",
+    "wysoki"]
+
+meteoalarmAwarenessLevel = "poziom_zagrozenia"
+meteoalarmRegions = {
+    'PL001':"mazowieckiego", 
+    'PL002':"lubuskiego", 
+    'PL003':"zachodniopomorskiego",
+    'PL004':"pomorskiego", 
+    'PL005':"dolnoslaskiego", 
+    'PL006':"opolskiego",
+    'PL007':"śląskiego", 
+    'PL008':"malopolskiego", 
+    'PL009':"podkarpackiego", 
+    'PL010':"świętokrzyskiego",
+    'PL011':"łódzkiego", 
+    'PL012':"wielkopolskiego", 
+    'PL013':"kujawsko_pomorskiego", 
+    'PL014':"warminsko_mazurskiego", 
+    'PL015':"lubelskiego",
+    'PL016':"podlaskiego",
+    'IE003':"dolnoslaskiego",
+}
+
+meteoalarmAwareness   = "zagrozenia_meteorologiczne_dla_wojewodztwa"
+today    = "dzis"
+tomorrow = "jutro"
+
+
+# World Weather Online
+
+
+wwo_weather_codes = {
+    '113':'bezchmurnie', # Clear/Sunny
+    '116':'częściowe zachmurzenie', # Partly Cloudy
+    '119':'pochmurno', # Cloudy
+    '122':'zachmurzenie całkowite', # Overcast
+    '143':'zamglenia', # Mist
+    '176':'lokalne przelotne opady deszczu', # Patchy rain nearby
+    '179':'śnieg', # Patchy snow nearby
+    '182':'śnieg z deszczem', # Patchy sleet nearby
+    '185':'lokalna przelotna marznąca mżawka', # Patchy freezing drizzle nearby
+    '200':'lokalne burze', # Thundery outbreaks in nearby
+    '227':'zamieć śnieżna', # Blowing snow
+    '230':'zamieć śnieżna', # Blizzard
+    '248':'mgła', # Fog
+    '260':'marznąca mgła', # Freezing fog
+    '263':'mżawka', # Patchy light drizzle
+    '266':'mżawka', # Light drizzle
+    '281':'marznąca mżawka', # Freezing drizzle
+    '284':'marznąca mżawka', # Heavy freezing drizzle
+    '293':'lokalny słaby deszcz', # Patchy light rain
+    '296':'słaby deszcz', # Light rain
+    '299':'przelotne opady deszczu', # Moderate rain at times
+    '302':'umiarkowane opady deszczu', # Moderate rain
+    '305':'przelotne ulewy', # Heavy rain at times
+    '308':'ulewy', # Heavy rain
+    '311':'słabe opady marznącego deszczu', # Light freezing rain
+    '314':'umiarkowane opady marznącego deszczu', # Moderate or Heavy freezing rain
+    '317':'słabe opady śniegu z deszczem', # Light sleet
+    '320':'umiarkowane lub ciężkie opady śniegu z deszczem', # Moderate or heavy sleet
+    '323':'słabe opady śniegu', # Patchy light snow
+    '326':'słabe opady śniegu', # Light snow
+    '329':'umiarkowane opady śniegu', # Patchy moderate snow
+    '332':'umiarkowane opady śniegu', # Moderate snow
+    '335':'opady śniegu', # Patchy heavy snow
+    '338':'intensywne_opady_sniegu', # Heavy snow
+    '350':'grad', # Ice pellets
+    '353':'słabe przelotne opady deszczu', # Light rain shower
+    '356':'przelotne opady deszczu', # Moderate or heavy rain shower
+    '359':'ulewny deszcz', # Torrential rain shower
+    '362':'słabe opady śniegu z deszczem', # Light sleet showers
+    '365':'umiarkowane opady śniegu z deszczem', # Moderate or heavy sleet showers
+    '368':'słabe opady śniegu', # Light snow showers
+    '371':'umiarkowane opady śniegu', # Moderate or heavy snow showers
+    '374':'słabe opady śniegu ziarnistego', # Light showers of ice pellets
+    '377':'umiarkowane opady śniegu ziarnistego', # Moderate or heavy showers of ice pellets
+    '386':'burza', # Patchy light rain in area with thunder
+    '389':'burza', # Moderate or heavy rain in area with thunder
+    '392':'burza śnieżna', # Patchy light snow in area with thunder
+    '395':'burza śnieżna', # Moderate or heavy snow in area with thunder
+}
+
+# HSCR_laviny
+hscr_welcome = "komunikat_czeskiej_sluzby_ratownictwa_gorskiego"
+hscr_region = {"K": "w_karkonoszach obowiazuje", "J": "w_jesionikach_i_masywie_snieznika obowiazuje"}
+avalancheLevel = ['']+[i+' stopien_zagrozenia_lawinowego' for i in ['pierwszy', 'drugi', 'trzeci', 'czwarty', 'piaty_najwyzszy'] ]
+hscr_tendention = ['', '', 'tendencja_spadkowa', 'tendencja_wzrostowa']
+
+# GOPR_lawiny
+gopr_welcome = 'komunikat_gorskiego_ochotniczego_pogotowia_ratunkowego'
 gopr_region = ["", "w_karkonoszach obowiazuje", "", "w_regionie_babiej_gory obowiazuje", "w_pieninach obowiazuje", "w_bieszczadach obowiazuje"]
 avalancheLevel = ['']+[i+' stopien_zagrozenia_lawinowego' for i in ['pierwszy', 'drugi', 'trzeci', 'czwarty', 'piaty najwyzszy'] ]
 gopr_tendention = ['', '', 'tendencja_spadkowa', 'tendencja_wzrostowa']
-info_at = 'komunikat_z_dnia'
 
-hscr_welcome= "komunikat czeskiej_sluzby_ratownictwa_gorskiego"
-hscr_region = {"K": "w_karkonoszach obowiazuje", "J": "w_jesionikach_i_masywie_snieznika obowiazuje"}
-hscr_tendention = ['', '', 'tendencja_spadkowa', 'tendencja_wzrostowa']
+# povodi_cz
+
+# awareness levels for povodi_cz
+povodi_cz_welcome = 'komunikat_czeskiego_instytutu_hydrometeorologicznego'
+awalvls = ['',
+    'stopien_czuwania',              # bdelosť            State of Alert
+    'stopien_gotowosci',             # pohotovosť         State of Emergency
+    'stopien_zagrozenia',            # ohrozenie          State of Danger
+    'stopien_ekstremalnych_powodzi'  # extrémna povodeň   extreme flood
+    ]
+
+river = 'rzeka'
+station = 'wodowskaz'
