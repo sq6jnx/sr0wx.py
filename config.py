@@ -10,14 +10,14 @@ serialBaudRate = 9600
 
 from lib.cw import *
 
-lang = "pl_google"
+lang = "pl"
 
 pygameBug = 1
 
 helloMsg = ["tu_eksperymentalna_automatyczna_stacja_pogodowa",\
-    "sp6yre",]#"lokator","jo81ld"]
+    's','p','szesc','y','n','d',]#"lokator","jo81ld"]
 source = 'zrodlo'
-goodbyeMsg = ["_","tu_sp6yre",cw('sp6yre')]
+goodbyeMsg = ["_","tu", 's','p','szesc','y','n','d']
 
 modules = ["worldweatheronline", "meteoalarm", "prospect_mp",\
         "y_weather","povodi_cz",'gopr_lawiny',
@@ -114,7 +114,7 @@ meteoalarm = m()
 # PL004: Pomorskie              PL014: Warmińsko-mazurskie 
 # PL012: Wielkopolskie          PL003: Zachodniopomorskie 
 
-meteoalarm.region = 'PL005'
+meteoalarm.region = 'PL004'
 meteoalarm.showToday = 1
 meteoalarm.showTomorrow = 1
 
