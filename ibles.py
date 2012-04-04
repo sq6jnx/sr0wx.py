@@ -92,7 +92,6 @@ def get_forecast_url():
         return None
     else:
         webfile = downloadFile('http://bazapozarow.ibles.pl/zagrozenie/')
-        #print _url.findall(webfile)[0]
         return url%( _url.findall(webfile)[0][0:-2] ) # dlaczego [0:-2]?!?
 
 def getData(l):
@@ -119,8 +118,9 @@ def getData(l):
         zagrozenie=max(zagrozenie, poziomy[kolor])
 
     if zagrozenie>0:
+        print zagrozenie
         data['data']=' '.join( ('w_lasach_wystepuje ',
-                poziomy_nazwy[poziomy[kolor]],
+                poziomy_nazwy[zagrozenie],
                 'zagrozenie_pozarowe',))
 
     return data
