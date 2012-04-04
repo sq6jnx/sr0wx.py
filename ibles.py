@@ -63,8 +63,7 @@ poziomy = {
         (160,160,160,255): -2, # brak danych
         }
 
-poziomy_nazwy = ['', 'zagrozenie_male',
-        'zagrozenie_umiarkowane', 'zagrozenie_duze', ]
+poziomy_nazwy = ['', 'male', 'srednie', 'duze', ]
 
 def get_forecast_url():
     """Podaje URL wyliczony analogicznie do
@@ -78,7 +77,7 @@ def get_forecast_url():
 
     # debug trick: odkomentuj poniższą linię aby funkcja zwróciła adres do mapki
     # na której "sporo się dzieje ;)
-    #return url%('2011','6','7','1')
+    return url%('2011','6','7','1')
     # koniec tricka
 
     now = datetime.datetime.now()
@@ -101,6 +100,7 @@ def getData(l):
         return data
 
     mapa=downloadFile(url)
+    print url
     f=open('ibles.png','wb')
     f.write(mapa)
     f.close()
@@ -112,11 +112,13 @@ def getData(l):
         polozenie = strefy[strefa]
         kolor = tuple(s.get_at(polozenie))
         zagrozenie=max(zagrozenie, poziomy[kolor])
+
+    print zagrozenie
         
     if zagrozenie>0:
-        data['data']=' uwaga w lasach obowiązuje '+\
-            poziomy_nazwy[poziomy[kolor]]+\
-            ' poziom zagrozenia pozarami lasow'
+        data['data']=' '.join( ('w_lasach_wystepuje ',
+                poziomy_nazwy[poziomy[kolor]],
+                'zagrozenie_pozarowe',))
 
     return data
 
