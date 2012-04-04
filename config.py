@@ -352,3 +352,22 @@ gopr_lawiny.podajWystawe = 1 # not yet implemented
 ibles = m()
 ibles.strefy = [37,38,]
 
+
+
+# -------------
+# activity_map
+# ------------
+
+activity_map = m()
+activity_map.service_url="http://test.ostol.pl/?base="
+activity_map.data = {
+        "callsign":"SQ6JNX",
+        "lat":     17.049337,
+        "lon":     51.109805,
+        "q":       5,
+        "asl":     118,
+        "agl":     20,
+        "range":   30,
+        "info":    u"Stacja zainstalowana na Urzędzie Wojewódzkim",
+        } 
+
