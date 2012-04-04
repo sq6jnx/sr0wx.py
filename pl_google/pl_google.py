@@ -491,3 +491,6 @@ awalvls = ['',
 
 river = 'rzeka'
 station = 'wodowskaz'
+
+
+source='zrodlo'

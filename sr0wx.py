@@ -75,6 +75,13 @@ import debug, traceback
 # For infrmational purposes script says hello and gives local time/date,
 # so it will be possible to find out how long script was running.
 
+def my_import(name):
+    mod = __import__(name)
+    components = name.split('.')
+    for comp in components[1:]:
+        mod = getattr(mod, comp)
+    return mod
+
 debug.log("CORE", "sr0wx.py started")
 debug.log("LEGAL","")
 debug.log("LEGAL","Copyright 2009-2012 Michal Sadowski (sq6jnx at hamradio dot pl)")
@@ -125,7 +132,9 @@ else:
     modules=config.modules
 
 needCTCSS = False
-sources = [config.source,]
+lang = my_import('.'.join((config.lang, config.lang)) )
+sources = [lang.source,]
+
 for m in modules:
     try:
         debug.log("CORE","starting %s..."%(m) )
