@@ -19,6 +19,7 @@
 import urllib
 import pygame
 import datetime
+import re
 from config import ibles  as config
 
 lang=None
@@ -66,18 +67,22 @@ poziomy = {
 poziomy_nazwy = ['', 'male', 'srednie', 'duze', ]
 
 def get_forecast_url():
-    """Podaje URL wyliczony analogicznie do
-    ``http://bazapozarow.ibles.pl/zagrozenie/``, funkcja dzisiaj(). W przypadku,
+    """Podaje dokładnie taki URL, na który powołuje się strona 
+    ``http://bazapozarow.ibles.pl/zagrozenie/``, niekiedy bowiem poranne raporty
+    o zagrożeniu pożarowym są wydawane na godziny południowe. W przypadku,
     gdy bieżąca data i czas na komputerze jest z zakresu 1 października -- 31
     marca zwraca None, gdyż w tym okresie zagrożenie pożarowe lasów nie jest
     prognozowane."""
+
+    _url=re.compile('mapa\.php\?rok=(\d{4})&mies=(\d{1,2})&'+\
+            'dzien=(\d{1,2})&godz=(\d)&mapa=(\d)&ver=(\d)')
 
     url = "http://bazapozarow.ibles.pl/zagrozenie/mapa.php?"\
             +"rok=%s&mies=%s&dzien=%s&godz=%s&mapa=0&ver=0"
 
     # debug trick: odkomentuj poniższą linię aby funkcja zwróciła adres do mapki
     # na której "sporo się dzieje ;)
-    return url%('2011','6','7','1')
+    #return url%('2011','6','7','1')
     # koniec tricka
 
     now = datetime.datetime.now()
@@ -85,10 +90,10 @@ def get_forecast_url():
 
     if month not in range(4,10):
         return None
-    elif hour>12:
-        return url%(str(year),str(month),str(day), str(0))
     else:
-        return url%(str(year),str(month),str(day), str(1))
+        webfile = downloadFile('http://bazapozarow.ibles.pl/zagrozenie/')
+        #print _url.findall(webfile)[0]
+        return url%( _url.findall(webfile)[0][0:-2] ) # dlaczego [0:-2]?!?
 
 def getData(l):
     global lang
