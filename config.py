@@ -18,7 +18,8 @@ helloMsg = ["tu_eksperymentalna_automatyczna_stacja_pogodowa",\
     "sp6yre",]#"lokator","jo81ld"]
 goodbyeMsg = ["_","tu_sp6yre",cw('sp6yre')]
 
-modules = ["worldweatheronline", "meteoalarm", "imgw_podest", "prospect_mp", "y_weather"]
+modules = ["worldweatheronline", "meteoalarm", "imgw_podest", "prospect_mp",
+"y_weather", 'ibles']
 
 class m:
     pass
@@ -350,5 +351,5 @@ gopr_lawiny.podajWystawe = 1 # not yet implemented
 # nie występuje. Ważne, aby numery stref podać w tablicy.
 
 ibles = m()
-ibles.strefy = [37,38,]
+ibles.strefy = [37,38,16]
 
