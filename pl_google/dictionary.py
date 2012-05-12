@@ -228,10 +228,20 @@ download_list = [
 ['ę. stopień gotowości',            'stopien_gotowosci',],
 ['ę. stopień zagrożenia',           'stopien_zagrozenia',],
 ['ę. stopień ekstremalnych powodzi','stopien_ekstremalnych_powodzi'],
-['czeski instytut hydrometeorologiczny']
+['czeski instytut hydrometeorologiczny'],
 
 
 # niektóre czeskie nazwy dla povodi_cz (głównie przygraniczne) na potrzeby
 # SP6TPW i przez niego przetłumaczone. Dzięki, Grzegorz!
+
+# IBLES -- zagrożenia pożarowe lasów
+
+["w lasach występuje"],
+["małe"],
+["średnie"],
+["duże"],
+["zagrożenie pożarowe"],
+["instytut badawczy leśnictwa", 'ibles'],
+
 
 ]
