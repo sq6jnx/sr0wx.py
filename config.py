@@ -10,7 +10,7 @@ serialBaudRate = 9600
 
 from lib.cw import *
 
-lang = "pl"
+lang = "pl_google"
 
 pygameBug = 1
 
@@ -361,7 +361,7 @@ ibles.strefy = [37,38,]
 activity_map = m()
 activity_map.service_url="http://test.ostol.pl/?base="
 activity_map.data = {
-        "callsign":"SR0WX"
+        "callsign":"SR0WX",
         "lat":     0,
         "lon":     0,
         "q":       5,
