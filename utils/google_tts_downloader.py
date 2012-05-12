@@ -43,6 +43,8 @@ for word in dictionary.download_list:
             filename=filename[4:]
         if phrase[-1] == "k":
             filename = filename[0:-2]
+    elif len(word)==1:
+        filename = phrase.replace(' ','_')
     else:
         filename = word[1]
 
@@ -62,7 +64,7 @@ for word in dictionary.download_list:
         os.system("lame --decode %s.mp3 %s.wav"%(filename,filename))
         length = float(subprocess.Popen(["soxi", "-D", "%s.wav"%filename], stdout=subprocess.PIPE).communicate()[0])
     
-        os.system("sox %s.wav %s.ogg trim %s %s"%(filename,filename, str(start), str(length-end)))
+        os.system("sox %s.wav %s.ogg trim %s %s tempo 1.3"%(filename,filename, str(start), str(length-end)))
         
         #os.system("mplayer %s.ogg"%filename)
         os.remove(filename+".wav")
