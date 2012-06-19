@@ -42,7 +42,7 @@ def format(s):
 wodowskazy={}
 
 _wodowskaz=re.compile('Stacja\:\ (.{1,}?)\<')
-_rzeka=re.compile('Rzeka\:\ (.{1,}?)\<')
+_rzeka=re.compile(u"""Rzeka\:\ (.{1,}?)\<|(Jezioro\ .{1,}?)\<|(Zalew\ .{1,}?)|(Morze\ Ba..tyckie)""", re.MULTILINE)
 _stan=re.compile('Stan\ Wody\ H\ \[cm\]\:\ (.{1,}?)\<')
 _nnw=re.compile('NNW\:(\d{1,})')
 _ssw=re.compile('SSW\:(\d{1,})')
@@ -98,10 +98,13 @@ def pobierzDaneWodowskazu(wodowskaz):
     if '.' in wodowskaz:
         wodowskaz = wodowskaz.split('.')[1] # pozbywamy się numeru regionu
     dane = wodowskazy[wodowskaz] # po co cały czas mieszać słownikiem
+
+    #print dane
+    #print _rzeka.findall(dane)
     
     return {'numer':wodowskaz,
         'nazwa':flatten(_wodowskaz.findall(dane)),
-        'rzeka':flatten(_rzeka.findall(dane)).split('->')[0],
+        'rzeka': (' '.join(flatten(_rzeka.findall(dane)))).split('->')[0],
         'stan':flatten(_stan.findall(dane)),
         'nnw':flatten(_nnw.findall(dane)),
         'ssw':flatten(_ssw.findall(dane)),
@@ -112,7 +115,7 @@ def pobierzDaneWodowskazu(wodowskaz):
         'przekroczenieStanuStan':flatten(_przekroczenieStanuStan.findall(dane)),}
 
 def getData(l):
-    data = {"data":"", "needCTCSS":False, "allOK":True, "source":"imgw"}
+    data = {"data":"", "needCTCSS":False, "allOK":True, "source":"imgw"} 
 
     stanyOstrzegawcze = {}
     stanyAlarmowe = {}
@@ -225,7 +228,7 @@ if __name__ == '__main__':
         region = sys.argv[2]
         # generowanie listy słów słownika; ostatnie słowo (rozielone spacją)
         # jest nazwą pliku docelowego
-	
+    
         print """#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
@@ -242,21 +245,14 @@ END_MARKER = ' k'
 CUT_START = 0.9
 CUT_END=0.7
 
-download_list = [ 
-
-    ['ę. rzeka', 'rzeka'],
-    ['ę. wodowskaz', 'wodowskaz'],
-    ['ę. przekroczenia stanów alarmowych', 'przekroczenia_stanow_alarmowych'],
-    ['ę. komunikat hydrologiczny i em gje wu', 'komunikat_hydrologiczny_imgw'],
-    ['i em gje wu', 'imgw'],
-    ['ę. przekroczenia stanów ostrzegawczych', 'przekroczenia_stanow_ostrzegawczych'],
-
-"""
-        #frazy = ['komunikat hydrologiczny imgw', 'przekroczenia stanów ostrzegawczych',
-        #    'przekroczenia stanów alarmowych', 'rzeka', 'wodowskaz']
-        #for fraza in set(frazy):
-        #    print "\t['%s', '%s'],"%(fraza, format(fraza),)
-        #    #print "\t['%s', '%s'],"%(unicode(fraza,'utf-8'), format(fraza),)
+download_list = [ """
+        frazy = [u'komunikat hydrologiczny imgw', 
+                u'przekroczenia stanów ostrzegawczych',
+                u'przekroczenia stanów alarmowych', u'rzeka', u'wodowskaz']
+        for fraza in set(frazy):
+            #print fraza.encode('utf-8')
+            print "\t['%s', '%s'],"%(fraza.encode('utf-8'),
+                    format(fraza).encode('utf-8'),)
 
         frazy=[]
         zaladujRegion(int(region))
@@ -265,7 +261,7 @@ download_list = [
             frazy.append(w['nazwa'])
         for fraza in set(frazy):
             print "\t['ę. %s', '%s'],"%(fraza, str(bezpiecznaNazwa(fraza)),)
-	print ']'
+        print ']'
     elif len(sys.argv)==2 and int(sys.argv[1]) in range(1,14+1):
         # podaje listę wodowskazów w danym regionie (danej zlewni)
         region = sys.argv[1]
