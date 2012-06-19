@@ -43,6 +43,7 @@ wodowskazy={}
 
 _wodowskaz=re.compile('Stacja\:\ (.{1,}?)\<')
 _rzeka=re.compile('Rzeka\:\ (.{1,}?)\<')
+_rzeka=re.compile(u"""Rzeka\:\ (.{1,}?)\<|(Jezioro\ .{1,}?)\<|(Zalew\ .{1,}?)|(Morze\ Ba..tyckie)""", re.MULTILINE)
 _stan=re.compile('Stan\ Wody\ H\ \[cm\]\:\ (.{1,}?)\<')
 _nnw=re.compile('NNW\:(\d{1,})')
 _ssw=re.compile('SSW\:(\d{1,})')
@@ -98,10 +99,13 @@ def pobierzDaneWodowskazu(wodowskaz):
     if '.' in wodowskaz:
         wodowskaz = wodowskaz.split('.')[1] # pozbywamy się numeru regionu
     dane = wodowskazy[wodowskaz] # po co cały czas mieszać słownikiem
+
+    #print dane
+    #print _rzeka.findall(dane)
     
     return {'numer':wodowskaz,
         'nazwa':flatten(_wodowskaz.findall(dane)),
-        'rzeka':flatten(_rzeka.findall(dane)).split('->')[0],
+        'rzeka': (' '.join(flatten(_rzeka.findall(dane)))).split('->')[0],
         'stan':flatten(_stan.findall(dane)),
         'nnw':flatten(_nnw.findall(dane)),
         'ssw':flatten(_ssw.findall(dane)),
@@ -243,11 +247,13 @@ CUT_START = 0.9
 CUT_END=0.7
 
 download_list = [ """
-        frazy = ['komunikat hydrologiczny imgw', 'przekroczenia stanów ostrzegawczych',
-            'przekroczenia stanów alarmowych', 'rzeka', 'wodowskaz']
+        frazy = [u'komunikat hydrologiczny imgw', 
+                u'przekroczenia stanów ostrzegawczych',
+                u'przekroczenia stanów alarmowych', u'rzeka', u'wodowskaz']
         for fraza in set(frazy):
-            print "\t['%s', '%s'],"%(fraza, format(fraza),)
-            #print "\t['%s', '%s'],"%(unicode(fraza,'utf-8'), format(fraza),)
+            #print fraza.encode('utf-8')
+            print "\t['%s', '%s'],"%(fraza.encode('utf-8'),
+                    format(fraza).encode('utf-8'),)
 
         frazy=[]
 	zaladujRegion(int(region))
