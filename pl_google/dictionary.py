@@ -23,6 +23,13 @@ download_list = [
 ["tu eksperymentalna automatyczna stacja pogodowa k",],
 ["tu automatyczna stacja pogodowa powiatu brzeskiego"],
 
+
+["ę.  tu automatyczna stacja pogodowa powiatu wielunskiego",],
+['stanisław paweł siedem, karol, ewa, dorota','sp7ked'],
+['tu stanisław paweł siedem, karol, ewa, dorota','tu_sp7ked'],
+['z godziny'],
+
+
 ["ę. Stanisław Paweł 6 Jokohama - Roman, Ewa", "sp6yre"],
 ["ę. stanisław kłebek 6 jadwiga natalia kłebek ", "sq6jnq"],
 ["ę. stanisław kłebek 6 adam cezary maria", "sq6acm"],
@@ -32,7 +39,7 @@ download_list = [
 ["tu stanisław kłebek 6 jadwiga natalia kłebek k", 'tu_sq6jnq'],
 ["tu stanisław kłebek 6 adam cezary maria", 'tu_sq6acm'],
 
-["stan pogody z dnia k",],
+["stan pogody z dnia",],
 
 ["pierwszego"], ["drugiego"], ["trzeciego"], ["czwartego"],
 ["piątego"], ["szóstego"], ["siódmego"], 
@@ -241,7 +248,7 @@ download_list = [
 ["średnie"],
 ["duże"],
 ["zagrożenie pożarowe"],
-["instytut badawczy leśnictwa", 'ibles'],
+["ę.  instytut badawczy leśnictwa", 'ibles'],
 
 
 ]
