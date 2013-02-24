@@ -17,7 +17,7 @@ CUT_END=0.7
 download_list = [ 
 
     ["komunikat hydrologiczny czeskiego instytutu hydrometeorologicznego"],
-    ['czeski instytut hydrometeorologiczny','chmi_cz']
+    ['czeski instytut hydrometeorologiczny','chmi_cz'],
     ["Mikulowice", "mikulovice"], # Mikulovice
     ["Biała głuchołaska", "be!la_"], # Bělá
     ["Walszow", "vals_ov"], # Valšov
