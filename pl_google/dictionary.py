@@ -22,24 +22,24 @@ download_list = [
 # welcome and goodbye messages
 ["tu eksperymentalna automatyczna stacja pogodowa k",],
 ["tu automatyczna stacja pogodowa powiatu brzeskiego"],
+["tu automatyczna stacja pogodowa powiatu prudnickiego"],
 
 
-["ę.  tu automatyczna stacja pogodowa powiatu wielunskiego",],
-['stanisław paweł siedem, karol, ewa, dorota','sp7ked'],
-['tu stanisław paweł siedem, karol, ewa, dorota','tu_sp7ked'],
-['z godziny'],
-
+["tu automatyczna stacja pogodowa powiatu olsztyniskiego",
+    "tu_automatyczna_stacja_pogodowa_powiatu_olsztynskiego",],
 
 ["ę. Stanisław Paweł 6 Jokohama - Roman, Ewa", "sp6yre"],
 ["ę. stanisław kłebek 6 jadwiga natalia kłebek ", "sq6jnq"],
 ["ę. stanisław kłebek 6 adam cezary maria", "sq6acm"],
+["ę. stanisław paweł 6 karol ewa olga", "sp6keo"],
 
 
 ["tu Stanisław Paweł 6 Jokohama, Roman, Ewa", 'tu_sp6yre'],
 ["tu stanisław kłebek 6 jadwiga natalia kłebek k", 'tu_sq6jnq'],
 ["tu stanisław kłebek 6 adam cezary maria", 'tu_sq6acm'],
+["tu stanisław paweł 6 karol ewa olga", "tu_sp6keo"],
 
-["stan pogody z dnia",],
+["stan pogody z dnia k",],
 
 ["pierwszego"], ["drugiego"], ["trzeciego"], ["czwartego"],
 ["piątego"], ["szóstego"], ["siódmego"], 
@@ -235,20 +235,10 @@ download_list = [
 ['ę. stopień gotowości',            'stopien_gotowosci',],
 ['ę. stopień zagrożenia',           'stopien_zagrozenia',],
 ['ę. stopień ekstremalnych powodzi','stopien_ekstremalnych_powodzi'],
-['czeski instytut hydrometeorologiczny'],
+['czeski instytut hydrometeorologiczny']
 
 
 # niektóre czeskie nazwy dla povodi_cz (głównie przygraniczne) na potrzeby
 # SP6TPW i przez niego przetłumaczone. Dzięki, Grzegorz!
-
-# IBLES -- zagrożenia pożarowe lasów
-
-["w lasach występuje"],
-["małe"],
-["średnie"],
-["duże"],
-["zagrożenie pożarowe"],
-["ę.  instytut badawczy leśnictwa", 'ibles'],
-
 
 ]
