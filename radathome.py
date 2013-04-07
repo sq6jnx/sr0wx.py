@@ -107,7 +107,7 @@ def getData(l):
     global lang
     lang = my_import(l+"."+l)
     data = {"data":"", "needCTCSS":False, "debug":None, 
-            "source":"radAtHome", "allOK":True}
+            "source":"", "allOK":True}
 
     rlevel = get_radiation_level()
     if rlevel is not None:
@@ -120,8 +120,8 @@ def getData(l):
             lvl=lang.radiation_levels[2]
             data['needCTCSS']=True
         
-        data['data']=' '.join( (radiation_level, lang.readFraction(rlevel, 3),
-                lvl) )
+        data['data']=' '.join( (lang.radiation_level, lvl, 
+                lang.readFraction(rlevel, 3), lang.uSiph) )
 
     return data
 
