@@ -63,7 +63,7 @@ def parse_csv():
                 db.execute("""
                     insert into radathome(
                             id, ticks, timestamp, sensor_rev,status, column_A, parent_timestamp) 
-                    values (?,?,?,?,?,?, (select max(timestamp) from r))""", row)
+                    values (?,?,?,?,?,?, (select max(timestamp) from radathome))""", row)
                 added+=1
             except sqlite3.IntegrityError:
                 not_added+=1
