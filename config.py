@@ -383,5 +383,5 @@ radAtHome.n_hours = 3
 radAtHome.medium_tresh = 0.3
 radAtHome.high_tresh   = 0.8
 #radAtHome.database    = ':memory:' # for testing
-radAtHome.database     = 'radAtHome.sqlite3' # for normal use
+radAtHome.database     = 'radathome.sqlite3' # for normal use
 

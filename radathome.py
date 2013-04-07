@@ -31,10 +31,6 @@ lang=None
 # http://radioactiveathome.org/boinc/forum_thread.php?id=60#574
 # you can find ticks to uS formula under second link.
 
-#def downloadFile(url):
-#    webFile = urllib.urlopen(url)
-#    return webFile.read()
-
 def my_import(name):
     mod = __import__(name)
     components = name.split('.')
@@ -48,7 +44,7 @@ def parse_csv():
     db=sqlite3.connect(config.database)
     
     db.execute("""
-    create table if not exists r(
+    create table if not exists radathome(
         id int,
         ticks int,
         timestamp int primary key,
@@ -65,7 +61,7 @@ def parse_csv():
                     strftime('%s')
             try:
                 db.execute("""
-                    insert into r(
+                    insert into radathome(
                             id, ticks, timestamp, sensor_rev,status, column_A, parent_timestamp) 
                     values (?,?,?,?,?,?, (select max(timestamp) from r))""", row)
                 added+=1
@@ -90,15 +86,15 @@ def get_radiation_level():
         	(r1.ticks-r2.ticks)/((r1.timestamp-r2.timestamp)/60.0)/171.232876 as radiation	
         	*/
         	avg((r1.ticks-r2.ticks)/((r1.timestamp-r2.timestamp)/60.0)/171.232876)	
-        from r as r1 
-        	inner join r as r2 on r1.parent_timestamp=r2.timestamp
+        from radathome as r1 
+        	inner join radathome as r2 on r1.parent_timestamp=r2.timestamp
         where 
             r1.status='n' /* "newer" measurement must be normal, not "first" or "restarted" */	
             /* for sanity: we substract "older" measurement from "newer" */
             and r1.timestamp>r2.timestamp
             and r1.ticks>r2.ticks
             and datetime(r1.timestamp,'unixepoch')>=datetime('now','utc',?)
-            """, ['%d hours'%config.n_hours])
+            """, ['-%d hours'%config.n_hours])
     
     try:
         return c.fetchone()[0]
@@ -106,7 +102,6 @@ def get_radiation_level():
         return None
         pass
     
-
 
 def getData(l):
     global lang
@@ -125,15 +120,14 @@ def getData(l):
             lvl=lang.radiation_levels[2]
             data['needCTCSS']=True
         
-        
-        data['data']=' '.join( (radiation_level, 
-                lang.readFraction(rlevel, 3),
+        data['data']=' '.join( (radiation_level, lang.readFraction(rlevel, 3),
                 lvl) )
 
     return data
 
 if __name__=='__main__':
     #getData('pl_google')
-    parse_csv()
+    #parse_csv()
     import pl_google.pl_google as lang
+    print get_radiation_level()
     print lang.readFraction(get_radiation_level(), 3)
