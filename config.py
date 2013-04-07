@@ -372,3 +372,16 @@ activity_map.data = {
         "info":    u"Additional informations",
         } 
 
+
+# -------------
+# radAtHome
+# ------------
+
+radAtHome = m()
+radAtHome.file_path = '/tmp/data.bin'
+radAtHome.n_hours = 3
+radAtHome.medium_tresh = 0.3
+radAtHome.high_tresh   = 0.8
+#radAtHome.database    = ':memory:' # for testing
+radAtHome.database     = 'radAtHome.sqlite3' # for normal use
+

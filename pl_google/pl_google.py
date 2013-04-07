@@ -304,6 +304,22 @@ def readCallsign(call):
     
     return rv
 
+def readFraction(number, precision):
+    try:
+        integer, fraction = str(round(number,precision)).split('.')
+    except TypeError:
+        return None
+        pass
+    
+    rv= ' '.join( (cardinal(int(integer)), comma) )
+    
+    while fraction[0]=='0':
+        rv=' '.join( (rv, cardinal(0)), )
+        fraction.pop(0)
+        
+    rv=' '.join( (rv, cardinal(int(fraction)),) )
+    return rv
+
 # ##########################################
 #
 # module dependant words
@@ -493,5 +509,9 @@ awalvls = ['',
 river = 'rzeka'
 station = 'wodowskaz'
 
+comma = 'przecinek'
+uSiph  = 'mikrosiwerta_na_godzine'
+radiation_level = 'promieniowanie_tla'
+radiation_levels = ['w_normie', 'podwyzszone', 'wysokie']
 
 source='zrodlo'

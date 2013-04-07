@@ -235,10 +235,18 @@ download_list = [
 ['ę. stopień gotowości',            'stopien_gotowosci',],
 ['ę. stopień zagrożenia',           'stopien_zagrozenia',],
 ['ę. stopień ekstremalnych powodzi','stopien_ekstremalnych_powodzi'],
-['czeski instytut hydrometeorologiczny']
-
+['czeski instytut hydrometeorologiczny'],
 
 # niektóre czeskie nazwy dla povodi_cz (głównie przygraniczne) na potrzeby
 # SP6TPW i przez niego przetłumaczone. Dzięki, Grzegorz!
+
+# Sample dla radioactive@Home
+
+['promieniowanie tła'],
+['przecinek'],
+['mikrosjiwerta na godzinę', 'miktosiwerta_na_godzine'],
+['w normie'], 
+['podwyższone'], 
+['wysokie'],
 
 ]
