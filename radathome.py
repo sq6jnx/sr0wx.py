@@ -126,8 +126,4 @@ def getData(l):
     return data
 
 if __name__=='__main__':
-    #getData('pl_google')
-    #parse_csv()
-    import pl_google.pl_google as lang
-    print get_radiation_level()
-    print lang.readFraction(get_radiation_level(), 3)
+    parse_csv()
