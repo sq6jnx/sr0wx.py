@@ -243,8 +243,8 @@ download_list = [
 # Sample dla radioactive@Home
 
 ['promieniowanie tła'],
-['przecinek'],
-['mikrosjiwerta na godzinę', 'miktosiwerta_na_godzine'],
+['przecinek', 'przecinek'],
+['mikrosjiwerta na godzinę', 'mikrosiwerta_na_godzine'],
 ['w normie'], 
 ['podwyższone'], 
 ['wysokie'],

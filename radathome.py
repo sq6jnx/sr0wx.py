@@ -120,8 +120,8 @@ def getData(l):
             lvl=lang.radiation_levels[2]
             data['needCTCSS']=True
         
-        data['data']=' '.join( (lang.radiation_level, lvl, 
-                lang.readFraction(rlevel, 3), lang.uSiph) )
+        data['data']=lang.removeDiacritics(' '.join( (lang.radiation_level, lvl, 
+                lang.readFraction(rlevel, 3), lang.uSiph) ))
 
     return data
 
