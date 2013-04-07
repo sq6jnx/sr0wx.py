@@ -103,7 +103,7 @@ def getData(l):
     'CURRENT_TEMP_C': lang.cardinal(
             fahrenheit2celsius(w['outTemp']), lang.C),
     'CURRENT_HUMIDITY': lang.cardinal(int(w['outHumidity']), lang.percent), 
-    'CURRENT_WIND_DIR_DEG': lang.cardinal(w['windDir'] or 0, lang.deg),
+    'CURRENT_WIND_DIR_DEG': lang.cardinal(int(w['windDir']) or 0, lang.deg),
     'CURRENT_WIND_SPEED_MPS': lang.cardinal(
             miph2mps(w['windSpeed']), lang.mPs),
     'CURRENT_PRESSURE': lang.cardinal(
