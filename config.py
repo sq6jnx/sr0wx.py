@@ -297,7 +297,7 @@ imgw_podest.wodowskazy = [
 # world weather online
 
 world_weather_online = m()
-world_weather_online.api_key = '4bd98a1060131251112011'
+world_weather_online.api_key = 'CHANGEME'
 world_weather_online.latitude = 52.71
 world_weather_online.longitude=19.11
 world_weather_online.template = """stan_pogody_z_dnia {OBSERVATION_TIME} 

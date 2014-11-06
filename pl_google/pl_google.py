@@ -259,7 +259,7 @@ def readISODT(ISODT):
     MMslownie = cardinal(mm).replace("zero","zero_zero")
 
     #return " ".join( (Dslownie, Mslownie, "godzina", HHslownie, MMslownie) )
-    return " ".join( (Dslownie, Mslownie, "z_godziny", HHslownie, MMslownie) )
+    return " ".join( (Dslownie, Mslownie, "godzina", HHslownie, MMslownie) )
 
 def readISODate(ISODate):
     _rv=() # return value

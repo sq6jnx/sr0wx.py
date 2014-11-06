@@ -40,6 +40,7 @@ download_list = [
 ["tu stanisław paweł 6 karol ewa olga", "tu_sp6keo"],
 
 ["stan pogody z dnia k",],
+["godzina"],
 
 ["pierwszego"], ["drugiego"], ["trzeciego"], ["czwartego"],
 ["piątego"], ["szóstego"], ["siódmego"], 
