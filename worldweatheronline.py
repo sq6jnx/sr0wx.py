@@ -50,7 +50,7 @@ def getData(l):
     lang = my_import(l+"."+l)
     rv = {'data':'', "needCTCSS":False, "source":"worldweatheronline"}
 
-    REQ_URL='http://free.worldweatheronline.com/feed/weather.ashx?q={LAT},{LON}&format=json&num_of_days=2&key={API_KEY}'
+    REQ_URL='http://api.worldweatheronline.com/free/v2/weather.ashx?q={LAT},{LON}&format=json&num_of_days=2&key={API_KEY}'
     params = {'LAT':str(config.latitude), 'LON':str(config.longitude),\
         'API_KEY':config.api_key}
 
@@ -60,7 +60,9 @@ def getData(l):
     # formatting.
     w = weather['data']['current_condition'][0]
     f0 = weather['data']['weather'][0]
+    f0w = weather['data']['weather'][0]['hourly'][0]
     f1 = weather['data']['weather'][1]
+    f1w = weather['data']['weather'][1]['hourly'][0]
     wc = lang.wwo_weather_codes
 
     # observation time gives us time in UTC, like '09:50 PM', but it gives no date.
@@ -97,28 +99,28 @@ def getData(l):
         'CURRENT_WIND_SPEED_MI':lang.cardinal(int(w['windspeedMiles']),lang.MiPh),
 
         #'FCAST0_PRECIP_MM':float(f0['precipMM']),
-        'FCAST0_TEMP_MIN_C':lang.cardinal(int(f0['tempMinC'])),
-        'FCAST0_TEMP_MAX_C':lang.cardinal(int(f0['tempMaxC']),lang.C),
-        #'FCAST0_TEMP_MIN_F':int(f0['tempMinF']),
-        #'FCAST0_TEMP_MAX_F':int(f0['tempMaxF']),
-        'FCAST0_WEATHER':lang.removeDiacritics(wc[f0['weatherCode']], remove_spaces=True),
-        'FCAST0_WIND_DIR':wind_direction(f0['winddir16Point']),
-        'FCAST0_WIND_DIR_DEG':lang.cardinal(int(f0['winddirDegree']),lang.deg),
-        'FCAST0_WIND_SPEED_KMPH':lang.cardinal(int(f0['windspeedKmph']),lang.kmPh),
-        'FCAST0_WIND_SPEED_MPS':lang.cardinal(kmph2mps(int(f0['windspeedKmph'])),lang.mPs),
-        'FCAST0_WIND_SPEED_MI':int(f0['windspeedMiles']),
+        'FCAST0_TEMP_MIN_C':lang.cardinal(int(f0['mintempC'])),
+        'FCAST0_TEMP_MAX_C':lang.cardinal(int(f0['maxtempC']),lang.C),
+        #'FCAST0_TEMP_MIN_F':int(f0['mintempF']),
+        #'FCAST0_TEMP_MAX_F':int(f0['maxtempF']),
+        'FCAST0_WEATHER':lang.removeDiacritics(wc[f0w['weatherCode']], remove_spaces=True),
+        'FCAST0_WIND_DIR':wind_direction(f0w['winddir16Point']),
+        'FCAST0_WIND_DIR_DEG':lang.cardinal(int(f0w['winddirDegree']),lang.deg),
+        'FCAST0_WIND_SPEED_KMPH':lang.cardinal(int(f0w['windspeedKmph']),lang.kmPh),
+        'FCAST0_WIND_SPEED_MPS':lang.cardinal(kmph2mps(int(f0w['windspeedKmph'])),lang.mPs),
+        'FCAST0_WIND_SPEED_MI':int(f0w['windspeedMiles']),
 
         #'FCAST1_PRECIP_MM':float(f1['precipMM']),
-        'FCAST1_TEMP_MIN_C':lang.cardinal(int(f1['tempMinC'])),
-        'FCAST1_TEMP_MAX_C':lang.cardinal(int(f1['tempMaxC']),lang.C),
-        #'FCAST1_TEMP_MIN_F':int(f1['tempMinF']),
-        #'FCAST1_TEMP_MAX_F':int(f1['tempMaxF']),
-        'FCAST1_WEATHER':lang.removeDiacritics(wc[f1['weatherCode']], remove_spaces=True),
-        'FCAST1_WIND_DIR':wind_direction(f1['winddir16Point']),
-        'FCAST1_WIND_DIR_DEG':lang.cardinal(int(f1['winddirDegree']),lang.deg),
-        'FCAST1_WIND_SPEED_KMPH':lang.cardinal(int(f1['windspeedKmph']),lang.kmPh),
-        'FCAST1_WIND_SPEED_MPS':lang.cardinal(kmph2mps(int(f1['windspeedKmph'])),lang.mPs),
-        'FCAST1_WIND_SPEED_MI':int(f1['windspeedMiles']),
+        'FCAST1_TEMP_MIN_C':lang.cardinal(int(f1['mintempC'])),
+        'FCAST1_TEMP_MAX_C':lang.cardinal(int(f1['maxtempC']),lang.C),
+        #'FCAST1_TEMP_MIN_F':int(f1['mintempF']),
+        #'FCAST1_TEMP_MAX_F':int(f1['maxtempF']),
+        'FCAST1_WEATHER':lang.removeDiacritics(wc[f1w['weatherCode']], remove_spaces=True),
+        'FCAST1_WIND_DIR':wind_direction(f1w['winddir16Point']),
+        'FCAST1_WIND_DIR_DEG':lang.cardinal(int(f1w['winddirDegree']),lang.deg),
+        'FCAST1_WIND_SPEED_KMPH':lang.cardinal(int(f1w['windspeedKmph']),lang.kmPh),
+        'FCAST1_WIND_SPEED_MPS':lang.cardinal(kmph2mps(int(f1w['windspeedKmph'])),lang.mPs),
+        'FCAST1_WIND_SPEED_MI':int(f1w['windspeedMiles']),
     }
 
     rv['data']=lang.removeDiacritics(config.template.format(**data))

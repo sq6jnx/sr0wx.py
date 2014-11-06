@@ -51,7 +51,7 @@ morse = { "A": ".-", "B": "-...", "C": "-.-.","D": "-..","E": ".","F": "..-.",
 ##    "międzynarodowy sygnał alarmowy (SOS)": "...---..."
     }
 
-def cw(text, wpm=25, farnsworth=None, weight=None, pitch=600, volume=0.1, sampleRate=44100):
+def cw(text, wpm=35, farnsworth=None, weight=None, pitch=1000, volume=0.4, sampleRate=16000):
 # Would be nice to cope with farnsworth<0 ==> slow down by ... WPM
 # Would be nice to implement weight
 
