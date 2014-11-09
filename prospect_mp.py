@@ -1,7 +1,7 @@
 #!/usr/env/python -tt
 # -*- encoding=utf8 -*-
 #
-#   Copyright 2009-2012 Michal Sadowski (sq6jnx at hamradio dot pl)
+#   Copyright 2009-2014 Michal Sadowski (sq6jnx at hamradio dot pl)
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -19,11 +19,10 @@
 import re
 import urllib
 from config import prospect_mp as config
-import datetime
-import debug
 import json
-import os 
-lang=None
+import os
+
+lang = None
 
 
 def bezpiecznaNazwa(s):
@@ -31,19 +30,28 @@ def bezpiecznaNazwa(s):
     wodowskazu. Ze względu na to, że w Polsce zarówno płynie
     rzeka Ślęza jak i Ślęża oznaczany jest każdy niełaciński
     znak"""
-    if str(s.__class__)=="<type 'str'>":
-        s=unicode(s, 'utf-8')
-    return s.lower().replace(u'ą',u'a_').replace(u'ć',u'c_').\
-        replace(u'ę',u'e_').replace(u'ł',u'l_').\
-        replace(u'ń',u'n_').replace(u'ó',u'o_').\
-        replace(u'ś',u's_').replace(u'ź',u'x_').\
-        replace(u'ż',u'z_').replace(u' ',u'_').\
-        replace(u'-',u'_').replace(u'(',u'').\
-        replace(u')',u'')
+    if type(s) == str:
+        s = unicode(s, 'utf-8')
+    return s.lower()\
+        .replace(u'ą', u'a_')\
+        .replace(u'ć', u'c_')\
+        .replace(u'ę', u'e_')\
+        .replace(u'ł', u'l_')\
+        .replace(u'ń', u'n_')\
+        .replace(u'ó', u'o_')\
+        .replace(u'ś', u's_')\
+        .replace(u'ź', u'x_')\
+        .replace(u'ż', u'z_')\
+        .replace(u' ', u'_')\
+        .replace(u'-', u'_')\
+        .replace(u'(', u'')\
+        .replace(u')', u'')
+
 
 def downloadFile(url):
     webFile = urllib.urlopen(url)
     return webFile.read()
+
 
 def my_import(name):
     mod = __import__(name)
@@ -52,62 +60,61 @@ def my_import(name):
         mod = getattr(mod, comp)
     return mod
 
-_przekroczenie = re.compile('(Delta)(?:(?:.{1,}?)Przekroczony\ stan\ (ostrzegawczy|alarmowy))?')
+przekroczenie = re.compile('(Delta)(?:(?:.{1,}?)Przekroczony\ stan\ (ostrzegawczy|alarmowy))?')
 
-def pobierzOstrzezenia(domena,stacja):
-    global przekroczenie,debug
-    domena,stacja = (domena.lower(), stacja.upper())
-    # testowe -- nie używać na produkcji! nie siać zamętu!
-    #url = "http://www.biala.prospect.pl/wizualizacja/punkt_pomiarowy.php?"+\
-    #      "prze=TUBI&rok=2010&miesiac=06&dzien=04&godzina=19&minuta=-3"
-    #url = "http://www.biala.prospect.pl/wizualizacja/punkt_pomiarowy.php?"+\
-    #      "prze=TUBI&rok=2010&miesiac=06&dzien=03&godzina=23&minuta=27"
 
+def pobierzOstrzezenia(domena, stacja):
+    global przekroczenie, debug
+    domena, stacja = (domena.lower(), stacja.upper())
 
     try:
-       url = "http://www.%s.prospect.pl/wizualizacja/punkt_pomiarowy.php?prze=%s"%(domena,stacja)
-       plik = downloadFile(url)
-       wynik = _przekroczenie.findall(plik)
-       if wynik[0]==('Delta', ''):
-           return None
-       elif wynik[0][1] in ('ostrzegawczy','alarmowy'):
-           return wynik[0][1]
-       else:
-           debug.log('PROSPECT-MP', u'Regex nie zwrócił oczekiwanych danych',\
-                   buglevel=5)
-           return None
+        url = "http://www.%s.prospect.pl/wizualizacja/punkt_pomiarowy.php?prze=%s" % (domena, stacja)
+        plik = downloadFile(url)
+        wynik = _przekroczenie.findall(plik)
+        if wynik[0] == ('Delta', ''):
+            return None
+        elif wynik[0][1] in ('ostrzegawczy', 'alarmowy'):
+            return wynik[0][1]
+        else:
+            debug.log('PROSPECT-MP',
+                      u'Regex nie zwrócił oczekiwanych danych',
+                      buglevel=5)
+            return None
     except:
-        debug.log('PROSPECT-MP', u'Regex nie zwrócił oczekiwanych danych',\
-                buglevel=5)
+        debug.log('PROSPECT-MP',
+                  u'Regex nie zwrócił oczekiwanych danych',
+                  buglevel=5)
         pass
         return None
 
 
 def getData(l):
-    data = {"data":"", "needCTCSS":False, "allOK":True, 
-            "source":"rwd_prospect"}
-    
+    data = {"data": "",
+            "needCTCSS": False,
+            "allOK": True,
+            "source": "rwd_prospect"}
+
     if not os.path.exists('prospect_mp.json'):
         stany = generuj_json(nie_zapisuj=True)
     else:
-        stany = json.loads(unicode(open('prospect_mp.json','r').read(),'utf-8'))
-        
-    if stany['ostrzegawczy']!={} or stany['alarmowy']!={}:
+        stany = json.loads(unicode(open('prospect_mp.json', 'r').read(), 'utf-8'))
+
+    if stany['ostrzegawczy'] != {} or stany['alarmowy'] != {}:
         data['data'] += 'lokalny_komunikat_hydrologiczny '
 
         if stany['alarmowy']:
-            # Sprawdzenie dla których wodowskazów mamy przekroczone 
+            # Sprawdzenie dla których wodowskazów mamy przekroczone
             # stany alarmowe -- włącz ctcss
-            data['needCTCSS']=True
-            data['data']+=' przekroczenia_stanow_alarmowych '
+            data['needCTCSS'] = True
+            data['data'] += ' przekroczenia_stanow_alarmowych '
             for rzeka in sorted(stany['alarmowy'].keys()):
-                data['data']+='rzeka %s wodowskaz %s '%(bezpiecznaNazwa(rzeka), \
+                data['data'] += 'rzeka %s wodowskaz %s ' % (bezpiecznaNazwa(rzeka),
                     " wodowskaz ".join(bezpiecznaNazwa(r) for r in sorted(stany['alarmowy'][rzeka])),)
 
         if stany['ostrzegawczy']:
-            data['data']+='_ przekroczenia_stanow_ostrzegawczych '
+            data['data'] += '_ przekroczenia_stanow_ostrzegawczych '
             for rzeka in sorted(stany['ostrzegawczy'].keys()):
-                data['data']+='rzeka %s wodowskaz %s '%(bezpiecznaNazwa(rzeka), \
+                data['data'] += 'rzeka %s wodowskaz %s ' % (bezpiecznaNazwa(rzeka), \
                     " wodowskaz ".join(bezpiecznaNazwa(r) for r in sorted(stany['ostrzegawczy'][rzeka])),)
 
     if os.path.exists('prospect_mp.json'):
@@ -116,9 +123,10 @@ def getData(l):
     debug.log("PODEST_MP", "finished...")
     return data
 
+
 def show_help():
     print u"""
-Uruchamiając ten skrypt z linii komend możesz wygenerować w łatwy sposób 
+Uruchamiając ten skrypt z linii komend możesz wygenerować w łatwy sposób
 fragment słownika sr0wx dla rzek i wodowskazów wskazanych w pliku config.py
 
 Należy uruchomić prospect_mp podając jako parametr gen, np.
@@ -130,6 +138,7 @@ a następnie
 python google_tts_downloader.py prospect_mp_dict.py
 
 aby dociągnąć niezbędne pliki."""
+
 
 def generuj_slownik():
     # generowanie listy słów słownika; ostatnie słowo (rozielone spacją)
@@ -159,10 +168,9 @@ download_list = [ """
         frazy.append(wpis[2])
 
     for fraza in set(frazy):
-        print "\t['ę. %s', '%s'],"%(fraza, str(bezpiecznaNazwa(fraza)),)
+        print "\t['ę. %s', '%s']," % (fraza, str(bezpiecznaNazwa(fraza)),)
 
-
-    print """['lokalny komunikat hydrologiczny]', 
+    print """['lokalny komunikat hydrologiczny]',
         ['przekroczenia stanów ostrzegawczych'],
         ['przekroczenia stanów alarmowych'], ['rzeka'], ['wodowskaz'],
         ['err wu de prospekt','rwd_prospect']
@@ -174,49 +182,41 @@ def generuj_json(nie_zapisuj=False):
     zawiera informacje o przekroczeniach stanów ostrzegawczych i/lub
     alarmowych"""
 
-    #json_file = open('prospect_mp.json','w')
-        
-
-    stany = {'ostrzegawczy':{}, 'alarmowy':{}}
+    stany = {'ostrzegawczy': {}, 'alarmowy': {}}
 
     for w in config.wodowskazy:
         try:
             domena, rzeka, wodowskaz, stacja = w
-            debug.log('PROSPECT-MP', ', '.join((domena,stacja,)))
-            stan = pobierzOstrzezenia(domena,stacja)
+            debug.log('PROSPECT-MP', ', '.join((domena, stacja,)))
+            stan = pobierzOstrzezenia(domena, stacja)
 
-            # Chłyt debugowy sprawdzający, czy mamy wszystkie sample: wszystkie 
-            # rzeki przełączamy na stan ostrzegawczy -- nie zapomnij wyłączyć!
-            #stan='alarmowy'
-            # Koniec chłytu
-
-            if stan in ('ostrzegawczy','alarmowy'):
-                if not stany[stan].has_key(rzeka):
-                    stany[stan][rzeka]=[]
+            if stan in ('ostrzegawczy', 'alarmowy'):
+                if rzeka not in stany[stan]:
+                    stany[stan][rzeka] = []
                 stany[stan][rzeka].append(wodowskaz)
         except:
             raise
-            debug.log('PROSPECT-MP', u'Pobieranie danych zakończyło się '+\
-                   u'błędem', buglevel=5)
+            debug.log('PROSPECT-MP',
+                      u'Pobieranie danych zakończyło się błędem',
+                      buglevel=5)
             pass
 
-    if nie_zapisuj==False:
-        json.dump(stany, open('prospect_mp.json','w'))
-    return  stany
+    if nie_zapisuj == False:
+        json.dump(stany, open('prospect_mp.json', 'w'))
+    return stany
 
 if __name__ == '__main__':
     from config import prospect_mp as config
+
     class DummyDebug:
-        def log(self,module,message,buglevel=None):
+        def log(self, module, message, buglevel=None):
             pass
 
     debug = DummyDebug()
     import sys
-    # tak, wiem, że można to zrobić bardziej elegancko (getopt), ale dla 2
-    # opcji nie ma chyba sensu...
-    if len(sys.argv)==2 and sys.argv[1]=='gen':
+    if len(sys.argv) == 2 and sys.argv[1] == 'gen':
         generuj_slownik()
-    elif len(sys.argv)==2 and sys.argv[1]=='json':
+    elif len(sys.argv) == 2 and sys.argv[1] == 'json':
         generuj_json()
     else:
         show_help()
