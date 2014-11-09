@@ -7,12 +7,11 @@
 # Generated automatically by imgw_podest.py. Feel free to modify it SLIGHTLY.
 
 LANGUAGE = 'pl'
-
 START_MARKER = 'ę. '
 END_MARKER = ' k'
 
 CUT_START = 0.9
-CUT_END=0.7
+CUT_END = 0.7
 
 download_list = [ 
 	['ę. Kąty', 'ka_ty'],
