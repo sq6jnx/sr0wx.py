@@ -36,6 +36,22 @@ def my_import(name):
     return mod
 
 
+def getAwareness(region, tomorrow=False):
+    r = re.compile('pictures/aw(\d[01]?)([0234]).jpg')
+    url = "http://www.meteoalarm.eu/index3.php?area=%s&day=%s&lang=EN"\
+        % (str(region), str(int(tomorrow)))
+
+    for line in downloadFile(url).split('\n'):
+        f = r.findall(line)
+        if len(f) is not 0 and int(f[0][0]) != 0:
+            a = " ".join((lang.meteoalarmAwarenesses[int(f[0][0])],
+                          lang.meteoalarmAwarenessLevel,
+                          lang.meteoalarmAwarenessLvl[int(f[0][1])],
+                          ))
+
+    return a
+
+
 def getData(l):
     global lang
     lang = my_import(l + "." + l)
@@ -79,19 +95,3 @@ def getData(l):
         data["needCTCSS"] = True
 
     return data
-
-
-def getAwareness(region, tomorrow=False):
-    r = re.compile('pictures/aw(\d[01]?)([0234]).jpg')
-    url = "http://www.meteoalarm.eu/index3.php?area=%s&day=%s&lang=EN"\
-        % (str(region), str(int(tomorrow)))
-
-    for line in downloadFile(url).split('\n'):
-        f = r.findall(line)
-        if len(f) is not 0 and int(f[0][0]) != 0:
-            a = " ".join((lang.meteoalarmAwarenesses[int(f[0][0])],
-                          lang.meteoalarmAwarenessLevel,
-                          lang.meteoalarmAwarenessLvl[int(f[0][1])],
-                          ))
-
-    return a
