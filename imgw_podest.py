@@ -1,7 +1,7 @@
 #!/usr/bin/python -tt
 # -*- coding: utf-8 -*-
 
-#   Copyright 2009-2012 Michal Sadowski (sq6jnx at hamradio dot pl)
+#   Copyright 2009-2014 Michal Sadowski (sq6jnx at hamradio dot pl)
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -17,47 +17,57 @@
 #
 
 
-# TODO: sprawdzanie, dla których wodowskazów możemy czytać komunikaty 
+# TODO: sprawdzanie, dla których wodowskazów możemy czytać komunikaty
 
-import os
-import urllib
 import re
+import urllib
 
-def format(s):
+
+
+def safe_name(s):
     """Zwraca "bezpieczną" nazwę dla nazwy danej rzeki/danego
     wodowskazu. Ze względu na to, że w Polsce zarówno płynie
     rzeka Ślęza jak i Ślęża oznaczany jest każdy niełaciński
     znak"""
-    if str(s.__class__)=="<type 'str'>":
-        s=unicode(s, 'utf-8')
-    return s.lower().replace(u'ą',u'a_').replace(u'ć',u'c_').\
-        replace(u'ę',u'e_').replace(u'ł',u'l_').\
-        replace(u'ń',u'n_').replace(u'ó',u'o_').\
-        replace(u'ś',u's_').replace(u'ź',u'x_').\
-        replace(u'ż',u'z_').replace(u' ',u'_').\
-        replace(u'-',u'_').replace(u'(',u'').\
-        replace(u')',u'')
+    if str(s.__class__) == "<type 'str'>":
+        s = unicode(s, 'utf-8')
+    return s.lower()\
+        .replace(u'ą', u'a_')\
+        .replace(u'ć', u'c_')\
+        .replace(u'ę', u'e_')\
+        .replace(u'ł', u'l_')\
+        .replace(u'ń', u'n_')\
+        .replace(u'ó', u'o_')\
+        .replace(u'ś', u's_')\
+        .replace(u'ź', u'x_')\
+        .replace(u'ż', u'z_')\
+        .replace(u' ', u'_')\
+        .replace(u'-', u'_')\
+        .replace(u'(', u'')\
+        .replace(u')', u'')
 
 
-wodowskazy={}
+wodowskazy = {}
 
-_wodowskaz=re.compile('Stacja\:\ (.{1,}?)\<')
-_rzeka=re.compile(u"""Rzeka\:\ (.{1,}?)\<|(Jezioro\ .{1,}?)\<|(Zalew\ .{1,}?)|(Morze\ Ba..tyckie)""", re.MULTILINE)
-_stan=re.compile('Stan\ Wody\ H\ \[cm\]\:\ (.{1,}?)\<')
-_nnw=re.compile('NNW\:(\d{1,})')
-_ssw=re.compile('SSW\:(\d{1,})')
-_www=re.compile('WWW\:(\d{1,})')
-_przeplyw=re.compile('Przepływ\ Q\ \[m3/s\]:\ (.{1,}?)\<')
-_czas=re.compile('Czas\(UTC\)\:\ (\d{4}-\d{2}-\d{2}\ \d{2}\:\d{2}\:\d{2})')
+_wodowskaz = re.compile('Stacja\:\ (.{1,}?)\<')
+_rzeka = re.compile(u"""Rzeka\:\ (.{1,}?)\<|(Jezioro\ .{1,}?)\<|(Zalew\ .{1,}?)|(Morze\ Ba..tyckie)""", re.MULTILINE)
+_stan = re.compile('Stan\ Wody\ H\ \[cm\]\:\ (.{1,}?)\<')
+_nnw = re.compile('NNW\:(\d{1,})')
+_ssw = re.compile('SSW\:(\d{1,})')
+_www = re.compile('WWW\:(\d{1,})')
+_przeplyw = re.compile('Przepływ\ Q\ \[m3/s\]:\ (.{1,}?)\<')
+_czas = re.compile('Czas\(UTC\)\:\ (\d{4}-\d{2}-\d{2}\ \d{2}\:\d{2}\:\d{2})')
 
-_przekroczenieStanu=re.compile('stan\ (ostrzegawczy|alarmowy)')
-_przekroczenieStanuStan=re.compile('stan\ (?:ostrzegawczy|alarmowy)\</b\>\ \((\d{1,})cm\)')
+_przekroczenieStanu = re.compile('stan\ (ostrzegawczy|alarmowy)')
+_przekroczenieStanuStan = re.compile('stan\ (?:ostrzegawczy|alarmowy)\</b\>\ \((\d{1,})cm\)')
+
 
 def getFile(url):
     webFile = urllib.urlopen(url)
     contents = webFile.read()
     webFile.close()
     return contents
+
 
 def flatten(x): # przerobić na lambda?
     """flatten(table) -> table[0] or None"""
@@ -67,9 +77,8 @@ def flatten(x): # przerobić na lambda?
         return x[0]
 
 def zaladujRegion(region):
-    """Funckcja służy do pobierania listy dostępnych wodowskazów ze strony IMGW
-    dla danego regionu.
-
+    """Funckcja służy do pobierania listy dostępnych wodowskazów ze strony
+    IMGW dla danego regionu.
 
     Korzystamy tutaj z faktu, że 1. Hash tables w JS mają składnię identyczną do pythonowych
     słowników; 2. W pliku są 2 słowniki a nas interesuje tylko pierwszy; 3. Python potrafi 
@@ -80,42 +89,41 @@ def zaladujRegion(region):
     global wodowskazy
 
     try:
-        debug.log("IMGW-HYDRO", 'Pobieram dane dla regionu %s'%region)
-        dane = getFile('http://www.pogodynka.pl/http/assets/products/podest/podest/hydro/mapy/dane%s.js'%str(region))
+        debug.log("IMGW-HYDRO", 'Pobieram dane dla regionu %s' % region)
+        dane = getFile('http://www.pogodynka.pl/http/assets/products/podest/podest/hydro/mapy/dane%s.js' % str(region))
         debug.log("IMGW-HYDRO", 'Przetwarzam...')
-        # NOTE: teraz trochę zabawnych rzeczy: następna linijka zadziała poprawnie tylko wtedy,
-        # kiedy w następnej będzie coś w rodzaju "print"
-        # wodowskazy.update(eval('{'+dane.split('{')[1].split('}')[0]+'}'))
-        # print wodowskazy
-        # próbujemy inaczej:
         wodowskazy = dict(eval('{'+dane.split('{')[1].split('}')[0]+'}'), **wodowskazy)
     except:
-        debug.log("IMGW-HYDRO", 'Nie udało się pobrać danych o wodowskazach dla regionu %s'%region, buglevel=6)
+        debug.log("IMGW-HYDRO", 'Nie udało się pobrać danych o wodowskazach dla regionu %s' % region, buglevel=6)
         pass
-    
+
+
 def pobierzDaneWodowskazu(wodowskaz):
     global wodowskazy
     if '.' in wodowskaz:
         wodowskaz = wodowskaz.split('.')[1] # pozbywamy się numeru regionu
     dane = wodowskazy[wodowskaz] # po co cały czas mieszać słownikiem
 
-    #print dane
-    #print _rzeka.findall(dane)
-    
-    return {'numer':wodowskaz,
-        'nazwa':flatten(_wodowskaz.findall(dane)),
-        'rzeka': (' '.join(flatten(_rzeka.findall(dane)))).split('->')[0],
-        'stan':flatten(_stan.findall(dane)),
-        'nnw':flatten(_nnw.findall(dane)),
-        'ssw':flatten(_ssw.findall(dane)),
-        'www':flatten(_www.findall(dane)),
-        'przeplyw':flatten(_przeplyw.findall(dane)),
-        'czas':flatten(_czas.findall(dane)),
-        'przekroczenieStanu':flatten(_przekroczenieStanu.findall(dane)),
-        'przekroczenieStanuStan':flatten(_przekroczenieStanuStan.findall(dane)),}
+    return {'numer': wodowskaz,
+            'nazwa': flatten(_wodowskaz.findall(dane)),
+            'rzeka': (' '.join(flatten(_rzeka.findall(dane)))).split('->')[0],
+            'stan': flatten(_stan.findall(dane)),
+            'nnw': flatten(_nnw.findall(dane)),
+            'ssw': flatten(_ssw.findall(dane)),
+            'www': flatten(_www.findall(dane)),
+            'przeplyw': flatten(_przeplyw.findall(dane)),
+            'czas': flatten(_czas.findall(dane)),
+            'przekroczenieStanu': flatten(_przekroczenieStanu.findall(dane)),
+            'przekroczenieStanuStan': flatten(_przekroczenieStanuStan.findall(dane)),
+            }
+
 
 def getData(l):
-    data = {"data":"", "needCTCSS":False, "allOK":True, "source":"imgw"} 
+    data = {"data": "",
+            "needCTCSS": False,
+            "allOK": True,
+            "source": "imgw"
+            }
 
     stanyOstrzegawcze = {}
     stanyAlarmowe = {}
@@ -131,16 +139,12 @@ def getData(l):
             zaladujRegion(region)
             zaladowaneRegiony.append(region)
         w = pobierzDaneWodowskazu(wodowskaz)
-        
-        # Chłyt debugowy sprawdzjący, czy mamy wszytkie sample: wszystkie rzeki
-        # przełączamy na stan ostrzegawczy -- nie zapomnij wyłączyć!
-        #w['przekroczenieStanu']='alarmowy'
-        # Koniec chłytu
 
-        w['rzeka']=bezpiecznaNazwa(w['rzeka'])
-        w['nazwa']=bezpiecznaNazwa(w['nazwa'])
+        w['rzeka'] = bezpiecznaNazwa(w['rzeka'])
+        w['nazwa'] = bezpiecznaNazwa(w['nazwa'])
 
-        if w['przekroczenieStanu']=='ostrzegawczy':
+        # TODO: collections.defaultdict?
+        if w['przekroczenieStanu'] == 'ostrzegawczy':
             if not stanyOstrzegawcze.has_key(w['rzeka']):
                 stanyOstrzegawcze[w['rzeka']]=[w['nazwa']]
             else:
@@ -166,8 +170,8 @@ def getData(l):
         if stanyOstrzegawcze!={}:
             data['data']+='_ przekroczenia_stanow_ostrzegawczych '
             for rzeka in sorted(stanyOstrzegawcze.keys()):
-                data['data']+='rzeka %s wodowskaz %s '%(format(rzeka), \
-                    " wodowskaz ".join([format(w) for w in sorted(stanyOstrzegawcze[rzeka])]),)
+                data['data']+='rzeka %s wodowskaz %s '%(safe_name(rzeka), \
+                    " wodowskaz ".join([safe_name(w) for w in sorted(stanyOstrzegawcze[rzeka])]),)
 
     debug.log("IMGW-HYDRO", "finished...")
 
@@ -252,7 +256,7 @@ download_list = [ """
         for fraza in set(frazy):
             #print fraza.encode('utf-8')
             print "\t['%s', '%s'],"%(fraza.encode('utf-8'),
-                    format(fraza).encode('utf-8'),)
+                    safe_name(fraza).encode('utf-8'),)
 
         frazy=[]
         zaladujRegion(int(region))
