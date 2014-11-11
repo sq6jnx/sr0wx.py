@@ -33,7 +33,7 @@ download_list = [
     ["tu automatyczna stacja pogodowa powiatu olsztyniskiego",
         "tu_automatyczna_stacja_pogodowa_powiatu_olsztynskiego"],
 
-    ["ę. Stanisław Paweł 6 Jokohama - Roman, Ewa", "sp6yre"],
+    ["ę. Stanisław Paweł 6 Jokohama Roman, Ewa", "sp6yre"],
     ["ę. stanisław kłebek 6 jadwiga natalia kłebek ", "sq6jnq"],
     ["ę. stanisław kłebek 6 adam cezary maria", "sq6acm"],
     ["ę. stanisław paweł 6 karol ewa olga", "sp6keo"],
