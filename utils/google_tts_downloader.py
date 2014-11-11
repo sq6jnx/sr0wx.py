@@ -51,7 +51,7 @@ for word in dictionary.download_list:
 
         if phrase[0:3] == "ę.":
             filename = filename[4:]
-        if phrase[-1] == "k":
+        if phrase[-2:] == " k":
             filename = filename[0:-2]
     elif len(word) == 1:
         filename = phrase.replace(' ', '_')
@@ -65,7 +65,7 @@ for word in dictionary.download_list:
         start, end = dictionary.CUT_START, dictionary.CUT_END
         if dictionary.LANGUAGE == 'pl' and phrase[0:3] == "ę.":
             start = dictionary.LONG_CUT_START
-        if dictionary.LANGUAGE == 'pl' and phrase[-1] == "k":
+        if dictionary.LANGUAGE == 'pl' and phrase[-2:] == " k":
             end = dictionary.LONG_CUT_END
 
         url = u"\"http://translate.google.com/translate_tts?tl=%s&q=%s\"" % (dictionary.LANGUAGE, urllib.quote_plus(phrase + " ."))
