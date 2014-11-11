@@ -11,7 +11,7 @@ from lib.cw import *
 
 lang = "pl_google"
 
-pygameBug = 1
+pygameBug = 0
 
 helloMsg = ["tu_eksperymentalna_automatyczna_stacja_pogodowa", "sp6yre", ]
 goodbyeMsg = ["_", "tu_sp6yre", cw('sp6yre')]
