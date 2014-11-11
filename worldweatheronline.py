@@ -16,7 +16,6 @@
 #   limitations under the License.
 #
 
-import debug
 import urllib2
 import json
 import datetime
@@ -54,19 +53,25 @@ def getData(l):
           "source": "worldweatheronline",
           }
 
-    REQ_URL = 'http://free.worldweatheronline.com/feed/weather.ashx?q={LAT},{LON}&format=json&num_of_days=2&key={API_KEY}'
+    REQ_URL = "http://api.worldweatheronline.com/free/v2/weather.ashx?"\
+              + "q={LAT},{LON}&format=json&num_of_days=2&key={API_KEY}"
+
     params = {'LAT': str(config.latitude),
-              'LON':str(config.longitude),
-              'API_KEY':config.api_key,
+              'LON': str(config.longitude),
+              'API_KEY': config.api_key,
               }
 
-    weather = json.loads(urllib2.urlopen(REQ_URL.format(**params)).read())
+    url = REQ_URL.format(**params)
+    response_data = urllib2.urlopen(url).read()
+    response = json.loads(response_data)
 
     # `w`, `f0` and `f1` are parts of big weather dictionary; we have to
     # unpack it for further formatting.
-    w = weather['data']['current_condition'][0]
-    f0 = weather['data']['weather'][0]
-    f1 = weather['data']['weather'][1]
+    w = response['data']['current_condition'][0]
+    f0 = response['data']['weather'][0]
+    f00 = f0['hourly'][0]
+    f1 = response['data']['weather'][1]
+    f10 = f1['hourly'][0]
     wc = lang.wwo_weather_codes
 
     # observation time gives us time in UTC, like '09:50 PM', but it gives
@@ -98,22 +103,22 @@ def getData(l):
             'CURRENT_WIND_SPEED_KMPH': lang.cardinal(int(w['windspeedKmph']), lang.kmPh),
             'CURRENT_WIND_SPEED_MPS': lang.cardinal(kmph2mps(int(w['windspeedKmph'])), lang.mPs),
             'CURRENT_WIND_SPEED_MI': lang.cardinal(int(w['windspeedMiles']), lang.MiPh),
-            'FCAST0_TEMP_MIN_C': lang.cardinal(int(f0['tempMinC'])),
-            'FCAST0_TEMP_MAX_C': lang.cardinal(int(f0['tempMaxC']), lang.C),
-            'FCAST0_WEATHER': lang.removeDiacritics(wc[f0['weatherCode']], remove_spaces=True),
-            'FCAST0_WIND_DIR': wind_direction(f0['winddir16Point']),
-            'FCAST0_WIND_DIR_DEG': lang.cardinal(int(f0['winddirDegree']), lang.deg),
-            'FCAST0_WIND_SPEED_KMPH': lang.cardinal(int(f0['windspeedKmph']), lang.kmPh),
-            'FCAST0_WIND_SPEED_MPS': lang.cardinal(kmph2mps(int(f0['windspeedKmph'])), lang.mPs),
-            'FCAST0_WIND_SPEED_MI': int(f0['windspeedMiles']),
-            'FCAST1_TEMP_MIN_C': lang.cardinal(int(f1['tempMinC'])),
-            'FCAST1_TEMP_MAX_C': lang.cardinal(int(f1['tempMaxC']), lang.C),
-            'FCAST1_WEATHER': lang.removeDiacritics(wc[f1['weatherCode']], remove_spaces=True),
-            'FCAST1_WIND_DIR': wind_direction(f1['winddir16Point']),
-            'FCAST1_WIND_DIR_DEG': lang.cardinal(int(f1['winddirDegree']), lang.deg),
-            'FCAST1_WIND_SPEED_KMPH': lang.cardinal(int(f1['windspeedKmph']), lang.kmPh),
-            'FCAST1_WIND_SPEED_MPS': lang.cardinal(kmph2mps(int(f1['windspeedKmph'])), lang.mPs),
-            'FCAST1_WIND_SPEED_MI': int(f1['windspeedMiles']),
+            'FCAST0_TEMP_MIN_C': lang.cardinal(int(f0['mintempC'])),
+            'FCAST0_TEMP_MAX_C': lang.cardinal(int(f0['maxtempC']), lang.C),
+            'FCAST0_WEATHER': lang.removeDiacritics(wc[f00['weatherCode']], remove_spaces=True),
+            'FCAST0_WIND_DIR': wind_direction(f00['winddir16Point']),
+            'FCAST0_WIND_DIR_DEG': lang.cardinal(int(f00['winddirDegree']), lang.deg),
+            'FCAST0_WIND_SPEED_KMPH': lang.cardinal(int(f00['windspeedKmph']), lang.kmPh),
+            'FCAST0_WIND_SPEED_MPS': lang.cardinal(kmph2mps(int(f00['windspeedKmph'])), lang.mPs),
+            'FCAST0_WIND_SPEED_MI': int(f00['windspeedMiles']),
+            'FCAST1_TEMP_MIN_C': lang.cardinal(int(f1['mintempC'])),
+            'FCAST1_TEMP_MAX_C': lang.cardinal(int(f1['maxtempC']), lang.C),
+            'FCAST1_WEATHER': lang.removeDiacritics(wc[f10['weatherCode']], remove_spaces=True),
+            'FCAST1_WIND_DIR': wind_direction(f10['winddir16Point']),
+            'FCAST1_WIND_DIR_DEG': lang.cardinal(int(f10['winddirDegree']), lang.deg),
+            'FCAST1_WIND_SPEED_KMPH': lang.cardinal(int(f10['windspeedKmph']), lang.kmPh),
+            'FCAST1_WIND_SPEED_MPS': lang.cardinal(kmph2mps(int(f10['windspeedKmph'])), lang.mPs),
+            'FCAST1_WIND_SPEED_MI': int(f10['windspeedMiles']),
             }
 
     rv['data'] = lang.removeDiacritics(config.template.format(**data))

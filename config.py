@@ -309,7 +309,7 @@ world_weather_online.template = """\
     {CURRENT_WIND_SPEED_KMPH} _ cisnienie {CURRENT_PRESSURE}
     pokrywa_chmur {CURRENT_CLOUDCOVER} _
 
-    prognoza_na_nastepne piec godzin
+    prognoza_na_nastepne trzy godziny
     {FCAST0_WEATHER} temperatura_minimalna
     {FCAST0_TEMP_MIN_C} maksymalna {FCAST0_TEMP_MAX_C}
     kierunek_wiatru {FCAST0_WIND_DIR} {FCAST0_WIND_DIR_DEG} predkosc_wiatru
