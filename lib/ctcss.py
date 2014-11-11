@@ -62,7 +62,7 @@ CTCSSTones = {'A': 67.0,
 import numpy.oldnumeric as Numeric
 
 
-def getCTCSS(tone, sampleRate=44100, peak=0.9):
+def getCTCSS(tone, sampleRate=16000, peak=0.9):
     # http://www.nabble.com/Chord-player-td21350708.html
     if tone in CTCSSTones:
         tone = CTCSSTones[tone]

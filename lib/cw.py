@@ -72,7 +72,7 @@ morse = {"A": ".-",
 
 
 def cw(text, wpm=25, farnsworth=None, weight=None, pitch=600,
-       volume=0.1, sampleRate=44100):
+       volume=0.1, sampleRate=16000):
 
     text = text.upper()
     if farnsworth is not None:
@@ -90,8 +90,8 @@ def cw(text, wpm=25, farnsworth=None, weight=None, pitch=600,
     if volume > 1.0:
         volume = 1.0
 
-    if sampleRate not in (11025, 22050, 44100):
-        sampleRate = 44100
+    if sampleRate not in (11025, 22050, 16000):
+        sampleRate = 16000
 
     # First of all we have to count lengths of pauses, "dits" and "dahs".
     # There are three kinds of pauses: between dits and dahs (interBeep),
@@ -172,14 +172,15 @@ def sine_array_onecycle(hz, peak=0.9, sampleRate=16000):
     return ((peak * 32767) * Numeric.sin(xvalues)).astype(Numeric.Int16)
 
 
-def sine_array(hz, peak, sampleRate=44100,length=1.0):
+def sine_array(hz, peak, sampleRate=16000,length=1.0):
     # Compute N samples of a sine wave with given frequency and peak amplitude
     # (defaults to one second).
     return Numeric.resize(sine_array_onecycle(hz, peak),
                           int(sampleRate * length))
 
 
-def play(text, wpm=25, farnsworth=None, weight=None, pitch=800, volume=1, sampleRate=44100):
+def play(text, wpm=25, farnsworth=None, weight=None, pitch=800, volume=1,
+        sampleRate=16000):
     s = pygame.sndarray.make_sound(cw(text, wpm, farnsworth, weight, pitch,
                                       volume, sampleRate))
 
@@ -191,6 +192,6 @@ def play(text, wpm=25, farnsworth=None, weight=None, pitch=800, volume=1, sample
 
 if __name__ == '__main__':
     import pygame
-    pygame.mixer.pre_init(44100, -16, 2, 1024)
-    pygame.mixer.init(44100, -16, 2, 1024)
+    pygame.mixer.pre_init(16000, -16, 2, 1024)
+    pygame.mixer.init(16000, -16, 2, 1024)
     play("vvv= test")
