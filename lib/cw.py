@@ -158,10 +158,12 @@ def cw(text, wpm=25, farnsworth=None, weight=None, pitch=600,
         else:
             message = Numeric.concatenate((message, interWord))
 
-    return Numeric.transpose(Numeric.array((message, message)))
+    message = Numeric.transpose(Numeric.array((message, message)))
+    message = message.copy(order='C')
+    return message
 
 
-def sine_array_onecycle(hz, peak=0.9, sampleRate=44100):
+def sine_array_onecycle(hz, peak=0.9, sampleRate=16000):
     # Compute one cycle of an N-Hz sine wave with given peak amplitude
     # http://www.nabble.com/Chord-player-td21350708.html
     length = sampleRate / float(hz)

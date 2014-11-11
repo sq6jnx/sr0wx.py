@@ -70,13 +70,15 @@ def getCTCSS(tone, sampleRate=44100, peak=0.9):
     omega = Numeric.pi * 2 / length
     xvalues = Numeric.arange(int(length)) * omega
     oneCycle = ((peak * 32767) * Numeric.sin(xvalues)).astype(Numeric.Int16)
-    return Numeric.transpose(Numeric.array((oneCycle, oneCycle)))
+    
+    ctcss_tone = Numeric.transpose(Numeric.array((oneCycle, oneCycle)))
+    return ctcss_tone.copy(order='C')
 
 
 def main():
     import pygame
-    pygame.mixer.pre_init(44100, -16, 2, 1024)
-    pygame.mixer.init(44100, -16, 2, 1024)
+    pygame.mixer.pre_init(16000, -16, 2, 1024)
+    pygame.mixer.init(16000, -16, 2, 1024)
     print "Testing CTCSS capability"
     for tone in sorted(CTCSSTones.keys()):
         print "Tone %s, %s Hz..." % (tone, CTCSSTones[tone])
