@@ -62,18 +62,20 @@ for word in dictionary.download_list:
         os.remove(filename + ".ogg")
 
     if not os.path.exists("%s.ogg" % filename):
-        start, end = (0, 0.4575)
+        start, end = dictionary.CUT_START, dictionary.CUT_END
         if dictionary.LANGUAGE == 'pl' and phrase[0:3] == "ę.":
-            start = 0.5
+            start = dictionary.LONG_CUT_START
         if dictionary.LANGUAGE == 'pl' and phrase[-1] == "k":
-            end = 0.73
+            end = dictionary.LONG_CUT_END
 
         url = u"\"http://translate.google.com/translate_tts?tl=%s&q=%s\"" % (dictionary.LANGUAGE, urllib.quote_plus(phrase + " ."))
         os.system("wget -q -U \"Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6\" -O %s.mp3 %s" % (filename, url))
         os.system("lame --decode %s.mp3 %s.wav" % (filename, filename))
         length = float(subprocess.Popen(["soxi", "-D", "%s.wav" % filename],
                                         stdout=subprocess.PIPE).communicate()[0])
-        os.system("sox %s.wav %s.ogg trim %s %s tempo 1.3" % (filename, filename, str(start), str(length - end)))
+        os.system("sox %s.wav %s.ogg trim %s %s tempo %s"\
+            % (filename, filename, str(start), str(length - end),
+               (dictionary.TEMPO)))
 
         os.remove(filename + ".wav")
         os.remove(filename + ".mp3")
