@@ -12,11 +12,11 @@
 
 LANGUAGE = 'pl'
 
-CUT_START = 0.2
-CUT_END = 0.42
+CUT_START = 0.0
+CUT_END = 0.1
 
 LONG_CUT_START = 0.570
-LONG_CUT_END = 0.7
+LONG_CUT_END = 0.42
 
 TEMPO = 1.0
 
@@ -39,7 +39,7 @@ download_list = [
     ["ę. stanisław paweł 6 karol ewa olga", "sp6keo"],
 
 
-    ["tu Stanisław Paweł 6 Jokohama, Roman, Ewa", 'tu_sp6yre'],
+    ["tu Stanisław Paweł 6 Jokohama Roman, Ewa", 'tu_sp6yre'],
     ["tu stanisław kłebek 6 jadwiga natalia kłebek k", 'tu_sq6jnq'],
     ["tu stanisław kłebek 6 adam cezary maria", 'tu_sq6acm'],
     ["tu stanisław paweł 6 karol ewa olga", "tu_sp6keo"],
@@ -108,7 +108,7 @@ download_list = [
     ["dziewiętnasta"], ["dwudziesta"],
 
     ["kierunek wiatru"], ["metr na sekundę"], ["metry na sekundę"],
-    ["metrów na sekunde"], ["kilometr na godzinę"], ["kilometry na godzinę"],
+    ["metrów na sekundę"], ["kilometr na godzinę"], ["kilometry na godzinę"],
     ["kilometrów na godzinę"],
 
     ["ciśnienie"], ["hektopaskal"],
@@ -198,7 +198,7 @@ download_list = [
     # Sample dla WorldWeatherOnline
 
     ['bezchmurnie'], ['burza'], ['burza śnieżna'], ['częściowe zachmurzenie'],
-    ['grad'], ['Intensywne opady śniegu'],
+    ['grad'], ['intensywne opady śniegu'],
     ['lokalna przelotna marznąca mżawka'], ['lokalne burze'],
     ['lokalne przelotne opady deszczu'],
     ['lokalny słaby deszcz'], ['marznąca mgła'], ['marznąca mżawka'],
