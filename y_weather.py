@@ -17,8 +17,8 @@
 #
 
 import datetime
-import urib
-from xm.dom import minidom
+import urllib
+from xml.dom import minidom
 
 fake_gettext = lambda(s): s
 _ = fake_gettext

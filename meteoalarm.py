@@ -37,6 +37,7 @@ def my_import(name):
 
 
 def getAwareness(region, tomorrow=False):
+    a = ""
     r = re.compile('pictures/aw(\d[01]?)([0234]).jpg')
     url = "http://www.meteoalarm.eu/index3.php?area=%s&day=%s&lang=EN"\
         % (str(region), str(int(tomorrow)))
