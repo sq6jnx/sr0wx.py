@@ -33,7 +33,6 @@ worldweatheronline   Bieżące obserwacje meteo i prognoza krótkoterminowa (mod
                      współrzędnych geograficznych)
 wview                Bieżące obserwacje meteo ze stacji pogodowej podłączonej do
                      komputera (za pomocą oprogramowania wview)                     
-y_weather            Informacje o pogodzie z serwisu Yahoo! Weather
 ===========          ===========
 
 Biblioteki

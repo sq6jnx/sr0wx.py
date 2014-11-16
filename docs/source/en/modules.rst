@@ -34,7 +34,6 @@ metar         Current weather conditions on the nearest international airport
 taf           Short-term weather forecast from nearest international airport 
               weather service
 meteoalarm    Regional meteo awarenesses as listed on ``www.meteoalarm.eu``
-y_weather     World-wide weather forecast from Yahoo! Weather
 ===========   ===========
 
 Library modules

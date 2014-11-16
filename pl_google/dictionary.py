@@ -75,19 +75,6 @@ download_list = [
 
     ["źródło"],
 
-    # nazwy zjawisk pogodowych (dla Yahoo! Weather)
-    ['bezchmurnie'], ['burza'], ['burza tropikalna'],
-    ['częściowe zachmurzenie'], ['deszcz'], ['deszcz i deszcz ze śniegiem'],
-    ['deszcz i grad'], ['deszcz ze śniegiem'], ['grad'], ['huragan'],
-    ['intensywne opady śniegu'], ['marznąca mżawka'], ['marznący deszcz'],
-    ['mgła'], ['mżawka'], ['pochmurno'], ['przelotne opady'],
-    ['przelotne opady śniegu'], ['przymrozki'], ['pył'], ['silne burze'],
-    ['silny wiatr'], ['słabe zachmurzenie'], ['słaby śnieg'], ['smog'],
-    ['śnieg'], ['śnieg i deszcz ze śniegiem'], ['tornado'], ['wietrznie'],
-    ['wysokie temperatury'], ['zamglenia'], ['zawieje śnieżne'],
-    ["jahu łeder", "y_weather"],
-
-
     # różne
     ["temperatura"], ["stopień celsjusza"],
     ["minus"], ["stopnie celsjusza"], ["stopni celsjusza"],

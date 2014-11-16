@@ -352,59 +352,6 @@ def readFraction(number, precision):
 class m:
     pass
 
-y_weather = m()
-y_weather.conditions = {
-    '0':  'tornado',                      # tornado
-    '1':  'burza tropikalna',             # tropical storm
-    '2':  'huragan',                      # hurricane
-    '3':  'silne burze',                  # severe thunderstorms
-    '4':  'burza',                        # thunderstorms
-    '5':  'deszcz ze śniegiem',           # mixed rain and snow
-    '6':  'deszcz i deszcz ze śniegiem',  # mixed rain and sleet
-    '7':  'śnieg i deszcz ze śniegiem',   # mixed snow and sleet
-    '8':  'marznąca mżawka',              # freezing drizzle
-    '9':  'mżawka',                       # drizzle
-    '10': 'marznący deszcz',              # freezing rain
-    '11': 'deszcz',                       # showers
-    '12': 'deszcz',                       # showers
-    '13': 'śnieg',                        # snow flurries
-    '14': 'słaby śnieg',                  # light snow showers
-    '15': 'zawieje śnieżne',              # blowing snow
-    '16': 'śnieg',                        # snow
-    '17': 'grad',                         # hail
-    '18': 'deszcz ze śniegiem',           # sleet
-    '19': 'pył',                          # dust
-    '20': 'zamglenia',                    # foggy
-    '21': 'mgła',                         # haze
-    '22': 'smog',                         # smoky
-    '23': 'silny wiatr',                  # blustery
-    '24': 'wietrznie',                    # windy
-    '25': 'przymrozki',                   # cold
-    '26': 'pochmurno',                    # cloudy
-    '27': 'pochmurno',                    # mostly cloudy (night)
-    '28': 'pochmurno',                    # mostly cloudy (day)
-    '29': 'częściowe zachmurzenie',       # partly cloudy (night)
-    '30': 'częściowe zachmurzenie',       # partly cloudy (day)
-    '31': 'bezchmurnie',                  # clear (night)
-    '32': 'bezchmurnie',                  # sunny
-    '33': 'słabe zachmurzenie',           # fair (night)
-    '34': 'słabe zachmurzenie',           # fair (day)
-    '35': 'deszcz i grad',                # mixed rain and hail
-    '36': 'wysokie temperatury',          # hot
-    '37': 'burza',                        # isolated thunderstorms
-    '38': 'burza',                        # scattered thunderstorms
-    '39': 'burza',                        # scattered thunderstorms
-    '40': 'przelotne opady',              # scattered showers
-    '41': 'intensywne opady śniegu',      # heavy snow
-    '42': 'przelotne opady śniegu',       # scattered snow showers
-    '43': 'intensywne opady śniegu',      # heavy snow
-    '44': 'częściowe zachmurzenie',       # partly cloudy
-    '45': 'burza',                        # thundershowers
-    '46': 'śnieg',                        # snow showers
-    '47': 'burza',                        # isolated thundershowers
-    '3200': '',                           # not available
-}
-
 
 # World Weather Online
 
