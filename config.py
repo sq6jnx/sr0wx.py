@@ -16,7 +16,7 @@ pygameBug = 0
 helloMsg = ["tu_eksperymentalna_automatyczna_stacja_pogodowa", "sp6yre", ]
 goodbyeMsg = ["_", "tu_sp6yre", cw('sp6yre')]
 
-modules = ["worldweatheronline", "imgw_podest", "prospect_mp",
+modules = ["worldweatheronline", "imgw_podest",
            "y_weather",]
 
 
@@ -88,51 +88,6 @@ sms_qst.authorized_senders = {'+48501805277': 'sq6jnx',
 debug = m()
 debug.writeLevel = None
 debug.showLevel = 0
-
-prospect_mp = m()
-# obowiązuje ścisła kolejność! domena, rzeka, wodowskaz, stacja
-prospect_mp.wodowskazy = [
-    ['jaslo',    'Ropa',          'Biecz',             'BIRO'],
-    ['jaslo',    'Jasiołka',      'Jasło',             'JAJA'],
-    ['jaslo',    'Jasiołka',      'Jedlicze',          'JEJA'],
-    ['jaslo',    'Wisloka',       'ulica Mickiewicza', 'JSWI'],
-    ['jaslo',    'Kąty',          'Wisłoka',           'KAWI'],
-    ['jaslo',    'Kotań',         'Wisłoka',           'KOWI'],
-    ['jaslo',    'Ropa',          'Łosie',             'LORO'],
-    ['jaslo',    'Wisłoka',       'Majscowa',          'MAWI'],
-    ['jaslo',    'Wisłoka',       'Nowy Żmigród',      'NZWI'],
-    ['jaslo',    'Wisłoka',       'Osiek Jasielski',   'OJWI'],
-    ['jaslo',    'Ropa',          'Skoloszyn',         'SKRO'],
-    ['jaslo',    'Jasiołka',      'Szczepańcowa',      'SZJA'],
-    ['jaslo',    'Ropa',          'Szymbark',          'SZRO'],
-    ['jaslo',    'Jasiołka',      'Tarnowiec',         'TAJA'],
-    ['jaslo',    'Ropa',          'Trzczcinica',       'TRRO'],
-    # ['mielec',   'Wisłoka',       'Gawluszowice',      'GAWI'],
-    # ['mielec',   'Potok Zgórski', 'Podborze',          'POPZ'],
-    # ['mielec',   'Wisłoka',       'Przeclaw',          'PRWI'],
-    # ['mielec',   'Breń Stary',    'Sadkowa Gora',      'SABR'],
-    # ['mielec',   'Wisłoka',       'Wola Mielceka',     'WMWI'],
-    # ['mielec',   'Breń',          'Zabrnie',           'ZABR'],
-    # ['mielec',   'Wisła',         'Zaduszniki',        'ZAWI'],
-    # ['mielec',   'Breń',          'Ziempiniów',        'ZIBR'],
-    ['ropczyce', 'Wielopolka',    'Glinik',            'GLWI'],
-    ['ropczyce', 'Bystrzyca',     'Iwierzyce',         'IWBY'],
-    ['ropczyce', 'Wielopolka',    'Kozodrza',          'KZWI'],
-    ['ropczyce', 'Wielopolka',    'Łączki Kucharskie', 'LKWI'],
-    ['ropczyce', 'Wielopolka',    'Okonin',            'OKWI'],
-    ['ropczyce', 'Bystrzyca',     'Sielec',            'SIBY'],
-    ['ropczyce', 'Budzisz',       'Zagorzyce',         'ZABU'],
-    ['biala',    'Biała',         'Grybów',            'GRBI'],
-    ['biala',    'Biała',         'Pławna',            'PWBI'],
-    ['biala',    'Biała',         'Golanka',           'GOBI'],
-    ['biala',    'Biała',         'Tuchów',            'TUBI'],
-    ['biala',    'Biała',         'Pleśna',            'PLBI'],
-    ['biala',    'Biała',         'Tarnów',            'TABI'],
-    # ['sanok',    'Osława',        'Czaszyn',           'CZOS'],
-    # ['sanok',    'Pielnica',      'Nowosielce',        'NOPI'],
-    # ['sanok',    'San',           'Sanok',             'SASA'],
-    ['lososina', 'Łososina',      'Wronowice',         'WRLO'],
-]
 
 imgw_podest = m()
 
