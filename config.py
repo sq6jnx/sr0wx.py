@@ -17,7 +17,7 @@ helloMsg = ["tu_eksperymentalna_automatyczna_stacja_pogodowa", "sp6yre", ]
 goodbyeMsg = ["_", "tu_sp6yre", cw('sp6yre')]
 
 modules = ["worldweatheronline", "meteoalarm", "imgw_podest", "prospect_mp",
-           "y_weather", 'ibles', ]
+           "y_weather",]
 
 
 class m:
@@ -319,20 +319,6 @@ world_weather_online.template = """\
     {FCAST1_TEMP_MIN_C} maksymalna {FCAST1_TEMP_MAX_C} kierunek_wiatru
     {FCAST1_WIND_DIR} {FCAST1_WIND_DIR_DEG} predkosc_wiatru
     {FCAST1_WIND_SPEED_MPS} {FCAST1_WIND_SPEED_KMPH} _ """
-
-
-# -------------
-# ibles
-# ------------
-
-# Numer swojej strefy najłatwiej sprawdzić na
-# http://bazapozarow.ibles.pl/zagrozenie/ . Możesz podać jedną lub kilka stref,
-# którymi jesteś zainteresowany; w tym drugim przypadku odczytane zostanie
-# najwyższe z występujących zagrożenie nawet jeśli w strefie "obok" zagrożenie
-# nie występuje. Ważne, aby numery stref podać w tablicy.
-
-ibles = m()
-ibles.strefy = [37, 38, 16]
 
 
 # -------------
