@@ -174,19 +174,6 @@ download_list = [
     ['zamglenia'], ['zamieć śnieżna'], ['pokrywa chmur'],
     ['łorld łeder onlajn', "worldweatheronline"],
 
-    # Sample dla povodi_cz
-
-    ['komunikat czeskiego instytutu hydrometeorologicznego'],
-    ['rzeka'], ['wodowskaz'],
-    ['ę. stopień czuwania', 'stopien_czuwania', ],
-    ['ę. stopień gotowości', 'stopien_gotowosci', ],
-    ['ę. stopień zagrożenia', 'stopien_zagrozenia', ],
-    ['ę. stopień ekstremalnych powodzi', 'stopien_ekstremalnych_powodzi'],
-    ['czeski instytut hydrometeorologiczny'],
-
-    # niektóre czeskie nazwy dla povodi_cz (głównie przygraniczne) na potrzeby
-    # SP6TPW i przez niego przetłumaczone. Dzięki, Grzegorz!
-
     # Sample dla radioactive@Home
 
     ['promieniowanie tła'],

@@ -458,17 +458,6 @@ wwo_weather_codes = {'113': 'bezchmurnie',                                      
                      '395': 'burza śnieżna',                                    # Moderate or heavy snow in area with thunder
                      }
 
-# povodi_cz
-
-# awareness levels for povodi_cz
-povodi_cz_welcome = 'komunikat_czeskiego_instytutu_hydrometeorologicznego'
-awalvls = ['',
-           'stopien_czuwania',              # bdelosť, State of Alert
-           'stopien_gotowosci',             # pohotovosť, State of Emergency
-           'stopien_zagrozenia',            # ohrozenie, State of Danger
-           'stopien_ekstremalnych_powodzi'  # extrémna povodeň, extreme flood
-           ]
-
 river = 'rzeka'
 station = 'wodowskaz'
 

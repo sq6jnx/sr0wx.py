@@ -30,8 +30,6 @@ Nazwa                Opis
 ==========           ===========
 imgw_podest          Ostrzeżenia hydrologiczne dla Polski 
                      (z www.pogodynka.pl/podest)
-povodi_cz            Ostrzeżenia hydrologiczne dla Czech i terenów 
-                     przygranicznych (w tym części Polski)
 prospect_mp          Ostrzeżenia hydrologiczne dla południowo-wschodniej 
                      części Polski (zobacz 
                      http://www.prospect.pl/index.php?a=article&art_id=83&m=13)
