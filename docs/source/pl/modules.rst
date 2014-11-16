@@ -28,11 +28,7 @@ Moduły danych
 ==========           ===========
 Nazwa                Opis
 ==========           ===========
-worldweatheronline   Bieżące obserwacje meteo i prognoza krótkoterminowa (moduł
-                     konkurencyjny dla y_weather, w teorii pogoda dla podanych
-                     współrzędnych geograficznych)
-wview                Bieżące obserwacje meteo ze stacji pogodowej podłączonej do
-                     komputera (za pomocą oprogramowania wview)                     
+worldweatheronline   Bieżące obserwacje meteo i prognoza krótkoterminowa
 ===========          ===========
 
 Biblioteki
