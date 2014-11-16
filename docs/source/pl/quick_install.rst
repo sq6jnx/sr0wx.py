@@ -199,26 +199,6 @@ Najpierw jednak należy dokonać kilku zmian:
     cd pl_google
     python google_tts_downloader.py dictionary.py
 
-    4. Przejdź do katalogu głównego i wygeneruj listę plików dla swojej zlewni
-    rzek. Z mapki wynika, że interesować cię będzie zlewnia nr 6, 7 i 11
-
-    cd ..
-    python imgw_podest.py
-
-    Wyjście tych trzech poleceń wklej w odpowiednie (podobnie wyglądające)
-    miejsce w config.py
-
-    python imgw_podest.py 3
-    python imgw_podest.py 7
-
-    pliki dla google_tts_downloader możesz wygenerować teraz poprzez:
-
-    python imgw_podest.py gen 6 > pl_google/3.py
-    python imgw_podest.py gen 6 > pl_google/7.py
-    cd pl_google
-    python google_tts_downloader.py 3.py
-    python google_tts_downloader.py 7.py
-
 .. note ::
 
     Należy też znaleźć prosty mechanizm na wyłapywanie potencjalnie za małych

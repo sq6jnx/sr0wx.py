@@ -28,9 +28,6 @@ Moduły danych
 ==========           ===========
 Nazwa                Opis
 ==========           ===========
-imgw_podest          Ostrzeżenia hydrologiczne dla Polski 
-                     (z www.pogodynka.pl/podest)
-                     http://www.prospect.pl/index.php?a=article&art_id=83&m=13)
 worldweatheronline   Bieżące obserwacje meteo i prognoza krótkoterminowa (moduł
                      konkurencyjny dla y_weather, w teorii pogoda dla podanych
                      współrzędnych geograficznych)

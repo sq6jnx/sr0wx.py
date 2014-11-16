@@ -55,7 +55,7 @@ zamieniający tekst na telegrafię: ::
 I już prawie koniec. Definiowanie jakie moduły mają być uruchamiane podczas
 startu jest równie łatwe: ::
   
-  modules = ["imgw_podest", "y_weather"]
+  modules = ["module_a", "module_b"]
 
 I to już w zasadzie koniec ustawiania modułu głównego, Kolejne linie
 ``config.py`` to już tylko konfiguracja poszczególnych modułów. Zaczyna się to

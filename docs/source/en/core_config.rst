@@ -54,7 +54,7 @@ callsign in CW we import tiny module to translate text to morse code: ::
 Almost done. Defining which modules should be run at each start and in which
 order is self explanatory: ::
   
-  modules = ["imgw_podest", "y_weather"]
+  modules = ["module_a", "module_b"]
 
 Actually, that's all for the ``core``. Next lines (and this is probably 75% of
 the whole ``config.py`` are **modules** configuration. This starts from a
