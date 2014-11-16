@@ -406,54 +406,7 @@ y_weather.conditions = {
 }
 
 
-# These dictionaries are used by meteoalarm module.
-meteoalarmAwarenesses = ["",
-                         "silny_wiatr",
-                         "snieg_lub_oblodzenie",
-                         "burze",
-                         "mgly",
-                         "wysokie_temperatury",
-                         "niskie_temperatury",
-                         "zjawiska_strefy_brzegowej",
-                         "pozary_lasow",
-                         "lawiny",
-                         "intensywne_opady_deszczu",
-                         "inne_zagrozenia",
-                         ]
-
-meteoalarmAwarenessLvl = ["nieokreslony",
-                          "",
-                          "niski",
-                          "sredni",
-                          "wysoki",
-                          ]
-
-meteoalarmAwarenessLevel = "poziom_zagrozenia"
-meteoalarmRegions = {'PL001': "mazowieckiego",
-                     'PL002': "lubuskiego",
-                     'PL003': "zachodniopomorskiego",
-                     'PL004': "pomorskiego",
-                     'PL005': "dolnoslaskiego",
-                     'PL006': "opolskiego",
-                     'PL007': "śląskiego",
-                     'PL008': "malopolskiego",
-                     'PL009': "podkarpackiego",
-                     'PL010': "świętokrzyskiego",
-                     'PL011': "łódzkiego",
-                     'PL012': "wielkopolskiego",
-                     'PL013': "kujawsko_pomorskiego",
-                     'PL014': "warminsko_mazurskiego",
-                     'PL015': "lubelskiego",
-                     'PL016': "podlaskiego",
-                     }
-
-meteoalarmAwareness = "zagrozenia_meteorologiczne_dla_wojewodztwa"
-today = "dzis"
-tomorrow = "jutro"
-
-
 # World Weather Online
-
 
 wwo_weather_codes = {'113': 'bezchmurnie',                                      # Clear/Sunny
                      '116': 'częściowe zachmurzenie',                           # Partly Cloudy

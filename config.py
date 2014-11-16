@@ -16,7 +16,7 @@ pygameBug = 0
 helloMsg = ["tu_eksperymentalna_automatyczna_stacja_pogodowa", "sp6yre", ]
 goodbyeMsg = ["_", "tu_sp6yre", cw('sp6yre')]
 
-modules = ["worldweatheronline", "meteoalarm", "imgw_podest", "prospect_mp",
+modules = ["worldweatheronline", "imgw_podest", "prospect_mp",
            "y_weather",]
 
 
@@ -88,31 +88,6 @@ sms_qst.authorized_senders = {'+48501805277': 'sq6jnx',
 debug = m()
 debug.writeLevel = None
 debug.showLevel = 0
-
-# ----------
-# meteoalarm
-# ----------
-meteoalarm = m()
-
-# There are three things you should configure in meteoalarm module:
-# region number, if module should show meteo awareness for today and
-# and if it should show awareness for tommorow.
-#
-# Here is the list of region codes for Poland. You can find region
-# numbers for other countries on www.meteoalarm.eu .
-#
-# PL011: Łódzkie                PL007: Śląskie
-# PL010: Świętokrzyskie         PL005: Dolnośląskie
-# PL013: Kujawsko-pomorskie     PL015: Lubelskie
-# PL002: Lubuskie               PL008: Małopolskie
-# PL001: Mazowieckie            PL007: Opolskie
-# PL009: Podkarpackie           PL016: Podlaskie
-# PL004: Pomorskie              PL014: Warmińsko-mazurskie
-# PL012: Wielkopolskie          PL003: Zachodniopomorskie
-
-meteoalarm.region = 'PL005'
-meteoalarm.showToday = 1
-meteoalarm.showTomorrow = 1
 
 prospect_mp = m()
 # obowiązuje ścisła kolejność! domena, rzeka, wodowskaz, stacja

@@ -28,8 +28,6 @@ Moduły danych
 ==========           ===========
 Nazwa                Opis
 ==========           ===========
-meteoalarm           Informacje o zagrożeniach meteorologicznych ze strony
-                     www.meteoalarm.eu
 imgw_podest          Ostrzeżenia hydrologiczne dla Polski 
                      (z www.pogodynka.pl/podest)
 povodi_cz            Ostrzeżenia hydrologiczne dla Czech i terenów 
