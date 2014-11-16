@@ -224,16 +224,6 @@ download_list = [
     ['tendencja wzrostowa'], ['tendencja spadkowa'],
     ['służba górska republiki czeskiej', 'hscr'],
 
-    # Sample dla gopr_laviny
-
-    ['ę.  komunikat górskiego ochotniczego pogotowia ratunkowego'],
-    ["ę.  w karkonoszach"], ["w regionie babiej góry"],
-    ["w pieninach"], ["w bieszczadach"], ["ę.  obowiązuje"],
-    ["pierwszy"], ["drugi"], ["trzeci"], ["czwarty"],
-    ["ę. piąty, najwyższy", 'piaty_najwyzszy'],
-    ['ę.  stopień zagrożenia lawinowego'],
-    ['tendencja wzrostowa'], ['tendencja spadkowa'], ['gopr'],
-
     # Sample dla povodi_cz
 
     ['komunikat czeskiego instytutu hydrometeorologicznego'],

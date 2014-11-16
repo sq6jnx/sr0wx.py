@@ -28,7 +28,6 @@ Moduły danych
 ==========           ===========
 Nazwa                Opis
 ==========           ===========
-gopr_lawiny          Ostrzeżenia lawinowe wydawane przez GOPR
 hscr_laviny          Ostrzeżenia lawinowe wydawane przez HSCR (Horská služba
                      ČR), czeski GOPR
 meteoalarm           Informacje o zagrożeniach meteorologicznych ze strony

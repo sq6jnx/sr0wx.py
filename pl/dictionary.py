@@ -8,7 +8,7 @@
 # they're made with free (beer)/open source/free (freedom) software,
 # but I have no idea.
 
-# This is the GENERAL download list and settings for polish language 
+# This is the GENERAL download list and settings for polish language
 
 LANGUAGE = 'pl'
 
@@ -35,8 +35,8 @@ download_list = [
 ["stan pogody z dnia k",],
 
 ["pierwszego"], ["drugiego"], ["trzeciego"], ["czwartego"],
-["piątego"], ["szóstego"], ["siódmego"], 
-["ę. ósmego", 'osmego'], ["dziewiątego"], ["dziesiątego"], 
+["piątego"], ["szóstego"], ["siódmego"],
+["ę. ósmego", 'osmego'], ["dziewiątego"], ["dziesiątego"],
 ["jedenastego"], ["dwunastego"],
 ["trzynastego"], ["czternastego"], ["piętnastego"],
 ["szesnastego"], ["siedemnastego"], ["osiemnastego"],
@@ -56,7 +56,7 @@ download_list = [
 ["siedemnaście"], ["osiemnaście"], ["dziewiętnaście"],
 ["dwadzieścia"], ["trzydzieści"], ["czterdzieści"],
 ["pięćdziesiąt"], ["sześćdziesiąt"], ["siedemdziesiąt"],
-["osiemdziesiąt"], ["dziewięćdziesiąt"], ["sto"], 
+["osiemdziesiąt"], ["dziewięćdziesiąt"], ["sto"],
 ["dwieście"], ["trzysta"], ["czterysta"], ["pięćset"],
 ["sześćset"], ["siedemset"], ["osiemset"], ["dziewięćset"],
 ["tysiąc"],
@@ -82,7 +82,7 @@ download_list = [
 ["kierunek wiatr"], ["północny"], ["północno"], ["wschodni"],
 ["wschodnio"], ["zachodni"], ["zachodnio"], ["południowy"],
 ["południowo"], ["wilgotność"], ["procent"], ["prędkość wiatru"],
-["metr na sekundę"], ["metrów na sekundę"], 
+["metr na sekundę"], ["metrów na sekundę"],
 ["stopień"],["stopnie"],["stopni"],
 ["widoczność"], ["kilometr"], ["kilometry"],
 ["kilometrów"], ["temperatura odczuwalna"],
@@ -96,7 +96,7 @@ download_list = [
 ["dziewiętnasta"], ["dwudziesta"],
 
 ["kierunek wiatru"], ["metr na sekundę"], ["metry na sekundę"],
-["metrów na sekunde"], 
+["metrów na sekunde"],
 ["kilometr na godzinę"], ["kilometry na godzinę"], ["kilometrów na godzinę"],
 
 ["ciśnienie"], ["hektopaskal"],
@@ -110,7 +110,7 @@ download_list = [
 ['komunikat specjalny od'],
 ['powtarzam komunikat'],
 
-# literowanie polskie wg. "Krótkofalarstwo i radiokomunikacja - poradnik", 
+# literowanie polskie wg. "Krótkofalarstwo i radiokomunikacja - poradnik",
 # Łukasz Komsta SQ8QED, Wydawnictwa Komunikacji i Łączności Warszawa, 2001,
 # str. 130 (z drobnymi modyfikacjami fonetycznymi)
 
@@ -207,18 +207,8 @@ download_list = [
 ['w karkonoszach'],['w jesionikach i masywie śnieżnika'], ['obowiązuje'],
 ["pierwszy"],["drugi"],["trzeci"],["czwarty"],
 ["piąty, najwyższy", 'piaty_najwyzszy'], ['stopień zagrożenia lawinowego'],
-['tendencja wzrostowa'],['tendencja spadkowa'], 
+['tendencja wzrostowa'],['tendencja spadkowa'],
 ['służba górska republiki czeskiej','hscr'],
-
-# Sample dla gopr_laviny
-
-['ę.  komunikat górskiego ochotniczego pogotowia ratunkowego'],
-["ę.  w karkonoszach"], ["w regionie babiej góry"],
-["w pieninach"], ["w bieszczadach"], ["ę.  obowiązuje"],
-["pierwszy"],["drugi"],["trzeci"],["czwarty"],
-["ę. piąty, najwyższy", 'piaty_najwyzszy'], 
-['ę.  stopień zagrożenia lawinowego'],
-['tendencja wzrostowa'],['tendencja spadkowa'],['gopr'],
 
 # Sample dla povodi_cz
 
