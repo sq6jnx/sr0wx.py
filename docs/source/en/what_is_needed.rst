@@ -18,7 +18,7 @@ internet connection
   to supply data. sr0wx.py can use many different datasorces (see modules
   page). You'll get best results with cable connection, but any source is OK
   (wireless, GSM, etc.). By the way, GSM USB dongle may be usefull to broadcast
-  and read aloud SMS messages (see ``SMS_QTC``).
+  and read aloud SMS messages (currently not supported).
   
 good location
   this is: station's antenna should be high enough so the station is received

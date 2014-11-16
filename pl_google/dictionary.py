@@ -117,11 +117,6 @@ download_list = [
     ["temperatura minimalna"], ["maksymalna"],
     ["następnie"],
 
-    # sms_qst
-
-    ['komunikat specjalny od'],
-    ['powtarzam komunikat'],
-
     # literowanie polskie wg. "Krótkofalarstwo i radiokomunikacja - poradnik",
     # Łukasz Komsta SQ8QED, Wydawnictwa Komunikacji i Łączności Warszawa, 2001,
     # str. 130 (z drobnymi modyfikacjami fonetycznymi)

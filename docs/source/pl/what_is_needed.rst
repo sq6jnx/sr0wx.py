@@ -20,8 +20,7 @@ nadajnik
 połączenie internetowe
   do zapiewnienia dostępu do danych. ``sr0wx.py`` może pobierać dane z wielu
   różnych źródeł (zobacz stronę moduły). Najlepsze efekty otrzymasz podłączając
-  się za pomocą przewodu, ale każdy sposób (WiFi, GSM, ...) jest dobry. Przy
-  okazji, modem USB może być potrzebny do obsługi modułu ``SMS_QTC``.
+  się za pomocą przewodu, ale każdy sposób (WiFi, GSM, ...) jest dobry.
   
 dobra lokalizacja:
   to znaczy, że: Antena stacji powinna być na tyle wysoko, aby stacja była

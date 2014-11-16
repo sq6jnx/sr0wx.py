@@ -44,47 +44,6 @@ y_weather.template = """\
     {FORECAST1_MIN_TEMP_SHORT} maksymalna {FORECAST1_MAX_TEMP} _
     """
 
-# ----------
-# sms_qst
-# ----------
-
-sms_qst = m()
-sms_qst.max_sim_capacity = 255
-sms_qst.db_file = 'sms_qst.sqlite'  # or ':memory:' for on-memory db
-sms_qst.temp_file = '/tmp/sms_qst_{ID}.wav'
-sms_qst.leave_messages_on_sim = True  # You can delete or leave SMS on SIMCard after reading
-
-# command in subprocess.Popen form
-# espeak
-sms_qst.tts_command = [['/usr/bin/espeak', '-a', '200', '-p', '64',
-                        '-s', '170', '{MESSAGE}', '-g', '5', '-v', 'pl',
-                        '-w', sms_qst.temp_file, ], ]
-# festival with mbrola voice -- ugly
-# you need fest.conf file with two lines in it:
-# (voice_pjwstk_pl_ks_mbrola)
-# (Parameter.set 'Duration_Stretch 1.25)
-# sms_qst.tts_command = [
-#    ['echo', '{MESSAGE}',],
-#    ['iconv', '-f', 'UTF-8', '-t', 'ISO_8859-2'],
-#    ['text2wave', '-o', sms_qst.temp_file, '-eval', 'fest.conf']
-# ]
-
-# espeak with mbrola -- doesn't work??
-# sms_qst.tts_command = [
-#    ['/usr/bin/espeak', '-a', '100', '-p', '64',
-#    '-s', '170', '-g', '10', '-v', 'mb-pl1', '{MESSAGE}'],
-#
-#    ['/usr/bin/mbrola', '-e', '/usr/share/mbrola/pl1/pl1',
-#    '-t', '2',
-#     '-', sms_qst.temp_file]
-# ]
-sms_qst.template = """\
-    komunikat_specjalny_od {CALL} _ {MESSAGE} _
-    powtarzam_komunikat _ {MESSAGE}"""
-sms_qst.authorized_senders = {'+48501805277': 'sq6jnx',
-                              '+48603186430': 'sq6jnq',
-                              }
-
 debug = m()
 debug.writeLevel = None
 debug.showLevel = 0

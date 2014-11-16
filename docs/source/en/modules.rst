@@ -35,7 +35,6 @@ taf           Short-term weather forecast from nearest international airport
               weather service
 meteoalarm    Regional meteo awarenesses as listed on ``www.meteoalarm.eu``
 imgw_podest   Hydrological awarenesses for Poland (via www.pogodynka.pl/podest)
-sms_qst       Module for reading messages supplied by SMS. As of 2011-09-05 in alpha stage.
 y_weather     World-wide weather forecast from Yahoo! Weather
 ===========   ===========
 
