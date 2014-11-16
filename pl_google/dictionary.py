@@ -215,15 +215,6 @@ download_list = [
     ['zamglenia'], ['zamieć śnieżna'], ['pokrywa chmur'],
     ['łorld łeder onlajn', "worldweatheronline"],
 
-    # Sample dla hscr_laviny
-
-    ['komunikat czeskiej służby ratownictwa górskiego'],
-    ['w karkonoszach'], ['w jesionikach i masywie śnieżnika'], ['obowiązuje'],
-    ["pierwszy"], ["drugi"], ["trzeci"], ["czwarty"],
-    ["piąty, najwyższy", 'piaty_najwyzszy'], ['stopień zagrożenia lawinowego'],
-    ['tendencja wzrostowa'], ['tendencja spadkowa'],
-    ['służba górska republiki czeskiej', 'hscr'],
-
     # Sample dla povodi_cz
 
     ['komunikat czeskiego instytutu hydrometeorologicznego'],
