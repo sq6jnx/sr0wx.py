@@ -42,8 +42,6 @@ prospect_mp          Ostrzeżenia hydrologiczne dla południowo-wschodniej
                      http://www.prospect.pl/index.php?a=article&art_id=83&m=13)
 sms_qst              Moduł odczytywania głosowego i dystrybucji informacji SMS 
                      (na dzień 2011-09-05 wciąż w fazie alpha).
-sunriset             Godziny wschodu i zachodu słońca dla danych współrzędnych
-                     geograficznych
 worldweatheronline   Bieżące obserwacje meteo i prognoza krótkoterminowa (moduł
                      konkurencyjny dla y_weather, w teorii pogoda dla podanych
                      współrzędnych geograficznych)
