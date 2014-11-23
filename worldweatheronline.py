@@ -22,22 +22,7 @@ import datetime
 import pytz
 import logging
 
-class SR0WXModule(object):
-    def __init__(self):
-        pass
-
-    def getData(self):
-        """Deprecated method. Runs `get_data()`."""
-        import warnings
-        msg = "Use if getData() is deprecated, use get_data() instead"
-        warnings.warn(msg)
-        return self.get_data()
-
-    def get_data(self):
-        """Returns message to be played back by core of sr0wx.py. Not
-implemented here"""
-        msg = "This method should be implemented in child class"
-        raise NotImplementedError(msg)
+from sr0wx_module import SR0WXModule
 
 
 class WorldWeatherOnline(SR0WXModule):
@@ -165,4 +150,4 @@ tricky part, so best see example config."""
 def getData(l):
     from config import world_weather_online as config
     wwo = WorldWeatherOnline(**config)
-    return wwo.getData()
+    return wwo.get_data()
