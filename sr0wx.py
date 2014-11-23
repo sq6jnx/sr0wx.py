@@ -211,7 +211,7 @@ for el in data:
             soundSamples[el] = pygame.mixer.Sound(el[7:])
         if el is not "_" and el not in soundSamples:
             if not os.path.isfile(config.lang + "/" + el + ".ogg"):
-                debug.log("CORE", "couldn't find %s" % (config.lang + "/" + el + ".ogg"), 3)
+                logger.warn("Couldn't find %s" % (config.lang + "/" + el + ".ogg"))
                 soundSamples[el] = pygame.sndarray.make_sound(cw.cw("^"))
                 if config.pygameBug == 1:
                     soundSamples[el] = pygame.sndarray.make_sound(pygame.sndarray.array(soundSamples[el])[:len(pygame.sndarray.array(soundSamples[el]))/2])
