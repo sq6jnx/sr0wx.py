@@ -52,13 +52,12 @@
 #
 # SR0WX (core) requires the following packages:
 
-import debug
 import getopt
 import lib.cw as cw
 import os
 import pygame
 import sys
-import traceback
+import logging, logging.handlers
 
 # ``os``, ``sys`` and ``time`` doesn't need further explanation, these are
 # syandard Python packages.
@@ -76,6 +75,29 @@ import traceback
 # For infrmational purposes script says hello and gives local time/date,
 # so it will be possible to find out how long script was running.
 
+# Logging configuration
+def setup_logging(config):
+    # create formatter and add it to the handlers
+    formatter = logging.Formatter(config.logline_format)
+
+    logger = logging.getLogger()
+    logger.setLevel(min(config.console_log_level, config.file_log_level))
+
+    # create file handler which logs even debug messages
+    file_handler = config.file_handler(**config.file_handler_config)
+    file_handler.setLevel(config.file_log_level)
+
+    # create console handler with a higher log level
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(config.console_log_level)
+    console_handler.setFormatter(formatter)
+    file_handler.setFormatter(formatter)
+    # add the handlers to logger
+    logger.addHandler(console_handler)
+    logger.addHandler(file_handler)
+
+    return logger
+
 
 def my_import(name):
     mod = __import__(name)
@@ -83,22 +105,6 @@ def my_import(name):
     for comp in components[1:]:
         mod = getattr(mod, comp)
     return mod
-
-debug.log("CORE", "sr0wx.py started")
-debug.log("LEGAL", "")
-debug.log("LEGAL", "Copyright 2009-2012 Michal Sadowski (sq6jnx at hamradio dot pl)")
-debug.log("LEGAL", "")
-debug.log("LEGAL", "Licensed under the Apache License, Version 2.0 (the \"License\");")
-debug.log("LEGAL", "you may not use this file except in compliance with the License.")
-debug.log("LEGAL", "You may obtain a copy of the License at")
-debug.log("LEGAL", "")
-debug.log("LEGAL", "    http://www.apache.org/licenses/LICENSE-2.0")
-debug.log("LEGAL", "")
-debug.log("LEGAL", "Unless required by applicable law or agreed to in writing, software")
-debug.log("LEGAL", "distributed under the License is distributed on an \"AS IS\" BASIS,")
-debug.log("LEGAL", "WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.")
-debug.log("LEGAL", "See the License for the specific language governing permissions and")
-debug.log("LEGAL", "limitations under the License.")
 
 #
 # All datas returned by SR0WX modules will be stored in ``data`` variable.
@@ -128,6 +134,26 @@ for opt, arg in opts:
 if config is None:
     import config
 
+logger = setup_logging(config)
+
+logger.info("sr0wx.py started")
+logger.info('''
+Copyright 2009-2014 Michal Sadowski (sq6jnx at hamradio dot pl)
+
+Licensed under the Apache License, Version 2.0 (the \"License\");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an \"AS IS\" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.''')
+logger.info("sr0wx.py started")
+
+
 if len(args) > 0:
     modules = args[0].split(",")
 else:
@@ -139,7 +165,7 @@ sources = [lang.source, ]
 
 for m in modules:
     try:
-        debug.log("CORE", "starting %s..." % (m,))
+        logger.info("starting %s...", m)
         module = __import__(m)
         moduleData = module.getData(config.lang)
         data = " ".join((data, moduleData["data"]))
@@ -148,8 +174,7 @@ for m in modules:
                 and moduleData['source'] != '':
             sources.append(moduleData['source'])
     except:
-        exceptionType, exceptionValue, exceptionTraceback = sys.exc_info()
-        debug.log("CORE", traceback.format_exc(), 6)
+        logger.exception("Exception when running %s", m)
 
 # When all the modules finished its' work it's time to ``.split()`` returned
 # data. Every element of returned list is actually a filename of a sample.
@@ -178,10 +203,10 @@ for el in data:
     else:
         playlist.append("[sndarray]")
 
-debug.log("CORE", "playlist elements: %s" % (" ".join(playlist)))
-debug.log("CORE", "loading sound samples...")
+logger.info("playlist elements: %s", " ".join(playlist))
+logger.info("loading sound samples...")
 
-debug.log("CORE", "playing sound samples")
+logger.info("playing sound samples")
 
 soundSamples = {}
 for el in data:
@@ -220,7 +245,8 @@ if config.serialPort is not None:
             ser.setDTR(1)
             ser.setRTS(0)
     except:
-        debug.log("CORE", "Failed to open %s@%i" % (config.serialPort, config.serialBaudRate), 3)
+        log = "Failed to open serial port %s@%i"
+        logger.error(log, config.serialPort, config.serialBaudRate)
 
 pygame.time.delay(1000)
 
@@ -254,17 +280,21 @@ for el in data:
 # other stuff) before closing the ``pygame`` mixer and display some debug
 # informations.
 
-debug.log("CORE", "finishing...")
+logger.info("finishing...")
 
 pygame.time.delay(1000)
 
 # If we've opened serial it's now time to close it.
-if config.serialPort is not None:
-    ser.close()
+try:
+    if config.serialPort is not None:
+        ser.close()
+except NameError:
+    logging.exception("Couldn't close serial port")
+
 
 pygame.mixer.quit()
 
-debug.log("CORE", "goodbye")
+logging.info("goodbye")
 
 # Documentation is a good thing when you need to double or triple your
 # Lines-Of-Code index ;)

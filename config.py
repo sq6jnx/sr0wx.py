@@ -1,6 +1,21 @@
 #!/usr/bin/python -tt
 # -*- coding: utf-8 -*-
 
+import logging, logging.handlers
+
+console_log_level = logging.DEBUG
+file_log_level = logging.ERROR
+logline_format = '%(asctime)s %(name)s %(levelname)s: %(message)s'
+file_handler = logging.handlers.TimedRotatingFileHandler
+file_handler_config = {
+    'filename': 'sr0wx.log',
+    'when': 'D',
+    'interval': 1,
+    'backupCount': 30,
+    'delay': True,
+    'utc': True,
+}
+
 CTCSS = 88.8
 playCTCSS = False
 CTCSSVolume = 0.1
