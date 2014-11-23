@@ -355,55 +355,56 @@ class m:
 
 # World Weather Online
 
-wwo_weather_codes = {'113': 'bezchmurnie',                                      # Clear/Sunny
-                     '116': 'częściowe zachmurzenie',                           # Partly Cloudy
-                     '119': 'pochmurno',                                        # Cloudy
-                     '122': 'zachmurzenie całkowite',                           # Overcast
-                     '143': 'zamglenia',                                        # Mist
-                     '176': 'lokalne przelotne opady deszczu',                  # Patchy rain nearby
-                     '179': 'śnieg',                                            # Patchy snow nearby
-                     '182': 'śnieg z deszczem',                                 # Patchy sleet nearby
-                     '185': 'lokalna przelotna marznąca mżawka',                # Patchy freezing drizzle nearby
-                     '200': 'lokalne burze',                                    # Thundery outbreaks in nearby
-                     '227': 'zamieć śnieżna',                                   # Blowing snow
-                     '230': 'zamieć śnieżna',                                   # Blizzard
-                     '248': 'mgła',                                             # Fog
-                     '260': 'marznąca mgła',                                    # Freezing fog
-                     '263': 'mżawka',                                           # Patchy light drizzle
-                     '266': 'mżawka',                                           # Light drizzle
-                     '281': 'marznąca mżawka',                                  # Freezing drizzle
-                     '284': 'marznąca mżawka',                                  # Heavy freezing drizzle
-                     '293': 'lokalny słaby deszcz',                             # Patchy light rain
-                     '296': 'słaby deszcz',                                     # Light rain
-                     '299': 'przelotne opady deszczu',                          # Moderate rain at times
-                     '302': 'umiarkowane opady deszczu',                        # Moderate rain
-                     '305': 'przelotne ulewy',                                  # Heavy rain at times
-                     '308': 'ulewy',                                            # Heavy rain
-                     '311': 'słabe opady marznącego deszczu',                   # Light freezing rain
-                     '314': 'umiarkowane opady marznącego deszczu',             # Moderate or Heavy freezing rain
-                     '317': 'słabe opady śniegu z deszczem',                    # Light sleet
-                     '320': 'umiarkowane lub ciężkie opady śniegu z deszczem',  # Moderate or heavy sleet
-                     '323': 'słabe opady śniegu',                               # Patchy light snow
-                     '326': 'słabe opady śniegu',                               # Light snow
-                     '329': 'umiarkowane opady śniegu',                         # Patchy moderate snow
-                     '332': 'umiarkowane opady śniegu',                         # Moderate snow
-                     '335': 'opady śniegu',                                     # Patchy heavy snow
-                     '338': 'intensywne_opady_sniegu',                          # Heavy snow
-                     '350': 'grad',                                             # Ice pellets
-                     '353': 'słabe przelotne opady deszczu',                    # Light rain shower
-                     '356': 'przelotne opady deszczu',                          # Moderate or heavy rain shower
-                     '359': 'ulewny deszcz',                                    # Torrential rain shower
-                     '362': 'słabe opady śniegu z deszczem',                    # Light sleet showers
-                     '365': 'umiarkowane opady śniegu z deszczem',              # Moderate or heavy sleet showers
-                     '368': 'słabe opady śniegu',                               # Light snow showers
-                     '371': 'umiarkowane opady śniegu',                         # Moderate or heavy snow showers
-                     '374': 'słabe opady śniegu ziarnistego',                   # Light showers of ice pellets
-                     '377': 'umiarkowane opady śniegu ziarnistego',             # Moderate or heavy showers of ice pellets
-                     '386': 'burza',                                            # Patchy light rain in area with thunder
-                     '389': 'burza',                                            # Moderate or heavy rain in area with thunder
-                     '392': 'burza śnieżna',                                    # Patchy light snow in area with thunder
-                     '395': 'burza śnieżna',                                    # Moderate or heavy snow in area with thunder
-                     }
+wwo_weather_codes = {
+    '113': 'bezchmurnie',                                      # Clear/Sunny
+    '116': 'częściowe zachmurzenie',                           # Partly Cloudy
+    '119': 'pochmurno',                                        # Cloudy
+    '122': 'zachmurzenie całkowite',                           # Overcast
+    '143': 'zamglenia',                                        # Mist
+    '176': 'lokalne przelotne opady deszczu',                  # Patchy rain nearby
+    '179': 'śnieg',                                            # Patchy snow nearby
+    '182': 'śnieg z deszczem',                                 # Patchy sleet nearby
+    '185': 'lokalna przelotna marznąca mżawka',                # Patchy freezing drizzle nearby
+    '200': 'lokalne burze',                                    # Thundery outbreaks in nearby
+    '227': 'zamieć śnieżna',                                   # Blowing snow
+    '230': 'zamieć śnieżna',                                   # Blizzard
+    '248': 'mgła',                                             # Fog
+    '260': 'marznąca mgła',                                    # Freezing fog
+    '263': 'mżawka',                                           # Patchy light drizzle
+    '266': 'mżawka',                                           # Light drizzle
+    '281': 'marznąca mżawka',                                  # Freezing drizzle
+    '284': 'marznąca mżawka',                                  # Heavy freezing drizzle
+    '293': 'lokalny słaby deszcz',                             # Patchy light rain
+    '296': 'słaby deszcz',                                     # Light rain
+    '299': 'przelotne opady deszczu',                          # Moderate rain at times
+    '302': 'umiarkowane opady deszczu',                        # Moderate rain
+    '305': 'przelotne ulewy',                                  # Heavy rain at times
+    '308': 'ulewy',                                            # Heavy rain
+    '311': 'słabe opady marznącego deszczu',                   # Light freezing rain
+    '314': 'umiarkowane opady marznącego deszczu',             # Moderate or Heavy freezing rain
+    '317': 'słabe opady śniegu z deszczem',                    # Light sleet
+    '320': 'umiarkowane lub ciężkie opady śniegu z deszczem',  # Moderate or heavy sleet
+    '323': 'słabe opady śniegu',                               # Patchy light snow
+    '326': 'słabe opady śniegu',                               # Light snow
+    '329': 'umiarkowane opady śniegu',                         # Patchy moderate snow
+    '332': 'umiarkowane opady śniegu',                         # Moderate snow
+    '335': 'opady śniegu',                                     # Patchy heavy snow
+    '338': 'intensywne_opady_sniegu',                          # Heavy snow
+    '350': 'grad',                                             # Ice pellets
+    '353': 'słabe przelotne opady deszczu',                    # Light rain shower
+    '356': 'przelotne opady deszczu',                          # Moderate or heavy rain shower
+    '359': 'ulewny deszcz',                                    # Torrential rain shower
+    '362': 'słabe opady śniegu z deszczem',                    # Light sleet showers
+    '365': 'umiarkowane opady śniegu z deszczem',              # Moderate or heavy sleet showers
+    '368': 'słabe opady śniegu',                               # Light snow showers
+    '371': 'umiarkowane opady śniegu',                         # Moderate or heavy snow showers
+    '374': 'słabe opady śniegu ziarnistego',                   # Light showers of ice pellets
+    '377': 'umiarkowane opady śniegu ziarnistego',             # Moderate or heavy showers of ice pellets
+    '386': 'burza',                                            # Patchy light rain in area with thunder
+    '389': 'burza',                                            # Moderate or heavy rain in area with thunder
+    '392': 'burza śnieżna',                                    # Patchy light snow in area with thunder
+    '395': 'burza śnieżna',                                    # Moderate or heavy snow in area with thunder
+}
 
 river = 'rzeka'
 station = 'wodowskaz'
