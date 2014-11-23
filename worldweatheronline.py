@@ -20,6 +20,7 @@ import urllib2
 import json
 import datetime
 import pytz
+import logging
 from config import world_weather_online as config
 
 
@@ -48,6 +49,8 @@ kmph2mps = lambda s: int(round(float(s)*(5.0/18.0)))
 def getData(l):
     global lang
     lang = my_import(l + "." + l)
+    logger = logging.getLogger(__name__)
+
     rv = {'data': '',
           "needCTCSS": False,
           "source": "worldweatheronline",
@@ -62,8 +65,11 @@ def getData(l):
               }
 
     url = REQ_URL.format(**params)
+    logger.info("Sending query")
+    logger.debug("Query is: %s", url)
     response_data = urllib2.urlopen(url).read()
     response = json.loads(response_data)
+    logger.debug("Response is: %s", response)
 
     # `w`, `f0` and `f1` are parts of big weather dictionary; we have to
     # unpack it for further formatting.
