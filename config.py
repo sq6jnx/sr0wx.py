@@ -32,6 +32,7 @@ serialBaudRate = 9600
 
 from lib.cw import *
 
+import pl_google.pl_google as pl_google
 lang = "pl_google"
 
 pygameBug = 0
@@ -47,29 +48,31 @@ class m:
 
 # world weather online
 
-world_weather_online = m()
-world_weather_online.api_key = 'CHANGEME'
-world_weather_online.latitude = 52.71
-world_weather_online.longitude = 19.11
-world_weather_online.template = """\
-    stan_pogody_z_dnia {OBSERVATION_TIME}
-    _ {CURRENT_WEATHER}
-    temperatura {CURRENT_TEMP_C} wilgotnosc {CURRENT_HUMIDITY}
-    _ kierunek_wiatru {CURRENT_WIND_DIR}
-    {CURRENT_WIND_DIR_DEG} predkosc_wiatru {CURRENT_WIND_SPEED_MPS}
-    {CURRENT_WIND_SPEED_KMPH} _ cisnienie {CURRENT_PRESSURE}
-    pokrywa_chmur {CURRENT_CLOUDCOVER} _
+world_weather_online = {
+    'api_key': "CHANGEME",
+    'latitude': 52.71,
+    'longitude': 19.11,
+    'language': pl_google,
+    'message_template': """\
+stan_pogody_z_dnia {OBSERVATION_TIME}
+_ {CURRENT_WEATHER}
+temperatura {CURRENT_TEMP_C} wilgotnosc {CURRENT_HUMIDITY}
+_ kierunek_wiatru {CURRENT_WIND_DIR}
+{CURRENT_WIND_DIR_DEG} predkosc_wiatru {CURRENT_WIND_SPEED_MPS}
+{CURRENT_WIND_SPEED_KMPH} _ cisnienie {CURRENT_PRESSURE}
+pokrywa_chmur {CURRENT_CLOUDCOVER} _
 
-    prognoza_na_nastepne trzy godziny
-    {FCAST0_WEATHER} temperatura_minimalna
-    {FCAST0_TEMP_MIN_C} maksymalna {FCAST0_TEMP_MAX_C}
-    kierunek_wiatru {FCAST0_WIND_DIR} {FCAST0_WIND_DIR_DEG} predkosc_wiatru
-    {FCAST0_WIND_SPEED_MPS} {FCAST0_WIND_SPEED_KMPH}
+prognoza_na_nastepne trzy godziny
+{FCAST0_WEATHER} temperatura_minimalna
+{FCAST0_TEMP_MIN_C} maksymalna {FCAST0_TEMP_MAX_C}
+kierunek_wiatru {FCAST0_WIND_DIR} {FCAST0_WIND_DIR_DEG} predkosc_wiatru
+{FCAST0_WIND_SPEED_MPS} {FCAST0_WIND_SPEED_KMPH}
 
-    _ jutro {FCAST1_WEATHER} temperatura_minimalna
-    {FCAST1_TEMP_MIN_C} maksymalna {FCAST1_TEMP_MAX_C} kierunek_wiatru
-    {FCAST1_WIND_DIR} {FCAST1_WIND_DIR_DEG} predkosc_wiatru
-    {FCAST1_WIND_SPEED_MPS} {FCAST1_WIND_SPEED_KMPH} _ """
+_ jutro {FCAST1_WEATHER} temperatura_minimalna
+{FCAST1_TEMP_MIN_C} maksymalna {FCAST1_TEMP_MAX_C} kierunek_wiatru
+{FCAST1_WIND_DIR} {FCAST1_WIND_DIR_DEG} predkosc_wiatru
+{FCAST1_WIND_SPEED_MPS} {FCAST1_WIND_SPEED_KMPH} _ """,
+}
 
 
 # -------------
