@@ -18,14 +18,15 @@
 
 from config import activity_map as config
 import base64
-import debug
+import logging
 import json
 import urllib
-
 
 def getData(l):
     """This module does NOT return any data! It is here just to say "hello" to
     map utility!"""
+
+    logger = logging.getLogger(__name__)
 
     data = {"data": "",
             "needCTCSS": False,
@@ -37,10 +38,10 @@ def getData(l):
     b64data = base64.urlsafe_b64encode(dump)
 
     if urllib.urlopen(config.service_url + b64data).read() == 'OK':
-        debug.log("ACT_MAP", "Message sent, status OK")
+        logger.info("Message sent, status OK")
     else:
         msg = "Non-OK response from %s"
-        debug.log("ACT_MAP", msg % config.service_url + b64data, 6)
+        logger.info(msg, config.service_url + b64data)
 
     return data
 
