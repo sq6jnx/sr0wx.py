@@ -78,23 +78,19 @@ import logging, logging.handlers
 # Logging configuration
 def setup_logging(config):
     # create formatter and add it to the handlers
-    formatter = logging.Formatter(config.logline_format)
+    formatter = logging.Formatter(config.log_line_format)
 
+    # Creating logger with the lowest log level in config handlers
+    min_log_level = min([h['log_level'] for h in config.log_handlers])
     logger = logging.getLogger()
-    logger.setLevel(min(config.console_log_level, config.file_log_level))
+    logger.setLevel(min_log_level)
 
-    # create file handler which logs even debug messages
-    file_handler = config.file_handler(**config.file_handler_config)
-    file_handler.setLevel(config.file_log_level)
-
-    # create console handler with a higher log level
-    console_handler = logging.StreamHandler()
-    console_handler.setLevel(config.console_log_level)
-    console_handler.setFormatter(formatter)
-    file_handler.setFormatter(formatter)
-    # add the handlers to logger
-    logger.addHandler(console_handler)
-    logger.addHandler(file_handler)
+    # create logging handlers according to its definitions
+    for handler_definition in config.log_handlers:
+        handler = handler_definition['class'](**handler_definition['config'])
+        handler.setLevel(handler_definition['log_level'])
+        handler.setFormatter(formatter)
+        logger.addHandler(handler)
 
     return logger
 
