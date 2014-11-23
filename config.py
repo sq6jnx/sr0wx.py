@@ -45,11 +45,6 @@ modules = ["worldweatheronline",]
 class m:
     pass
 
-
-debug = m()
-debug.writeLevel = None
-debug.showLevel = 0
-
 # world weather online
 
 world_weather_online = m()
