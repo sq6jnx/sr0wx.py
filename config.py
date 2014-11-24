@@ -40,11 +40,7 @@ pygameBug = 0
 helloMsg = ["tu_eksperymentalna_automatyczna_stacja_pogodowa", "sp6yre", ]
 goodbyeMsg = ["_", "tu_sp6yre", cw('sp6yre')]
 
-modules = ["worldweatheronline",]
-
-
-class m:
-    pass
+modules = ["activity_map", "worldweatheronline",]
 
 # world weather online
 
@@ -79,15 +75,14 @@ _ jutro {FCAST1_WEATHER} temperatura_minimalna
 # activity_map
 # ------------
 
-activity_map = m()
-activity_map.service_url = "http://test.ostol.pl/?base="
-activity_map.data = {"callsign": "SR0WX",
-                     "lat": 0,
-                     "lon": 0,
-                     "q": 5,
-                     "asl": 118,
-                     "agl": 20,
-                     "range": 30,
-                     "info": u"Additional information",
-                     }
-
+activity_map = {
+    "service_url": "http://test.ostol.pl/?base=",
+    "callsign": None,
+    "latitude": 0,
+    "longitude": 0,
+    "hour_quarter": 5,
+    "above_sea_level": 118,
+    "above_ground_level": 20,
+    "station_range": 30,
+    "additional_info": "",
+}

@@ -16,34 +16,78 @@
 #   limitations under the License.
 #
 
-from config import activity_map as config
 import base64
 import logging
 import json
 import urllib
 
-def getData(l):
-    """This module does NOT return any data! It is here just to say "hello" to
-    map utility!"""
+from sr0wx_module import SR0WXModule
 
-    logger = logging.getLogger(__name__)
 
-    data = {"data": "",
+class ActivityMap(SR0WXModule):
+    """This module does not give any data, it just contacts application to mark
+station on the map.
+
+Parameters:
+    - `callsign`: your station callsign
+    - `latitude`, `longitude`: geographic position of station
+    - `hour_quarter`: quarter in which station is transmitting (to be
+    deprecated)
+    - `above_sea_level`: antenna's height a.s.l.
+    - `above_ground_level`: antenna's height a.g.l.
+    - `station_range`: station's range in normal conditions, in kilometers
+    - `additional_info`: additional information to show on website
+    - `service_url`: mapping service url, defaults to SQ9ATK service
+    """
+    def __init__(self, callsign, latitude, longitude, hour_quarter,
+                 above_sea_level, above_ground_level, station_range,
+                 additional_info="", service_url="http://test.ostol.pl"):
+        self.__callsign = callsign
+        self.__latitude = latitude
+        self.__longitude = longitude
+        self.__hour_quarter = hour_quarter
+        self.__above_sea_level = above_sea_level
+        self.__above_ground_level = above_ground_level
+        self.__station_range = station_range
+        self.__additional_info = additional_info
+        self.__service_url = service_url
+
+        self.__logger = logging.getLogger(__name__)
+
+    def get_data(self):
+        """This module does NOT return any data! It is here just to say "hello" to
+        map utility!"""
+
+        station_info = {
+            "callsign": self.__callsign,
+            "lat": self.__latitude,
+            "lon": self.__longitude,
+            "q": self.__hour_quarter,
+            "asl": self.__above_sea_level,
+            "agl": self.__above_ground_level,
+            "range": self.__station_range,
+            "info": self.__additional_info,
+        }
+
+        dump = json.dumps(station_info, separators=(',', ':'))
+        b64data = base64.urlsafe_b64encode(dump)
+        request = self.__service_url + b64data
+        response = urllib.urlopen(request).read()
+
+        if response == 'OK':
+            self.__logger.info("Message sent, status OK")
+        else:
+            log = "Non-OK response from %s, (%s)"
+            self.__logger.error(log, request, response)
+
+        return {
+            "data": "",
             "needCTCSS": False,
             "debug": None,
             "allOK": True,
-            }
+        }
 
-    dump = json.dumps(config.data, separators=(',', ':'))
-    b64data = base64.urlsafe_b64encode(dump)
-
-    if urllib.urlopen(config.service_url + b64data).read() == 'OK':
-        logger.info("Message sent, status OK")
-    else:
-        msg = "Non-OK response from %s"
-        logger.info(msg, config.service_url + b64data)
-
-    return data
-
-if __name__ == '__main__':
-    getData('pl_google')
+def getData(l):
+    from config import activity_map as config
+    activity_map = ActivityMap(**config)
+    return activity_map.get_data()
