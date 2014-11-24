@@ -24,21 +24,21 @@ log_handlers = [
     }
 ]
 
-CTCSS = 88.8
-playCTCSS = False
-CTCSSVolume = 0.1
-serialPort = '/dev/ttyS0'
-serialBaudRate = 9600
+ctcss_tone = 88.8
+play_ctcss = False
+ctcss_volume = 0.1
+serial_port = '/dev/ttyS0'
+serial_baud_rate = 9600
 
 from lib.cw import *
 
 import pl_google.pl_google as pl_google
 lang = "pl_google"
 
-pygameBug = 0
+pygame_bug = 0
 
-helloMsg = ["tu_eksperymentalna_automatyczna_stacja_pogodowa", "sp6yre", ]
-goodbyeMsg = ["_", "tu_sp6yre", cw('sp6yre')]
+hello_msg = ["tu_eksperymentalna_automatyczna_stacja_pogodowa", "sp6yre", ]
+goodbye_msg = ["_", "tu_sp6yre", cw('sp6yre')]
 
 modules = ["activity_map", "worldweatheronline",]
 

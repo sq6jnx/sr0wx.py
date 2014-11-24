@@ -57,7 +57,7 @@ tricky part, so best see example config."""
 
         rv = {
             'data': '',
-            "needCTCSS": False,
+            "need_ctcss": False,
             "source": "worldweatheronline",
         }
 
@@ -147,7 +147,7 @@ tricky part, so best see example config."""
 
         return rv
 
-def getData(l):
+def get_data(l):
     from config import world_weather_online as config
     wwo = WorldWeatherOnline(**config)
     return wwo.get_data()

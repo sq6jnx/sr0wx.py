@@ -82,12 +82,12 @@ Parameters:
 
         return {
             "data": "",
-            "needCTCSS": False,
+            "need_ctcss": False,
             "debug": None,
             "allOK": True,
         }
 
-def getData(l):
+def get_data(l):
     from config import activity_map as config
     activity_map = ActivityMap(**config)
     return activity_map.get_data()

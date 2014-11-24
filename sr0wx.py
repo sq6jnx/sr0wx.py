@@ -155,7 +155,7 @@ if len(args) > 0:
 else:
     modules = config.modules
 
-needCTCSS = False
+need_ctcss = False
 lang = my_import('.'.join((config.lang, config.lang)))
 sources = [lang.source, ]
 
@@ -163,22 +163,22 @@ for m in modules:
     try:
         logger.info("starting %s...", m)
         module = __import__(m)
-        moduleData = module.getData(config.lang)
-        data = " ".join((data, moduleData["data"]))
-        needCTCSS = needCTCSS or moduleData["needCTCSS"]
-        if moduleData["data"] != '' and moduleData.has_key('source') \
-                and moduleData['source'] != '':
-            sources.append(moduleData['source'])
+        module_data = module.get_data(config.lang)
+        data = " ".join((data, module_data["data"]))
+        need_ctcss = need_ctcss or module_data["need_ctcss"]
+        if module_data["data"] != '' and module_data.has_key('source') \
+                and module_data['source'] != '':
+            sources.append(module_data['source'])
     except:
         logger.exception("Exception when running %s", m)
 
 # When all the modules finished its' work it's time to ``.split()`` returned
 # data. Every element of returned list is actually a filename of a sample.
 
-data = config.helloMsg + data.split()
+data = config.hello_msg + data.split()
 if len(sources) > 1:
     data += sources
-data += config.goodbyeMsg
+data += config.goodbye_msg
 
 # It's time to init ``pygame``'s mixer (and ``pygame``). Possibly defined
 # sound quality is far-too-good (44kHz 16bit, stereo), so you can change it.
@@ -204,37 +204,37 @@ logger.info("loading sound samples...")
 
 logger.info("playing sound samples")
 
-soundSamples = {}
+sound_samples = {}
 for el in data:
     if "upper" in dir(el):
         if el[0:7] == 'file://':
-            soundSamples[el] = pygame.mixer.Sound(el[7:])
-        if el is not "_" and el not in soundSamples:
+            sound_samples[el] = pygame.mixer.Sound(el[7:])
+        if el is not "_" and el not in sound_samples:
             if not os.path.isfile(config.lang + "/" + el + ".ogg"):
                 logger.warn("Couldn't find %s" % (config.lang + "/" + el + ".ogg"))
-                soundSamples[el] = pygame.sndarray.make_sound(cw.cw("^"))
-                if config.pygameBug == 1:
-                    soundSamples[el] = pygame.sndarray.make_sound(pygame.sndarray.array(soundSamples[el])[:len(pygame.sndarray.array(soundSamples[el]))/2])
+                sound_samples[el] = pygame.sndarray.make_sound(cw.cw("^"))
+                if config.pygame_bug == 1:
+                    sound_samples[el] = pygame.sndarray.make_sound(pygame.sndarray.array(sound_samples[el])[:len(pygame.sndarray.array(sound_samples[el]))/2])
             else:
-                soundSamples[el] = pygame.mixer.Sound(config.lang + "/" + el + ".ogg")
+                sound_samples[el] = pygame.mixer.Sound(config.lang + "/" + el + ".ogg")
 
 # If program configuration specifies CTCSS subtone frequency this tone
 # will be played as long as the message.
 
-if config.CTCSS is not None and (needCTCSS or config.playCTCSS):
+if config.ctcss_tone is not None and (need_ctcss or config.play_ctcss):
     import lib.ctcss as ctcss
 
-    subtoneChannel = pygame.sndarray.make_sound(ctcss.getCTCSS(config.CTCSS)).play(-1)
-    subtoneChannel.set_volume(config.CTCSSVolume)
+    subtone_channel = pygame.sndarray.make_sound(ctcss.getCTCSS(config.ctcss_tone)).play(-1)
+    subtone_channel.set_volume(config.ctcss_volume)
 
 # Program should be able to "press PTT" via RSS232. See ``config`` for
 # details.
 
-if config.serialPort is not None:
+if config.serial_port is not None:
     import serial
     try:
-        ser = serial.Serial(config.serialPort, config.serialBaudRate)
-        if config.serialSignal == 'DTR':
+        ser = serial.Serial(config.serial_port, config.serial_baud_rate)
+        if config.serial_signal == 'DTR':
             ser.setDTR(0)
             ser.setRTS(1)
         else:
@@ -242,7 +242,7 @@ if config.serialPort is not None:
             ser.setRTS(0)
     except:
         log = "Failed to open serial port %s@%i"
-        logger.error(log, config.serialPort, config.serialBaudRate)
+        logger.error(log, config.serial_port, config.serial_baud_rate)
 
 pygame.time.delay(1000)
 
@@ -260,13 +260,13 @@ for el in data:
         pygame.time.wait(500)
     else:
         if "upper" in dir(el):
-            voiceChannel = soundSamples[el].play()
+            voice_channel = sound_samples[el].play()
         elif "upper" not in dir(el):
             sound = pygame.sndarray.make_sound(el)
-            if config.pygameBug == 1:
+            if config.pygame_bug == 1:
                 sound = pygame.sndarray.make_sound(pygame.sndarray.array(sound)[:len(pygame.sndarray.array(sound))/2])
-            voiceChannel = sound.play()
-        while voiceChannel.get_busy():
+            voice_channel = sound.play()
+        while voice_channel.get_busy():
             pygame.time.Clock().tick(25)
 
 # Possibly the argument of ``pygame.time.Clock().tick()`` should be in
@@ -282,7 +282,7 @@ pygame.time.delay(1000)
 
 # If we've opened serial it's now time to close it.
 try:
-    if config.serialPort is not None:
+    if config.serial_port is not None:
         ser.close()
 except NameError:
     logging.exception("Couldn't close serial port")
