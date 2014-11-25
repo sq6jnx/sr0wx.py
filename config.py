@@ -49,12 +49,12 @@ goodbye_msg = ["_", "tu_sp6yre", cw('sp6yre')]
 # world weather online
 
 from world_weather_online import WorldWeatherOnline
-worldweatheronline = WorldWeatherOnline(**{
-    'api_key': "CHANGEME",
-    'latitude': 52.71,
-    'longitude': 19.11,
-    'language': pl_google,
-    'message_template': """\
+worldweatheronline = WorldWeatherOnline(
+    api_key="CHANGEME",
+    latitude=52.71,
+    longitude=19.11,
+    language=pl_google,
+    message_template="""\
 stan_pogody_z_dnia {OBSERVATION_TIME}
 _ {CURRENT_WEATHER}
 temperatura {CURRENT_TEMP_C} wilgotnosc {CURRENT_HUMIDITY}
@@ -73,7 +73,7 @@ _ jutro {FCAST1_WEATHER} temperatura_minimalna
 {FCAST1_TEMP_MIN_C} maksymalna {FCAST1_TEMP_MAX_C} kierunek_wiatru
 {FCAST1_WIND_DIR} {FCAST1_WIND_DIR_DEG} predkosc_wiatru
 {FCAST1_WIND_SPEED_MPS} {FCAST1_WIND_SPEED_KMPH} _ """,
-})
+)
 
 
 # -------------
@@ -81,17 +81,17 @@ _ jutro {FCAST1_WEATHER} temperatura_minimalna
 # ------------
 
 from activity_map import ActivityMap
-activitymap = ActivityMap(**{
-    "service_url": "http://test.ostol.pl/?base=",
-    "callsign": None,
-    "latitude": 0,
-    "longitude": 0,
-    "hour_quarter": 5,
-    "above_sea_level": 118,
-    "above_ground_level": 20,
-    "station_range": 30,
-    "additional_info": "",
-})
+activitymap = ActivityMap(
+    service_url="http://test.ostol.pl/?base=",
+    callsign=None,
+    latitude=0,
+    longitude=0,
+    hour_quarter=5,
+    above_sea_level=118,
+    above_ground_level=20,
+    station_range=30,
+    additional_info="",
+)
 
 # List of modules to query on program run
 modules = [activitymap, worldweatheronline, ]
