@@ -152,11 +152,10 @@ need_ctcss = False
 lang = my_import('.'.join((config.lang, config.lang)))
 sources = [lang.source, ]
 
-for m in modules:
+for module in modules:
     try:
-        logger.info("starting %s...", m)
-        module = __import__(m)
-        module_data = module.get_data(config.lang)
+        logger.info("starting %s...", module)
+        module_data = module.get_data()
         module_message = module_data.get("message", "")
         module_source = module_data.get("source", "")
         module_ctcss = module_data.get("neeed_ctcss", False)
@@ -166,7 +165,7 @@ for m in modules:
         if module_message != "" and module_source != "":
             sources.append(module_data['source'])
     except:
-        logger.exception("Exception when running %s", m)
+        logger.exception("Exception when running %s", module)
 
 # When all the modules finished its' work it's time to ``.split()`` returned
 # data. Every element of returned list is actually a filename of a sample.

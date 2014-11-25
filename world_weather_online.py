@@ -142,8 +142,3 @@ tricky part, so best see example config."""
             "message": self.__language.removeDiacritics(self.__message_template.format(**data)),
             "source": "worldweatheronline",
         }
-
-def get_data(l):
-    from config import world_weather_online as config
-    wwo = WorldWeatherOnline(**config)
-    return wwo.get_data()

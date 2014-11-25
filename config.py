@@ -40,11 +40,16 @@ pygame_bug = 0
 hello_msg = ["tu_eksperymentalna_automatyczna_stacja_pogodowa", "sp6yre", ]
 goodbye_msg = ["_", "tu_sp6yre", cw('sp6yre')]
 
-modules = ["activity_map", "worldweatheronline",]
+#
+# Modules configuration
+#
+# List of activated modules is at the very bottom of this file
+#
 
 # world weather online
 
-world_weather_online = {
+from world_weather_online import WorldWeatherOnline
+worldweatheronline = WorldWeatherOnline(**{
     'api_key': "CHANGEME",
     'latitude': 52.71,
     'longitude': 19.11,
@@ -68,14 +73,15 @@ _ jutro {FCAST1_WEATHER} temperatura_minimalna
 {FCAST1_TEMP_MIN_C} maksymalna {FCAST1_TEMP_MAX_C} kierunek_wiatru
 {FCAST1_WIND_DIR} {FCAST1_WIND_DIR_DEG} predkosc_wiatru
 {FCAST1_WIND_SPEED_MPS} {FCAST1_WIND_SPEED_KMPH} _ """,
-}
+})
 
 
 # -------------
 # activity_map
 # ------------
 
-activity_map = {
+from activity_map import ActivityMap
+activitymap = ActivityMap(**{
     "service_url": "http://test.ostol.pl/?base=",
     "callsign": None,
     "latitude": 0,
@@ -85,4 +91,7 @@ activity_map = {
     "above_ground_level": 20,
     "station_range": 30,
     "additional_info": "",
-}
+})
+
+# List of modules to query on program run
+modules = [activitymap, worldweatheronline, ]
