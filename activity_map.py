@@ -81,7 +81,7 @@ Parameters:
             self.__logger.error(log, request, response)
 
         return {
-            "data": "",
+            "message": "",
             "need_ctcss": False,
             "debug": None,
             "allOK": True,

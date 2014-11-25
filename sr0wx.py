@@ -105,7 +105,7 @@ def my_import(name):
 #
 # All datas returned by SR0WX modules will be stored in ``data`` variable.
 
-data = " "
+message = " "
 
 # Information about which modules are to be executed is written in SR0WX
 # config file. Program starts every single of them and appends it's return
@@ -164,9 +164,9 @@ for m in modules:
         logger.info("starting %s...", m)
         module = __import__(m)
         module_data = module.get_data(config.lang)
-        data = " ".join((data, module_data["data"]))
+        message = " ".join((message, module_data["message"]))
         need_ctcss = need_ctcss or module_data["need_ctcss"]
-        if module_data["data"] != '' and module_data.has_key('source') \
+        if module_data["message"] != '' and module_data.has_key('source') \
                 and module_data['source'] != '':
             sources.append(module_data['source'])
     except:
@@ -175,10 +175,10 @@ for m in modules:
 # When all the modules finished its' work it's time to ``.split()`` returned
 # data. Every element of returned list is actually a filename of a sample.
 
-data = config.hello_msg + data.split()
+message = config.hello_msg + message.split()
 if len(sources) > 1:
-    data += sources
-data += config.goodbye_msg
+    message += sources
+message += config.goodbye_msg
 
 # It's time to init ``pygame``'s mixer (and ``pygame``). Possibly defined
 # sound quality is far-too-good (44kHz 16bit, stereo), so you can change it.
@@ -193,7 +193,7 @@ pygame.mixer.init(16000, -16, 2, 1024)
 
 playlist = []
 
-for el in data:
+for el in message:
     if "upper" in dir(el):
         playlist.append(el)
     else:
@@ -205,7 +205,7 @@ logger.info("loading sound samples...")
 logger.info("playing sound samples")
 
 sound_samples = {}
-for el in data:
+for el in message:
     if "upper" in dir(el):
         if el[0:7] == 'file://':
             sound_samples[el] = pygame.mixer.Sound(el[7:])
@@ -255,7 +255,7 @@ pygame.time.delay(1000)
 # Unfortunately, there may be some pauses between samples so "reading
 # aloud" will be less natural.
 
-for el in data:
+for el in message:
     if el == "_":
         pygame.time.wait(500)
     else:

@@ -56,7 +56,7 @@ tricky part, so best see example config."""
         logger = logging.getLogger(__name__)
 
         rv = {
-            'data': '',
+            'message': '',
             "need_ctcss": False,
             "source": "worldweatheronline",
         }
@@ -143,7 +143,7 @@ tricky part, so best see example config."""
             'FCAST1_WIND_SPEED_MI': int(f10['windspeedMiles']),
             }
 
-        rv['data'] = self.__language.removeDiacritics(self.__message_template.format(**data))
+        rv['message'] = self.__language.removeDiacritics(self.__message_template.format(**data))
 
         return rv
 
