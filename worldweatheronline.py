@@ -55,11 +55,6 @@ tricky part, so best see example config."""
     def get_data(self):
         logger = logging.getLogger(__name__)
 
-        rv = {
-            'message': '',
-            "need_ctcss": False,
-            "source": "worldweatheronline",
-        }
 
         REQ_URL = "http://api.worldweatheronline.com/free/v2/weather.ashx?"\
                 + "q={LAT},{LON}&format=json&num_of_days=2&key={API_KEY}"
@@ -143,9 +138,10 @@ tricky part, so best see example config."""
             'FCAST1_WIND_SPEED_MI': int(f10['windspeedMiles']),
             }
 
-        rv['message'] = self.__language.removeDiacritics(self.__message_template.format(**data))
-
-        return rv
+        return {
+            "message": self.__language.removeDiacritics(self.__message_template.format(**data)),
+            "source": "worldweatheronline",
+        }
 
 def get_data(l):
     from config import world_weather_online as config

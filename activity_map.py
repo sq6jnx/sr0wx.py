@@ -80,12 +80,7 @@ Parameters:
             log = "Non-OK response from %s, (%s)"
             self.__logger.error(log, request, response)
 
-        return {
-            "message": "",
-            "need_ctcss": False,
-            "debug": None,
-            "allOK": True,
-        }
+        return dict()
 
 def get_data(l):
     from config import activity_map as config
