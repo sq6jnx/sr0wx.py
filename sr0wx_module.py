@@ -32,6 +32,12 @@ class SR0WXModule(object):
 
     def get_data(self):
         """Returns message to be played back by core of sr0wx.py. Not
-implemented here"""
+implemented here.
+
+Modules are expected to return a `dict` with the following keys:
+    - `message` -- message text, filled template, etc (currently list of
+    samples)
+    - `need_ctcss` -- hint for core module whether or not to playback CTCSS tone
+"""
         msg = "This method should be implemented in child class"
         raise NotImplementedError(msg)
