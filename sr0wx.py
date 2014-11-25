@@ -164,10 +164,13 @@ for m in modules:
         logger.info("starting %s...", m)
         module = __import__(m)
         module_data = module.get_data(config.lang)
-        message = " ".join((message, module_data["message"]))
-        need_ctcss = need_ctcss or module_data["need_ctcss"]
-        if module_data["message"] != '' and module_data.has_key('source') \
-                and module_data['source'] != '':
+        module_message = module_data.get("message", "")
+        module_source = module_data.get("source", "")
+        module_ctcss = module_data.get("neeed_ctcss", False)
+
+        message = " ".join((message, module_message))
+        need_ctcss = need_ctcss or module_ctcss
+        if module_message != "" and module_source != "":
             sources.append(module_data['source'])
     except:
         logger.exception("Exception when running %s", m)
