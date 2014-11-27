@@ -73,6 +73,28 @@
 #
 # This dictionary is used by all SR0WX modules.
 
+# #################
+# CAUTION!
+# DIRTY HACK BELOW
+# #################
+#
+# for now `pyliczba` is not a Python module in terms like you can `pip` it or
+# something. It's even impossibru to import it, because it does not have an
+# `__init__  file. And the main file isn't even called `pyliczba`!
+#
+# ... so we create one...
+
+import os
+pyliczba_init = os.sep.join(('pl_google', 'pyliczba', '__init__.py'))
+if not os.path.isfile(pyliczba_init):
+    with open(pyliczba_init, 'w') as f:
+        f.write("from kwotaslownie import *")
+
+# It works!
+
+from six import u
+import pyliczba
+
 fake_gettext = lambda(s): s
 _ = fake_gettext
 
@@ -93,113 +115,24 @@ tendention = ['tendencja_spadkowa', '', 'tendencja_wzrostowa']
 
 # We need also local names for directions to convert two- or three letters
 # long wind direction into words (first is used as prefix, second as suffix):
-directions = {"N": ("północno ",   "północny"),
-              "E": ("wschodnio ",  "wschodni"),
-              "W": ("zachodnio ",  "zachodni"),
-              "S": ("południowo ", "południowy"),
+directions = {"N": (u("północno "),   u("północny")),
+              "E": (u("wschodnio "),  u("wschodni")),
+              "W": (u("zachodnio "),  u("zachodni")),
+              "S": (u("południowo "), u("południowy")),
               }
 
-
-# TODO: replace with pyliczba starts here
-
-# numbers
-jednostkiM = [u""] + u"jeden dwa trzy cztery pięć sześć siedem osiem dziewięć".split()
-jednostkiF = [u""] + u"jedną dwie trzy cztery pięć sześć siedem osiem dziewięć".split()
-dziesiatki = [u""] + u"""dziesięć dwadzieścia  trzydzieści czterdzieści
-     pięćdziesiąt sześćdziesiąt siedemdziesiąt osiemdziesiąt dziewięćdziesiąt""".split()
-nastki = u"""dziesięć jedenaście dwanaście trzynaście czternaście piętnaście
-        szesnaście siedemnaście osiemnaście dziewiętnaście""".split()
-setki = [u""]+ u"""sto dwieście trzysta czterysta pięćset sześćset siedemset osiemset
-              dziewięćset""".split()
-
-ws=u"""x x x
-   tysiąc tysiące tysięcy
-   milion miliony milionów
-   miliard miliardy miliardów
-   bilion biliony bilionów"""
-wielkie = [ l.split() for l in ws.split('\n') ]
-
-##zlotowki=u"""złoty złote złotych""".split()
-##grosze=u"""grosz grosze groszy""".split()
-
-# There are also some functions, by dowgird, so I haven't even looked into
-# them.
-
-def _slownie3cyfry(liczba, plec='M'):
-    if plec=='M':
-        jednostki = jednostkiM
-    else:
-        jednostki = jednostkiF
-
-    je = liczba % 10
-    dz = (liczba//10) % 10
-    se = (liczba//100) % 10
-    slowa=[]
-
-    if se>0:
-        slowa.append(setki[se])
-    if dz==1:
-        slowa.append(nastki[je])
-    else:
-        if dz>0:
-            slowa.append(dziesiatki[dz])
-        if je>0:
-            slowa.append(jednostki[je])
-    retval = " ".join(slowa)
-    return retval
-
-def _przypadek(liczba):
-    je = liczba % 10
-    dz = (liczba//10)  % 10
-
-    if liczba == 1:
-        typ = 0       #jeden tysiąc"
-    elif dz==1 and je>1:  # naście tysięcy
-        typ = 2
-    elif  2<=je<=4:
-        typ = 1       # [k-dziesiąt/set] [dwa/trzy/czery] tysiące
-    else:
-        typ = 2       # x tysięcy
-
-    return typ
-
-def lslownie(liczba, plec='M'):
-    """Liczba całkowita słownie"""
-    trojki = []
-    if liczba==0:
-        return u'zero'
-    while liczba>0:
-        trojki.append(liczba % 1000)
-        liczba = liczba // 1000
-    slowa = []
-    for i,n in enumerate(trojki):
-        if n>0:
-            if i>0:
-                p = _przypadek(n)
-                w = wielkie[i][p]
-                slowa.append(_slownie3cyfry(n, plec)+u" "+w)
-            else:
-                slowa.append(_slownie3cyfry(n, plec))
-    slowa.reverse()
-    return ' '.join(slowa)
-
-def cosslownie(liczba,cos, plec='M'):
-    """Słownie "ileś cosiów"
-
-    liczba - int
-    cos - tablica przypadków [coś, cosie, cosiów]"""
-    return lslownie(liczba, plec)+" " + cos[_przypadek(liczba)]
 
 # As you remember, ``cardinal()`` must be defined, this is the function which
 # will be used by SR0WX modules. This functions was also written by dowgrid,
 # modified by me. (Is function's name proper?)
-def cardinal(no, units=[u"",u"",u""], gender='M'):
+def cardinal(no, units=[u"",u"",u""]):
     """Zamienia liczbę zapisaną cyframi na zapis słowny, opcjonalnie z jednostkami
 w odpowiednim przypadku. Obsługuje liczby ujemne."""
     if no<0:
-        return (u"minus " + cosslownie(-no, units, plec=gender)).replace(u"jeden tysiąc", u"tysiąc",1).encode("utf-8")
+        rv = (u"minus " + pyliczba.cosslownie(-no, units)).replace(u("jeden tysiąc"), u("tysiąc"), 1)
     else:
-        return cosslownie(no, units, plec=gender).replace(u"jeden tysiąc", u"tysiąc",1).encode("utf-8")
+        rv = pyliczba.cosslownie(no, units).replace(u("jeden tysiąc"), u("tysiąc"), 1)
+    return removeDiacritics(rv)
 
 # This one tiny simply removes diactrics (lower case only). This function
 # must be defined even if your language doesn't use diactrics (like English),
@@ -210,15 +143,15 @@ w odpowiednim przypadku. Obsługuje liczby ujemne."""
 
 def removeDiacritics(text, remove_spaces=False):
     rv = text\
-        .replace("ą", "a")\
-        .replace("ć", "c")\
-        .replace("ę", "e")\
-        .replace("ł", "l")\
-        .replace("ń", "n")\
-        .replace("ó", "o")\
-        .replace("ś", "s")\
-        .replace("ź", "z")\
-        .replace("ż", "z")
+        .replace(u("ą"), "a")\
+        .replace(u("ć"), "c")\
+        .replace(u("ę"), "e")\
+        .replace(u("ł"), "l")\
+        .replace(u("ń"), "n")\
+        .replace(u("ó"), "o")\
+        .replace(u("ś"), "s")\
+        .replace(u("ź"), "z")\
+        .replace(u("ż"), "z")
 
     if not remove_spaces:
         return rv
@@ -236,17 +169,17 @@ def readISODT(ISODT):
                           int(ISODT[17:19]))
 
     # miesiąc
-    _M = ["", "stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca",
+    _M = [u(w) for w in ["", "stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca",
           "lipca", "sierpnia", "września", "października", "listopada",
-          "grudnia"]
+          "grudnia"]]
     Mslownie = _M[m]
 
     # dzień
-    _j = ["", "pierwszego", "drugiego", "trzeciego", "czwartego", "piątego",
+    _j = [u(w) for w in ["", "pierwszego", "drugiego", "trzeciego", "czwartego", "piątego",
           "szóstego", "siódmego", "ósmego", "dziewiątego", "dziesiątego",
           "jedenastego", "dwunastego", "trzynastego", "czternastego",
           "piętnastego", "szesnastego", "siedemnastego", "osiemnastego",
-          "dziewiętnastego"]
+          "dziewiętnastego"]]
     _d = ["", "", "dwudziestego", "trzydziestego"]
 
     if d < 20:
@@ -254,10 +187,10 @@ def readISODT(ISODT):
     else:
         Dslownie = " ".join((_d[d/10], _j[d % 10]))
 
-    _j = ["zero", "pierwsza", "druga", "trzecia", "czwarta", "piąta",
+    _j = [u(w) for word in ["zero", "pierwsza", "druga", "trzecia", "czwarta", "piąta",
           "szósta", "siódma", "ósma", "dziewiąta", "dziesiąta", "jedenasta",
           "dwunasta", "trzynasta", "czternasta", "piętnasta", "szesnasta",
-          "siedemnasta", "osiemnasta", "dziewiętnasta"]
+          "siedemnasta", "osiemnasta", "dziewiętnasta"]]
 
     if hh < 20:
         HHslownie = _j[hh]
@@ -268,7 +201,7 @@ def readISODT(ISODT):
 
     MMslownie = cardinal(mm).replace("zero", "zero_zero")
 
-    return " ".join((Dslownie, Mslownie, "z_godziny", HHslownie, MMslownie))
+    return removeDiacritics(" ".join((Dslownie, Mslownie, "z_godziny", HHslownie, MMslownie)))
 
 
 # TODO: this methods sucks. Replace with proper datetime use
@@ -279,17 +212,17 @@ def readISODate(ISODate):
                         int(ISODate[14:16]), int(ISODate[17:19]))
 
     # miesiąc
-    _M = ["", "stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca",
+    _M = [u(w) for w in ("", "stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca",
           "lipca", "sierpnia", "września", "października", "listopada",
-          "grudnia"]
+          "grudnia")]
     Mslownie = _M[m]
 
     # dzień
-    _j = ["", "pierwszego", "drugiego", "trzeciego", "czwartego", "piątego",
+    _j = [u(w) for w in ("", "pierwszego", "drugiego", "trzeciego", "czwartego", "piątego",
           "szóstego", "siódmego", "ósmego", "dziewiątego", "dziesiątego",
           "jedenastego", "dwunastego", "trzynastego", "czternastego",
           "piętnastego", "szesnastego", "siedemnastego", "osiemnastego",
-          "dziewiętnastego"]
+          "dziewiętnastego")]
     _d = ["", "", "dwudziestego", "trzydziestego"]
 
     if d < 20:
@@ -297,7 +230,7 @@ def readISODate(ISODate):
     else:
         Dslownie = " ".join((_d[d/10], _j[d % 10]))
 
-    return " ".join((Dslownie, Mslownie))
+    return removeDiacritics(" ".join((Dslownie, Mslownie)))
 
 
 def readHour(dt):
@@ -312,8 +245,8 @@ def readHourLen(hour):
     ss = hour.seconds
     hh = ss/3600
     mm = (ss-hh*3600)/60
-    return removeDiacritics(" ".join((cardinal(hh, hrs, gender='F'),
-                                      cardinal(mm, mns, gender='F'))))
+    return removeDiacritics(" ".join((cardinal(hh, hrs),
+                                      cardinal(mm, mns))))
 
 
 def readCallsign(call):
@@ -356,54 +289,54 @@ class m:
 # World Weather Online
 
 wwo_weather_codes = {
-    '113': 'bezchmurnie',                                      # Clear/Sunny
-    '116': 'częściowe zachmurzenie',                           # Partly Cloudy
-    '119': 'pochmurno',                                        # Cloudy
-    '122': 'zachmurzenie całkowite',                           # Overcast
-    '143': 'zamglenia',                                        # Mist
-    '176': 'lokalne przelotne opady deszczu',                  # Patchy rain nearby
-    '179': 'śnieg',                                            # Patchy snow nearby
-    '182': 'śnieg z deszczem',                                 # Patchy sleet nearby
-    '185': 'lokalna przelotna marznąca mżawka',                # Patchy freezing drizzle nearby
-    '200': 'lokalne burze',                                    # Thundery outbreaks in nearby
-    '227': 'zamieć śnieżna',                                   # Blowing snow
-    '230': 'zamieć śnieżna',                                   # Blizzard
-    '248': 'mgła',                                             # Fog
-    '260': 'marznąca mgła',                                    # Freezing fog
-    '263': 'mżawka',                                           # Patchy light drizzle
-    '266': 'mżawka',                                           # Light drizzle
-    '281': 'marznąca mżawka',                                  # Freezing drizzle
-    '284': 'marznąca mżawka',                                  # Heavy freezing drizzle
-    '293': 'lokalny słaby deszcz',                             # Patchy light rain
-    '296': 'słaby deszcz',                                     # Light rain
-    '299': 'przelotne opady deszczu',                          # Moderate rain at times
-    '302': 'umiarkowane opady deszczu',                        # Moderate rain
-    '305': 'przelotne ulewy',                                  # Heavy rain at times
-    '308': 'ulewy',                                            # Heavy rain
-    '311': 'słabe opady marznącego deszczu',                   # Light freezing rain
-    '314': 'umiarkowane opady marznącego deszczu',             # Moderate or Heavy freezing rain
-    '317': 'słabe opady śniegu z deszczem',                    # Light sleet
-    '320': 'umiarkowane lub ciężkie opady śniegu z deszczem',  # Moderate or heavy sleet
-    '323': 'słabe opady śniegu',                               # Patchy light snow
-    '326': 'słabe opady śniegu',                               # Light snow
-    '329': 'umiarkowane opady śniegu',                         # Patchy moderate snow
-    '332': 'umiarkowane opady śniegu',                         # Moderate snow
-    '335': 'opady śniegu',                                     # Patchy heavy snow
-    '338': 'intensywne_opady_sniegu',                          # Heavy snow
-    '350': 'grad',                                             # Ice pellets
-    '353': 'słabe przelotne opady deszczu',                    # Light rain shower
-    '356': 'przelotne opady deszczu',                          # Moderate or heavy rain shower
-    '359': 'ulewny deszcz',                                    # Torrential rain shower
-    '362': 'słabe opady śniegu z deszczem',                    # Light sleet showers
-    '365': 'umiarkowane opady śniegu z deszczem',              # Moderate or heavy sleet showers
-    '368': 'słabe opady śniegu',                               # Light snow showers
-    '371': 'umiarkowane opady śniegu',                         # Moderate or heavy snow showers
-    '374': 'słabe opady śniegu ziarnistego',                   # Light showers of ice pellets
-    '377': 'umiarkowane opady śniegu ziarnistego',             # Moderate or heavy showers of ice pellets
-    '386': 'burza',                                            # Patchy light rain in area with thunder
-    '389': 'burza',                                            # Moderate or heavy rain in area with thunder
-    '392': 'burza śnieżna',                                    # Patchy light snow in area with thunder
-    '395': 'burza śnieżna',                                    # Moderate or heavy snow in area with thunder
+    '113': u('bezchmurnie'),                                      # Clear/Sunny
+    '116': u('częściowe zachmurzenie'),                           # Partly Cloudy
+    '119': u('pochmurno'),                                        # Cloudy
+    '122': u('zachmurzenie całkowite'),                           # Overcast
+    '143': u('zamglenia'),                                        # Mist
+    '176': u('lokalne przelotne opady deszczu'),                  # Patchy rain nearby
+    '179': u('śnieg'),                                            # Patchy snow nearby
+    '182': u('śnieg z deszczem'),                                 # Patchy sleet nearby
+    '185': u('lokalna przelotna marznąca mżawka'),                # Patchy freezing drizzle nearby
+    '200': u('lokalne burze'),                                    # Thundery outbreaks in nearby
+    '227': u('zamieć śnieżna'),                                   # Blowing snow
+    '230': u('zamieć śnieżna'),                                   # Blizzard
+    '248': u('mgła'),                                             # Fog
+    '260': u('marznąca mgła'),                                    # Freezing fog
+    '263': u('mżawka'),                                           # Patchy light drizzle
+    '266': u('mżawka'),                                           # Light drizzle
+    '281': u('marznąca mżawka'),                                  # Freezing drizzle
+    '284': u('marznąca mżawka'),                                  # Heavy freezing drizzle
+    '293': u('lokalny słaby deszcz'),                             # Patchy light rain
+    '296': u('słaby deszcz'),                                     # Light rain
+    '299': u('przelotne opady deszczu'),                          # Moderate rain at times
+    '302': u('umiarkowane opady deszczu'),                        # Moderate rain
+    '305': u('przelotne ulewy'),                                  # Heavy rain at times
+    '308': u('ulewy'),                                            # Heavy rain
+    '311': u('słabe opady marznącego deszczu'),                   # Light freezing rain
+    '314': u('umiarkowane opady marznącego deszczu'),             # Moderate or Heavy freezing rain
+    '317': u('słabe opady śniegu z deszczem'),                    # Light sleet
+    '320': u('umiarkowane lub ciężkie opady śniegu z deszczem'),  # Moderate or heavy sleet
+    '323': u('słabe opady śniegu'),                               # Patchy light snow
+    '326': u('słabe opady śniegu'),                               # Light snow
+    '329': u('umiarkowane opady śniegu'),                         # Patchy moderate snow
+    '332': u('umiarkowane opady śniegu'),                         # Moderate snow
+    '335': u('opady śniegu'),                                     # Patchy heavy snow
+    '338': u('intensywne_opady_sniegu'),                          # Heavy snow
+    '350': u('grad'),                                             # Ice pellets
+    '353': u('słabe przelotne opady deszczu'),                    # Light rain shower
+    '356': u('przelotne opady deszczu'),                          # Moderate or heavy rain shower
+    '359': u('ulewny deszcz'),                                    # Torrential rain shower
+    '362': u('słabe opady śniegu z deszczem'),                    # Light sleet showers
+    '365': u('umiarkowane opady śniegu z deszczem'),              # Moderate or heavy sleet showers
+    '368': u('słabe opady śniegu'),                               # Light snow showers
+    '371': u('umiarkowane opady śniegu'),                         # Moderate or heavy snow showers
+    '374': u('słabe opady śniegu ziarnistego'),                   # Light showers of ice pellets
+    '377': u('umiarkowane opady śniegu ziarnistego'),             # Moderate or heavy showers of ice pellets
+    '386': u('burza'),                                            # Patchy light rain in area with thunder
+    '389': u('burza'),                                            # Moderate or heavy rain in area with thunder
+    '392': u('burza śnieżna'),                                    # Patchy light snow in area with thunder
+    '395': u('burza śnieżna'),                                    # Moderate or heavy snow in area with thunder
 }
 
 river = 'rzeka'

@@ -46,7 +46,7 @@ tricky part, so best see example config."""
         for i in range(0, len(direction) - 1):
             retval = retval + self.__language.directions[direction[i]][0]
         retval = retval + self.__language.directions[direction[-1]][1]
-        return retval
+        return self.__language.removeDiacritics(retval)
 
     # TODO: Do I need this?
     kmph2mps = lambda self, s: int(round(float(s)*(5.0/18.0)))
