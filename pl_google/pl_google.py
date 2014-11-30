@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-#   Copyright 2009-2012, 2014 Michal Sadowski (sq6jnx at hamradio dot pl)
+#   Copyright 2009-2014 Michal Sadowski (sq6jnx at hamradio dot pl)
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -15,63 +15,9 @@
 #   limitations under the License.
 #
 
-# *********
-# pl_google/pl_google.py
-# *********
-#
-# This file defines language dependent functions and variables. Probably
-# this is the most important file in whole package.
-#
-# ============
-# Requirements
-# ============
-#
-# This package *may* import some other packages, it is up to you (and your
-# needs).
-#
-# BUT: this package **must** define the following functions:
-# * ``direction()`` which "translates" direction given by letters into
-#    its word representation
-# * ``removeDiacritics()`` which removes diacritics
-# * ``readISODT()`` "translates" date and time into its word representation
-# * ``cardinal()``  which changes numbers into words (1 -> one)
-#
-# As you probably can see all of these functions are language-dependent.
-#
-# ======================
-# Implementation example
-# ======================
-#
-# Here is implementation example for Polish language. Polish is interesting
-# because it uses diacritics and 7 (seven) grammatical cases[#]_ (among many
-# other features ;)
-#
-# .. [*] http://pl.wikipedia.org/wiki/Przypadek#Przypadki_w_j.C4.99zyku_polskim
-#
-# There *may* be some issues with diacritics because there are many
-# implementations [#]. For example, Windows uses its own coding system while
-# Linux uses UTF-8 (I think). And, when moving files (which are named with
-# diacritics) from one platform to another results may (will) be
-# unexpectable.
-#
-# .. [#] http://pl.wikipedia.org/wiki/Kodowanie_polskich_znak%C3%B3w
-#
-# =====================
-# Polish dictionary
-# =====================
-#
-# Concept: to make things clear, easy to debug and to
-# internationalize. Program *doesn't use words* but *filenames*.
-# So, if somewhere in program variable's value or function returns
-# ie. *windy* it should be regarded as a *filename*, ``windy.ogg``.
-#
-# Beware too short words, it will be like machine gun rapid fire or
-# will sound like a cyborg from old, cheap sci-fi movie. IMO the good way
-# is to record longer phrases, like *"the temperature is"*, save it as
-# ``the_temperature_is.ogg`` and use it's filename (``the_temperature_is``)
-# as a return value.
-#
-# This dictionary is used by all SR0WX modules.
+from six import u
+import datetime
+from functools import wraps
 
 # #################
 # CAUTION!
@@ -85,46 +31,182 @@
 # ... so we create one...
 
 import os
+
 pyliczba_init = os.sep.join(('pl_google', 'pyliczba', '__init__.py'))
-if not os.path.isfile(pyliczba_init):
-    with open(pyliczba_init, 'w') as f:
-        f.write("from kwotaslownie import *")
+with open(pyliczba_init, 'w') as f:
+    f.write("from .kwotaslownie import *")
 
 # It works!
 
-from six import u
 import pyliczba
 
-fake_gettext = lambda(s): s
-_ = fake_gettext
 
-# Units and grammar cases
-hrs = ["", "godziny", "godzin"]
-hPa = ["hektopaskal", "hektopaskale", "hektopaskali"]
-percent = ["procent", "procent", "procent"]
-mPs = ["metr_na_sekunde", "metry_na_sekunde", "metrow_na_sekunde"]
-kmPh = ["kilometr_na_godzine", "kilometry_na_godzine", "kilometrow_na_godzine"]
-MiPh = ["", "", ""] # miles per hour -- not used
-windStrength = "sila_wiatru"
-deg = ["stopien", "stopnie", "stopni"]
-C = ["stopien_celsjusza", "stopnie_celsjusza", "stopni_celsjusza"]
-km = ["kilometr", "kilometry", "kilometrow"]
-mns = ["minuta", "minuty", "minut"]
-tendention = ['tendencja_spadkowa', '', 'tendencja_wzrostowa']
+def remove_accents(function):
+    """unicodedata.normalize() doesn't work with ł and Ł"""
+    @wraps(function)
+    def wrapper(*args, **kwargs):
+        return function(*args, **kwargs)\
+            .replace(u("ą"), "a").replace(u("Ą"), "a")\
+            .replace(u("ć"), "c").replace(u("Ć"), "c")\
+            .replace(u("ę"), "e").replace(u("Ę"), "e")\
+            .replace(u("ł"), "l").replace(u("Ł"), "l")\
+            .replace(u("ń"), "n").replace(u("Ń"), "n")\
+            .replace(u("ó"), "o").replace(u("Ó"), "o")\
+            .replace(u("ś"), "s").replace(u("Ś"), "s")\
+            .replace(u("ź"), "z").replace(u("Ź"), "z")\
+            .replace(u("ż"), "z").replace(u("Ż"), "z")\
+            .lower()
+    return wrapper
 
-
-# We need also local names for directions to convert two- or three letters
-# long wind direction into words (first is used as prefix, second as suffix):
-directions = {"N": (u("północno "),   u("północny")),
-              "E": (u("wschodnio "),  u("wschodni")),
-              "W": (u("zachodnio "),  u("zachodni")),
-              "S": (u("południowo "), u("południowy")),
-              }
+def _(text):
+    return text.replace(' ', '_')
 
 
-# As you remember, ``cardinal()`` must be defined, this is the function which
-# will be used by SR0WX modules. This functions was also written by dowgrid,
-# modified by me. (Is function's name proper?)
+@remove_accents
+def read_number(value, units=None):
+    """Converts numbers to text."""
+    if units is None:
+        retval = pyliczba.lslownie(abs(value))
+    else:
+        retval = pyliczba.cosslownie(abs(value), units)
+
+    if retval.startswith(u("jeden tysiąc")):
+        retval = retval.replace(u("jeden tysiąc"), u("tysiąc"))
+    if value < 0:
+        retval = " ".join(("minus", retval))
+    return retval
+
+@remove_accents
+def read_pressure(value):
+    hPa = ["hektopaskal", "hektopaskale", "hektopaskali"]
+    return read_number(value, hPa)
+
+@remove_accents
+def read_percent(value):
+    percent = ["procent", "procent", "procent"]
+    return read_number(value, percent)
+
+@remove_accents
+def read_temperature(value):
+    C = [_(u("stopień Celsjusza")), _("stopnie Celsjusza"), _("stopni Celsjusza")]
+    return read_number(value, C)
+
+@remove_accents
+def read_speed(no, unit='mps'):
+    units = {
+        'mps': [_(u("metr na sekundę")), _(u("metry na sekundę")),
+                _(u("metrów na sekundę"))],
+        'kmph': [_(u("kilometr na godzinę")), _(u("kilometry na godzinę")),
+                 _(u("kilometrów na godzinę"))]
+    }
+    return read_number(no, units[unit])
+
+@remove_accents
+def read_degrees(value):
+    deg = [u("stopień"), u("stopnie"), u("stopni")]
+    return read_number(value, deg)
+
+
+@remove_accents
+def read_direction(value, short=False):
+    directions = {
+        "N": (u("północno"),   u("północny")),
+        "E": (u("wschodnio"),  u("wschodni")),
+        "W": (u("zachodnio"),  u("zachodni")),
+        "S": (u("południowo"), u("południowy")),
+    }
+    if short:
+        value = value[-2:]
+    return '-'.join([directions[d][0 if i < 0 else 1]
+                     for i, d in enumerate(value, -len(value)+1)])
+
+
+@remove_accents
+def read_datetime(value, in_fmt, out_fmt):
+    MONTHS = [u(""),
+              u("stycznia"), u("lutego"), u("marca"), u("kwietnia"), u("maja"),
+              u("czerwca"), u("lipca"), u("sierpnia"), u("września"),
+              u("października"), u("listopada"), u("grudnia"),
+    ]
+
+    DAYS_N0 = [u(""), u(""), u("dwudziestego"), u("trzydziestego"),]
+    DAYS_N = [u(""),
+              u("pierwszego"), u("drugiego"), u("trzeciego"), u("czwartego"),
+              u("piątego"), u("szóstego"), u("siódmego"), u("ósmego"),
+              u("dziewiątego"), u("dziesiątego"), u("jedenastego"),
+              u("dwunastego"), u("trzynastego"), u("czternastego"),
+              u("piętnastego"), u("szesnastego"), u("siedemnastego"),
+              u("osiemnastego"), u("dziewiętnastego"),
+    ]
+    HOURS = [u("zero"), u("pierwsza"), u("druga"), u("trzecia"), u("czwarta"),
+             u("piąta"), u("szósta"), u("siódma"), u("ósma"), u("dziewiąta"),
+             u("dziesiąta"), u("jedenasta"), u("dwunasta"), u("trzynasta"),
+             u("czternasta"), u("piętnasta"), u("szesnasta"),
+             u("siedemnasta"), u("osiemnasta"), u("dziewiętnasta"),
+             u("dwudziesta"),
+    ]
+
+    _, tm_mon, tm_mday, tm_hour, tm_min, _, _, _, _ = \
+        datetime.datetime.strptime(value, in_fmt).timetuple()
+    #import pdb; pdb.set_trace()
+    retval = []
+    for word in out_fmt.split(" "):
+        if word == '%d':  # Day of the month
+            if tm_mday <= 20:
+                retval.append(DAYS_N[tm_mday])
+            else:
+                retval.append(DAYS_N0[tm_mday //10])
+                retval.append(DAYS_N[tm_mday % 10])
+        elif word == '%B':  # Month as locale’s full name 
+            retval.append(MONTHS[tm_mon])
+        elif word == '%H':  # Hour (24-hour clock) as a decimal number
+            if tm_hour <= 20:
+                retval.append(HOURS[tm_hour])
+            elif tm_hour > 20:
+                retval.append(HOURS[20])
+                retval.append(HOURS[tm_hour - 20])
+        elif word == '%M':  # Minute as a decimal number
+            if tm_min == 0:
+                retval.append(u('zero-zero'))
+            else:
+                retval.append(read_number(tm_min))
+        elif word.startswith('%'):
+            raise ValueError("Token %s' is not supported!", word)
+        else:
+            retval.append(word)
+    return ' '.join((w for w in retval if w != ''))
+
+@remove_accents
+def read_callsign(value):
+    # literowanie polskie wg. "Krótkofalarstwo i radiokomunikacja - poradnik",
+    # Łukasz Komsta SQ8QED, Wydawnictwa Komunikacji i Łączności Warszawa, 2001,
+    # str. 130 (z drobnymi modyfikacjami fonetycznymi)
+    LETTERS = {
+        'a': u('adam'), 'b': u('barbara'), 'c': u('celina'), 'd': u('dorota'),
+        'e': u('edward'), 'f': u('franciszek'), 'g': u('gustaw'),
+        'h': u('henryk'), 'i': u('irena'), 'j': u('józef'), 'k': u('karol'),
+        'l': u('ludwik'), 'm': u('marek'), 'n': u('natalia'), 'o': u('olga'),
+        'p': u('paweł'), 'q': u('quebec'), 'r': u('roman'), 's': u('stefan'),
+        't': u('tadeusz'), 'u': u('urszula'), 'v': u('violetta'),
+        'w': u('wacław'), 'x': u('xawery'), 'y': u('ypsilon'), 'z': u('zygmunt'),
+        '/': u('łamane'),
+    }
+    retval = []
+    for char in value.lower():
+        try:
+            retval.append(LETTERS[char])
+        except KeyError:
+            try:
+                retval.append(read_number(int(char)))
+            except ValueError:
+                raise ValueError("\"%s\" is not a element of callsign", char)
+    return ' '.join(retval)
+
+
+
+
+# set of deprecated functions
+
 def cardinal(no, units=[u"",u"",u""]):
     """Zamienia liczbę zapisaną cyframi na zapis słowny, opcjonalnie z jednostkami
 w odpowiednim przypadku. Obsługuje liczby ujemne."""
@@ -133,13 +215,6 @@ w odpowiednim przypadku. Obsługuje liczby ujemne."""
     else:
         rv = pyliczba.cosslownie(no, units).replace(u("jeden tysiąc"), u("tysiąc"), 1)
     return removeDiacritics(rv)
-
-# This one tiny simply removes diactrics (lower case only). This function
-# must be defined even if your language doesn't use diactrics (like English),
-# for example as a simple ``return text``.
-
-# TODO: replace with pyliczba ends here
-
 
 def removeDiacritics(text, remove_spaces=False):
     rv = text\
@@ -158,10 +233,6 @@ def removeDiacritics(text, remove_spaces=False):
     else:
         return rv.replace(' ', '_')
 
-# The last one changes ISO structured date time into word representation.
-# It doesn't return year value.
-
-# TODO: this methods sucks. Replace with proper datetime use
 def readISODT(ISODT):
     _rv = ()
     _, m, d, hh, mm, _ = (int(ISODT[0:4]), int(ISODT[5:7]), int(ISODT[8:10]),
@@ -233,57 +304,10 @@ def readISODate(ISODate):
     return removeDiacritics(" ".join((Dslownie, Mslownie)))
 
 
-def readHour(dt):
-    return removeDiacritics(readISODT('0000-00-00 '
-                                      + str(dt.hour).rjust(2, '0')
-                                      + ':'
-                                      + str(dt.minute).rjust(2, '0')
-                                      + ':00'))
-
-
-def readHourLen(hour):
-    ss = hour.seconds
-    hh = ss/3600
-    mm = (ss-hh*3600)/60
-    return removeDiacritics(" ".join((cardinal(hh, hrs),
-                                      cardinal(mm, mns))))
-
-
-def readCallsign(call):
-    rv = ''
-    for c in call.lower():
-        if c in 'abcdefghijklmnopqrstuvwxyz':
-            rv = rv + c + ' '
-        elif c in '0123456789':
-            rv = rv + removeDiacritics(cardinal(int(c))) + ' '
-        elif c == '/':
-            rv = rv + 'lamane '
-    return rv
-
-
-def readFraction(number, precision):
-    try:
-        integer, fraction = str(round(number, precision)).split('.')
-    except TypeError:
-        return None
-        pass
-
-    rv = ' '.join((cardinal(int(integer)), comma))
-
-    while fraction[0] == '0':
-        rv = ' '.join((rv, cardinal(0)),)
-        fraction.pop(0)
-
-    rv = ' '.join((rv, cardinal(int(fraction)),))
-    return rv
-
 # ##########################################
 #
 # module dependant words
 # #############################################
-
-class m:
-    pass
 
 
 # World Weather Online
@@ -339,12 +363,20 @@ wwo_weather_codes = {
     '395': u('burza śnieżna'),                                    # Moderate or heavy snow in area with thunder
 }
 
-river = 'rzeka'
-station = 'wodowskaz'
 
-comma = 'przecinek'
-uSiph = 'mikrosiwerta_na_godzine'
-radiation_level = 'promieniowanie_tla'
-radiation_levels = ['w_normie', 'podwyzszone', 'wysokie']
-
+# Units and grammar cases -- to be removed from code
+C = ["stopien_celsjusza", "stopnie_celsjusza", "stopni_celsjusza"]
 source = 'zrodlo'
+
+deg = ["stopien", "stopnie", "stopni"]
+directions = {
+    "N": (u("północno "),   u("północny")),
+    "E": (u("wschodnio "),  u("wschodni")),
+    "W": (u("zachodnio "),  u("zachodni")),
+    "S": (u("południowo "), u("południowy")),
+}
+MiPh = ["", "", ""]
+hPa = ["hektopaskal", "hektopaskale", "hektopaskali"]
+kmPh = ["kilometr_na_godzine", "kilometry_na_godzine", "kilometrow_na_godzine"]
+mPs = ["metr_na_sekunde", "metry_na_sekunde", "metrow_na_sekunde"]
+percent = ["procent", "procent", "procent"]
