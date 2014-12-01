@@ -55,7 +55,7 @@ worldweatheronline = WorldWeatherOnline(
     longitude=19.11,
     language=pl_google,
     message_template="""\
-stan_pogody_z_dnia {OBSERVATION_TIME}
+stan_pogody_z_godziny {OBSERVATION_TIME}
 _ {CURRENT_WEATHER}
 temperatura {CURRENT_TEMP_C} wilgotnosc {CURRENT_HUMIDITY}
 _ kierunek_wiatru {CURRENT_WIND_DIR}

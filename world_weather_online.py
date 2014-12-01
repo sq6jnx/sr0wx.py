@@ -38,17 +38,7 @@ tricky part, so best see example config."""
         self.__language = language
         self.__message_template = message_template
 
-    def __wind_direction(self, direction, short=False):
-        # TODO: `move to lang package`
-        retval = ""
-        if len(direction) == 3 and short:
-            direction = direction[1:3]
-        for i in range(0, len(direction) - 1):
-            retval = retval + self.__language.directions[direction[i]][0]
-        retval = retval + self.__language.directions[direction[-1]][1]
-        return self.__language.removeDiacritics(retval)
-
-    # TODO: Do I need this?
+    # TODO: Is it the best place for this function?
     kmph2mps = lambda self, s: int(round(float(s)*(5.0/18.0)))
 
 
@@ -79,66 +69,50 @@ tricky part, so best see example config."""
         f00 = f0['hourly'][0]
         f1 = response['data']['weather'][1]
         f10 = f1['hourly'][0]
-        wc = self.__language.wwo_weather_codes
 
         # observation time gives us time in UTC, like '09:50 PM', but it gives
-        # no date. Since we want it as a whole datetime, like '2011-12-28 21:50'
-        # we have to make some transformations. We assume that the observation
-        # was made today, but if resulting timestamp is in future we substract 1
-        # day and convert it to local time.
-
-        OBSERVATION_TIME = datetime.datetime.utcnow().strftime('%Y-%m-%d')
-        OBSERVATION_TIME = ' '.join((OBSERVATION_TIME, w['observation_time']))
-        OBSERVATION_TIME = datetime.datetime.strptime(OBSERVATION_TIME,
-                                                    '%Y-%m-%d %I:%M %p')
-        if OBSERVATION_TIME > datetime.datetime.utcnow():
-            OBSERVATION_TIME = OBSERVATION_TIME-datetime.timedelta(hours=24)
-        utc = pytz.utc
+        # no date. Since we want it as a whole datetime, like '1970-01-01 21:50'
+        # we have to make some transformations.
 
         # TODO: this is a configuration parameter!
-        local = pytz.timezone('Europe/Warsaw')
-        utc_dt = utc.localize(OBSERVATION_TIME)
+        timezone = pytz.timezone('Europe/Warsaw')
 
-        # What a mess!
-        # TODO: lang.read_temperature_celsius
-        # TODO: lang.`read datetime function` (no idea for name and
-        # functionality now)
-        # TODO: lang.read_pressure
-        # TODO: read_wind_direction (see def __wind_direction() above)
-        # TODO: read_wind_direction_degrees
-        # TODO: read_speed_kmph
-        # TODO: and so on to clear this mess below.
+        utc = pytz.utc
+        obs_time_utc = ' '.join(('1970-01-01', '8:46 PM'))
+        obs_time_utc = datetime.datetime.strptime(obs_time_utc, '%Y-%m-%d %I:%M %p')
+        utc_dt = utc.localize(obs_time_utc)
+        obs_localtime = utc_dt.astimezone(timezone)
+
+        l = self.__language
+        wc = self.__language.wwo_weather_codes
         data = {
-            'OBSERVATION_TIME': self.__language.readISODT(utc_dt.astimezone(local).strftime('%Y-%m-%d %H:%M:%S')),
-            'CURRENT_CLOUDCOVER': self.__language.cardinal(int(w['cloudcover']), self.__language.percent),
-            'CURRENT_HUMIDITY': self.__language.cardinal(int(w['humidity']), self.__language.percent),
-            'CURRENT_PRESSURE': self.__language.cardinal(int(w['pressure']), self.__language.hPa),
-            'CURRENT_TEMP_C': self.__language.cardinal(int(w['temp_C']), self.__language.C),
-            'CURRENT_WEATHER': self.__language.removeDiacritics(wc[w['weatherCode']], remove_spaces=True),
-            'CURRENT_WIND_DIR': self.__wind_direction(w['winddir16Point'], short=True),
-            'CURRENT_WIND_DIR_DEG': self.__language.cardinal(int(w['winddirDegree']), self.__language.deg),
-            'CURRENT_WIND_SPEED_KMPH': self.__language.cardinal(int(w['windspeedKmph']), self.__language.kmPh),
-            'CURRENT_WIND_SPEED_MPS': self.__language.cardinal(self.kmph2mps(int(w['windspeedKmph'])), self.__language.mPs),
-            'CURRENT_WIND_SPEED_MI': self.__language.cardinal(int(w['windspeedMiles']), self.__language.MiPh),
-            'FCAST0_TEMP_MIN_C': self.__language.cardinal(int(f0['mintempC'])),
-            'FCAST0_TEMP_MAX_C': self.__language.cardinal(int(f0['maxtempC']), self.__language.C),
-            'FCAST0_WEATHER': self.__language.removeDiacritics(wc[f00['weatherCode']], remove_spaces=True),
-            'FCAST0_WIND_DIR': self.__wind_direction(f00['winddir16Point']),
-            'FCAST0_WIND_DIR_DEG': self.__language.cardinal(int(f00['winddirDegree']), self.__language.deg),
-            'FCAST0_WIND_SPEED_KMPH': self.__language.cardinal(int(f00['windspeedKmph']), self.__language.kmPh),
-            'FCAST0_WIND_SPEED_MPS': self.__language.cardinal(self.kmph2mps(int(f00['windspeedKmph'])), self.__language.mPs),
-            'FCAST0_WIND_SPEED_MI': int(f00['windspeedMiles']),
-            'FCAST1_TEMP_MIN_C': self.__language.cardinal(int(f1['mintempC'])),
-            'FCAST1_TEMP_MAX_C': self.__language.cardinal(int(f1['maxtempC']), self.__language.C),
-            'FCAST1_WEATHER': self.__language.removeDiacritics(wc[f10['weatherCode']], remove_spaces=True),
-            'FCAST1_WIND_DIR': self.__wind_direction(f10['winddir16Point']),
-            'FCAST1_WIND_DIR_DEG': self.__language.cardinal(int(f10['winddirDegree']), self.__language.deg),
-            'FCAST1_WIND_SPEED_KMPH': self.__language.cardinal(int(f10['windspeedKmph']), self.__language.kmPh),
-            'FCAST1_WIND_SPEED_MPS': self.__language.cardinal(self.kmph2mps(int(f10['windspeedKmph'])), self.__language.mPs),
-            'FCAST1_WIND_SPEED_MI': int(f10['windspeedMiles']),
-            }
+            'OBSERVATION_TIME': l.read_datetime(obs_localtime, '%H %M'),
+            'CURRENT_CLOUDCOVER': l.read_percent(int(w['cloudcover'])),
+            'CURRENT_HUMIDITY': l.read_percent(int(w['humidity'])),
+            'CURRENT_PRESSURE': l.read_pressure(int(w['pressure'])),
+            'CURRENT_TEMP_C': l.read_temperature(int(w['temp_C'])),
+            'CURRENT_WEATHER': l.ra(wc[w['weatherCode']]),
+            'CURRENT_WIND_DIR': l.read_direction(w['winddir16Point'], short=True),
+            'CURRENT_WIND_DIR_DEG': l.read_degrees(int(w['winddirDegree'])),
+            'CURRENT_WIND_SPEED_KMPH': l.read_speed(int(w['windspeedKmph']), unit='kmph'),
+            'CURRENT_WIND_SPEED_MPS': l.read_speed(self.kmph2mps(w['windspeedKmph'])),
+            'FCAST0_TEMP_MIN_C': l.read_number(int(f0['mintempC'])),
+            'FCAST0_TEMP_MAX_C': l.read_temperature(int(f0['maxtempC'])),
+            'FCAST0_WEATHER': l.ra(wc[f00['weatherCode']]),
+            'FCAST0_WIND_DIR': l.read_direction(f00['winddir16Point'], short=True),
+            'FCAST0_WIND_DIR_DEG': l.read_degrees(int(f00['winddirDegree'])),
+            'FCAST0_WIND_SPEED_KMPH': l.read_speed(int(f00['windspeedKmph']), unit='kmph'),
+            'FCAST0_WIND_SPEED_MPS': l.read_speed(self.kmph2mps(f00['windspeedKmph'])),
+            'FCAST1_TEMP_MIN_C': l.read_number(int(f1['mintempC'])),
+            'FCAST1_TEMP_MAX_C': l.read_temperature(int(f1['maxtempC'])),
+            'FCAST1_WEATHER': l.ra(wc[f10['weatherCode']]),
+            'FCAST1_WIND_DIR': l.read_direction(f10['winddir16Point']),
+            'FCAST1_WIND_DIR_DEG': l.read_degrees(int(f10['winddirDegree'])),
+            'FCAST1_WIND_SPEED_KMPH': l.read_speed(int(f10['windspeedKmph']), unit='kmph'),
+            'FCAST1_WIND_SPEED_MPS': l.read_speed(self.kmph2mps(f10['windspeedKmph'])),
+        }
 
         return {
-            "message": self.__language.removeDiacritics(self.__message_template.format(**data)),
+            "message": self.__message_template.format(**data),
             "source": "worldweatheronline",
         }
