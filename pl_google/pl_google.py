@@ -122,7 +122,16 @@ def read_direction(value, short=False):
 
 
 @remove_accents
-def read_datetime(value, in_fmt, out_fmt):
+def read_datetime(value, out_fmt, in_fmt=None):
+
+    if type(value) != datetime.datetime and in_fmt is not None:
+        value = datetime.datetime.strptime(value, in_fmt)
+    elif type(value) == datetime.datetime:
+        pass
+    else:
+        raise TypeError('Either datetime must be supplied or both '
+                        'value and in_fmt')
+
     MONTHS = [u(""),
               u("stycznia"), u("lutego"), u("marca"), u("kwietnia"), u("maja"),
               u("czerwca"), u("lipca"), u("sierpnia"), u("września"),
@@ -146,8 +155,8 @@ def read_datetime(value, in_fmt, out_fmt):
              u("dwudziesta"),
     ]
 
-    _, tm_mon, tm_mday, tm_hour, tm_min, _, _, _, _ = \
-        datetime.datetime.strptime(value, in_fmt).timetuple()
+
+    _, tm_mon, tm_mday, tm_hour, tm_min, _, _, _, _ = value.timetuple()
     #import pdb; pdb.set_trace()
     retval = []
     for word in out_fmt.split(" "):
