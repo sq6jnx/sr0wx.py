@@ -89,6 +89,14 @@ class TestKwotaSlownieFunctions(unittest.TestCase):
                          'trzeciego maja dwudziesta zero-zero')
         self.assertEqual(self.lang.read_datetime('2014-05-03 21:05', in_fmt=in_fmt, out_fmt=out_fmt),
                          'trzeciego maja dwudziesta pierwsza piec')
+        self.assertEqual(self.lang.read_datetime('2014-05-03 08:25 AM',
+                                                 in_fmt='%Y-%m-%d %I:%M %p',
+                                                 out_fmt=out_fmt),
+                         'trzeciego maja osma dwadziescia piec')
+        self.assertEqual(self.lang.read_datetime('2014-05-03 08:25 PM',
+                                                 in_fmt='%Y-%m-%d %I:%M %p',
+                                                 out_fmt=out_fmt),
+                         'trzeciego maja dwudziesta dwadziescia piec')
         self.assertRaises(ValueError, self.lang.read_datetime,
                           *('2014-05-03 0:00', '%d %B %%', in_fmt)),
         self.assertRaises(TypeError, self.lang.read_datetime,
