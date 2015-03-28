@@ -78,9 +78,13 @@ tricky part, so best see example config."""
         timezone = pytz.timezone('Europe/Warsaw')
 
         utc = pytz.utc
-        obs_time_utc = ' '.join(('1970-01-01', '8:46 PM'))
-        obs_time_utc = datetime.datetime.strptime(obs_time_utc, '%Y-%m-%d %I:%M %p')
-        utc_dt = utc.localize(obs_time_utc)
+        observation_time_utc = response['data']['current_condition'][0]['observation_time']
+        observation_string_utc = '1970-01-01 ' + observation_time_utc
+
+        observation_datetime_utc = datetime.datetime.strptime(observation_string_utc,
+                                                              '%Y-%m-%d %I:%M %p')
+
+        utc_dt = utc.localize(observation_datetime_utc)
         obs_localtime = utc_dt.astimezone(timezone)
 
         l = self.__language
