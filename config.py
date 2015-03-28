@@ -6,7 +6,7 @@ import logging, logging.handlers
 log_line_format = '%(asctime)s %(name)s %(levelname)s: %(message)s'
 log_handlers = [
     {
-        'log_level': logging.DEBUG,
+        'log_level': logging.INFO,
         'class': logging.StreamHandler,
         'config': {'stream': None},
     },
