@@ -116,6 +116,15 @@ tricky part, so best see example config."""
             'FCAST1_WIND_SPEED_MPS': l.read_speed(self.kmph2mps(f10['windspeedKmph'])),
         }
 
+        # (temporary?) fix for reading wind directions -- elements are separated
+        # with hyphen, but for purposes of reading by sr0wx core these should be
+        # separated by space.
+        data.update(dict(tuple((k, data[k].replace('-', ' '))
+                               for k in ('CURRENT_WIND_DIR',
+                                         'FCAST0_WIND_DIR',
+                                         'FCAST1_WIND_DIR',
+                                         ))))
+
         return {
             "message": self.__message_template.format(**data),
             "source": "worldweatheronline",
