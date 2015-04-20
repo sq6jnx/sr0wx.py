@@ -79,7 +79,8 @@ tricky part, so best see example config."""
 
         utc = pytz.utc
         observation_time_utc = response['data']['current_condition'][0]['observation_time']
-        observation_string_utc = '1970-01-01 ' + observation_time_utc
+        observation_date = response['data']['weather'][0]['date']
+        observation_string_utc = observation_date + ' ' + observation_time_utc
 
         observation_datetime_utc = datetime.datetime.strptime(observation_string_utc,
                                                               '%Y-%m-%d %I:%M %p')
