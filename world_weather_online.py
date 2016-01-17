@@ -72,14 +72,17 @@ tricky part, so best see example config."""
 
         # observation time gives us time in UTC, like '09:50 PM', but it gives
         # no date. Since we want it as a whole datetime, like '1970-01-01 21:50'
-        # we have to make some transformations.
+        # we have to get it from the API (from first forecast, to be exact)
+        # and merge it with the observation time 
 
         # TODO: this is a configuration parameter!
         timezone = pytz.timezone('Europe/Warsaw')
 
         utc = pytz.utc
         observation_time_utc = response['data']['current_condition'][0]['observation_time']
-        observation_string_utc = '1970-01-01 ' + observation_time_utc
+        observation_date_utc = response['data']['weather'][0]['date']
+        
+        observation_string_utc = observation_date_utc + ' ' + observation_time_utc
 
         observation_datetime_utc = datetime.datetime.strptime(observation_string_utc,
                                                               '%Y-%m-%d %I:%M %p')
