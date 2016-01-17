@@ -24,13 +24,8 @@ log_handlers = [
     }
 ]
 
-ctcss_tone = 88.8
-play_ctcss = False
-ctcss_volume = 0.1
 serial_port = '/dev/ttyS0'
 serial_baud_rate = 9600
-
-from lib.cw import *
 
 import pl_google.pl_google as pl_google
 lang = "pl_google"
@@ -38,7 +33,7 @@ lang = "pl_google"
 pygame_bug = 0
 
 hello_msg = ["tu_eksperymentalna_automatyczna_stacja_pogodowa", "sp6yre", ]
-goodbye_msg = ["_", "tu_sp6yre", cw('sp6yre')]
+goodbye_msg = ["_", "tu_sp6yre"]
 
 #
 # Modules configuration

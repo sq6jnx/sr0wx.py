@@ -60,7 +60,6 @@ You can find full list of contributors on github.com/sq6jnx/sr0wx.py
 # SR0WX (core) requires the following packages:
 
 import getopt
-import lib.cw as cw
 import os
 import pygame
 import sys
@@ -148,7 +147,6 @@ if len(args) > 0:
 else:
     modules = config.modules
 
-need_ctcss = False
 lang = my_import('.'.join((config.lang, config.lang)))
 sources = [lang.source, ]
 
@@ -158,10 +156,8 @@ for module in modules:
         module_data = module.get_data()
         module_message = module_data.get("message", "")
         module_source = module_data.get("source", "")
-        module_ctcss = module_data.get("neeed_ctcss", False)
 
         message = " ".join((message, module_message))
-        need_ctcss = need_ctcss or module_ctcss
         if module_message != "" and module_source != "":
             sources.append(module_data['source'])
     except:
@@ -207,20 +203,9 @@ for el in message:
         if el is not "_" and el not in sound_samples:
             if not os.path.isfile(config.lang + "/" + el + ".ogg"):
                 logger.warn("Couldn't find %s" % (config.lang + "/" + el + ".ogg"))
-                sound_samples[el] = pygame.sndarray.make_sound(cw.cw("^"))
-                if config.pygame_bug == 1:
-                    sound_samples[el] = pygame.sndarray.make_sound(pygame.sndarray.array(sound_samples[el])[:len(pygame.sndarray.array(sound_samples[el]))/2])
             else:
                 sound_samples[el] = pygame.mixer.Sound(config.lang + "/" + el + ".ogg")
 
-# If program configuration specifies CTCSS subtone frequency this tone
-# will be played as long as the message.
-
-if config.ctcss_tone is not None and (need_ctcss or config.play_ctcss):
-    import lib.ctcss as ctcss
-
-    subtone_channel = pygame.sndarray.make_sound(ctcss.getCTCSS(config.ctcss_tone)).play(-1)
-    subtone_channel.set_volume(config.ctcss_volume)
 
 # Program should be able to "press PTT" via RSS232. See ``config`` for
 # details.
