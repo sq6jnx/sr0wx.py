@@ -1,0 +1,4 @@
+hg+http://bitbucket.org/pygame/pygame # alternatively: apt-get install python-pygame
+pytz
+six
+pyserial
