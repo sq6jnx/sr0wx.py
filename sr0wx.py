@@ -64,6 +64,7 @@ import os
 import pygame
 import sys
 import logging, logging.handlers
+import subprocess
 
 # ``os``, ``sys`` and ``time`` doesn't need further explanation, these are
 # syandard Python packages.
@@ -136,10 +137,14 @@ for opt, arg in opts:
 if config is None:
     import config
 
+# Now let's get current release git hash
+githash = subprocess.check_output(["git","describe","--always"]).decode("utf-8").replace("\n","")
+
 logger = setup_logging(config)
 
-logger.info("sr0wx.py started")
+logger.info("sr0wx.py, version %s started" % githash)
 logger.info(LICENSE)
+
 
 
 if len(args) > 0:
