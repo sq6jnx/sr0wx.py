@@ -201,10 +201,10 @@ for el in message:
         if el[0:7] == 'file://':
             sound_samples[el] = pygame.mixer.Sound(el[7:])
         if el is not "_" and el not in sound_samples:
-            if not os.path.isfile(config.lang + "/" + el + ".ogg"):
-                logger.warn("Couldn't find %s" % (config.lang + "/" + el + ".ogg"))
+            if not os.path.isfile(config.lang + "/" + el + ".wav"):
+                logger.warn("Couldn't find %s" % (config.lang + "/" + el + ".wav"))
             else:
-                sound_samples[el] = pygame.mixer.Sound(config.lang + "/" + el + ".ogg")
+                sound_samples[el] = pygame.mixer.Sound(config.lang + "/" + el + ".wav")
 
 
 # Program should be able to "press PTT" via RSS232. See ``config`` for

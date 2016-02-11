@@ -13,3 +13,6 @@ pl/.svn/*
 pl_google/*.ogg
 pl_google/google_tts_downloader.py
 /config.py.bak
+*ogg
+*mp3
+*wav

@@ -71,7 +71,7 @@ class SR0WXLanguage(object):
         pass
 
 
-class PLGoogle(SR0WXLanguage):
+class PLMicrosoft(SR0WXLanguage):
     def __init__(self):
         pass
 
@@ -287,7 +287,7 @@ wwo_weather_codes = {
 # to be removed from code
 source = 'zrodlo'
 
-pl = PLGoogle()
+pl = PLMicrosoft()
 
 read_number = pl.read_number
 read_pressure = pl.read_pressure

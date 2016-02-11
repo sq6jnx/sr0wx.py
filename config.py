@@ -27,13 +27,13 @@ log_handlers = [
 serial_port = '/dev/ttyS0'
 serial_baud_rate = 9600
 
-import pl_google.pl_google as pl_google
-lang = "pl_google"
+import pl_microsoft.pl_microsoft as pl_microsoft
+lang = "pl_microsoft"
 
 pygame_bug = 0
 
-hello_msg = ["tu_eksperymentalna_automatyczna_stacja_pogodowa", "sp6yre", ]
-goodbye_msg = ["_", "tu_sp6yre"]
+hello_msg = ["tu_eksperymentalna_automatyczna_stacja_pogodowa", "sr0wx", ]
+goodbye_msg = ["_", "tu_sr0wx"]
 
 #
 # Modules configuration
@@ -48,7 +48,7 @@ worldweatheronline = WorldWeatherOnline(
     api_key="CHANGEME",
     latitude=52.71,
     longitude=19.11,
-    language=pl_google,
+    language=pl_microsoft,
     message_template="""\
 stan_pogody_z_godziny {OBSERVATION_TIME}
 _ {CURRENT_WEATHER}
