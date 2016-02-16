@@ -16,7 +16,7 @@
 #   limitations under the License.
 #
 
-import urllib2
+from six.moves import urllib
 import json
 import datetime
 import pytz
@@ -58,7 +58,7 @@ tricky part, so best see example config."""
         url = REQ_URL.format(**params)
         logger.info("Sending query")
         logger.debug("Query is: %s", url)
-        response_data = urllib2.urlopen(url).read()
+        response_data = urllib.request.urlopen(url).read().decode()
         response = json.loads(response_data)
         logger.debug("Response is: %s", response)
 
