@@ -19,7 +19,7 @@
 import base64
 import logging
 import json
-import urllib
+from six.moves import urllib
 
 from sr0wx_module import SR0WXModule
 
@@ -70,9 +70,9 @@ Parameters:
         }
 
         dump = json.dumps(station_info, separators=(',', ':'))
-        b64data = base64.urlsafe_b64encode(dump)
-        request = self.__service_url + b64data
-        response = urllib.urlopen(request).read()
+        b64data = base64.urlsafe_b64encode(dump.encode('ascii'))
+        request = self.__service_url + b64data.decode('ascii')
+        response = urllib.request.urlopen(request).read().decode()
 
         if response == 'OK':
             self.__logger.info("Message sent, status OK")
