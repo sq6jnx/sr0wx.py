@@ -80,10 +80,7 @@ logger.info("sr0wx.py started")
 logger.info(LICENSE)
 
 
-if len(args) > 0:
-    modules = args[0].split(",")
-else:
-    modules = config.modules
+modules = config.modules
 
 lang = my_import('.'.join((config.lang, config.lang)))
 sources = [lang.source, ]
