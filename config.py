@@ -3,6 +3,8 @@
 
 import logging, logging.handlers
 
+import pttlib
+
 log_line_format = '%(asctime)s %(name)s %(levelname)s: %(message)s'
 log_handlers = [
     {
@@ -24,8 +26,18 @@ log_handlers = [
     }
 ]
 
-serial_port = '/dev/ttyS0'
-serial_baud_rate = 9600
+# There are three ways for PTT with sr0wx.
+#
+# This is the "null" option where your transmitter is turn on with VOX:
+#
+ptt = pttlib.vox()
+#
+# The other way is to use pySerial and PTT on one of two pins: DTR or RTS
+#
+#ptt = pttlib.serial('/dev/ttyUSB0', signal='DTR')
+#
+# The third way is to use GPIO from Raspberry PI:
+# ptt = pttlib.gpio(17)
 
 import pl_microsoft.pl_microsoft as pl_microsoft
 lang = "pl_microsoft"

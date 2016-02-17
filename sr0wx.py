@@ -130,45 +130,26 @@ for el in message:
                 sound_samples[el] = pygame.mixer.Sound(config.lang + "/" + el + ".wav")
 
 
-if config.serial_port is not None:
-    import serial
-    try:
-        ser = serial.Serial(config.serial_port, config.serial_baud_rate)
-        if config.serial_signal == 'DTR':
-            ser.setDTR(0)
-            ser.setRTS(1)
+with config.ptt() as ptt:
+    pygame.time.delay(1000)
+
+    for el in message:
+        if el == "_":
+            pygame.time.wait(500)
         else:
-            ser.setDTR(1)
-            ser.setRTS(0)
-    except:
-        log = "Failed to open serial port %s@%i"
-        logger.error(log, config.serial_port, config.serial_baud_rate)
+            if "upper" in dir(el):
+                voice_channel = sound_samples[el].play()
+            elif "upper" not in dir(el):
+                sound = pygame.sndarray.make_sound(el)
+                if config.pygame_bug == 1:
+                    sound = pygame.sndarray.make_sound(pygame.sndarray.array(sound)[:len(pygame.sndarray.array(sound))/2])
+                voice_channel = sound.play()
+            while voice_channel.get_busy():
+                pygame.time.Clock().tick(25)
 
-pygame.time.delay(1000)
+    logger.info("finishing...")
 
-for el in message:
-    if el == "_":
-        pygame.time.wait(500)
-    else:
-        if "upper" in dir(el):
-            voice_channel = sound_samples[el].play()
-        elif "upper" not in dir(el):
-            sound = pygame.sndarray.make_sound(el)
-            if config.pygame_bug == 1:
-                sound = pygame.sndarray.make_sound(pygame.sndarray.array(sound)[:len(pygame.sndarray.array(sound))/2])
-            voice_channel = sound.play()
-        while voice_channel.get_busy():
-            pygame.time.Clock().tick(25)
-
-logger.info("finishing...")
-
-pygame.time.delay(1000)
-
-try:
-    if config.serial_port is not None:
-        ser.close()
-except NameError:
-    logging.exception("Couldn't close serial port")
+    pygame.time.delay(1000)
 
 
 pygame.mixer.quit()
