@@ -23,41 +23,6 @@ You can find full list of contributors on github.com/sq6jnx/sr0wx.py
 
 """
 
-#
-#
-# ********
-# sr0wx.py
-# ********
-#
-# This is main program file for automatic weather station project;
-# codename SR0WX.
-#
-# (At the moment) SR0WX can read METAR [#]_ weather informations and
-# is able to read them aloud in Polish. SR0WX is fully extensible, so
-# it's easy to make it read any other data in any language (I hope).
-#
-# .. [#] http://en.wikipedia.org/wiki/METAR
-#
-# =====
-# About
-# =====
-#
-# Every automatic station's callsign in Poland (SP) is prefixed by "SR".
-# This software is intended to read aloud weather informations (mainly).
-# That's why we (or I) called it SR0WX.
-#
-# Extensions (mentioned above) are called ``modules`` (or ``languages``).
-# Main part of SR0WX is called ``core``.
-#
-# SR0WX consists quite a lot of independent files so I (SQ6JNX) suggest
-# reading other manuals (mainly configuration- and internationalization
-# manual) in the same time as reading this one. Really.
-#
-# ============
-# Requirements
-# ============
-#
-# SR0WX (core) requires the following packages:
 
 import getopt
 import os
@@ -65,21 +30,6 @@ import pygame
 import sys
 import logging, logging.handlers
 
-# ``os``, ``sys`` and ``time`` doesn't need further explanation, these are
-# syandard Python packages.
-#
-# ``pygame`` [#]_ is a library helpful for game development, this project
-# uses it for reading (playing) sound samples. ``config`` is just a
-# SR0WX configuration file and it is described separately.
-#
-# ..[#] www.pygame.org
-#
-# =========
-# Let's go!
-# =========
-#
-# For infrmational purposes script says hello and gives local time/date,
-# so it will be possible to find out how long script was running.
 
 # Logging configuration
 def setup_logging(config):
@@ -108,21 +58,9 @@ def my_import(name):
         mod = getattr(mod, comp)
     return mod
 
-#
-# All datas returned by SR0WX modules will be stored in ``data`` variable.
-
 message = " "
-
-# Information about which modules are to be executed is written in SR0WX
-# config file. Program starts every single of them and appends it's return
-# value in ``data`` variable. As you can see every module is started with
-# language variable, which is also defined in configuration.
-# Refer configuration and internationalization manuals for further
-# informations.
-#
-# Modules may be also given in commandline, separated by a comma.
-
 config = None
+
 try:
     opts, args = getopt.getopt(sys.argv[1:], "c:", ["config="])
 except getopt.GetoptError:
@@ -163,24 +101,12 @@ for module in modules:
     except:
         logger.exception("Exception when running %s", module)
 
-# When all the modules finished its' work it's time to ``.split()`` returned
-# data. Every element of returned list is actually a filename of a sample.
-
 message = config.hello_msg + message.split()
 if len(sources) > 1:
     message += sources
 message += config.goodbye_msg
 
-# It's time to init ``pygame``'s mixer (and ``pygame``). Possibly defined
-# sound quality is far-too-good (44kHz 16bit, stereo), so you can change it.
-
 pygame.mixer.init(16000, -16, 2, 1024)
-
-# Next (as a tiny timesaver & memory eater ;) program loads all necessary
-# samples into memory. I think that this is better approach than reading
-# every single sample from disk in the same moment when it's time to play it.
-
-# Just for debug: our playlist (whole message as a list of filenames)
 
 playlist = []
 
@@ -207,9 +133,6 @@ for el in message:
                 sound_samples[el] = pygame.mixer.Sound(config.lang + "/" + el + ".ogg")
 
 
-# Program should be able to "press PTT" via RSS232. See ``config`` for
-# details.
-
 if config.serial_port is not None:
     import serial
     try:
@@ -226,15 +149,6 @@ if config.serial_port is not None:
 
 pygame.time.delay(1000)
 
-# OK, data prepared, samples loaded, let the party begin!
-#
-# Take a look at ``while`` condition -- program doesn't check if the
-# sound had finished played all the time, but only 25 times/sec (default).
-# It is because I don't want 100% CPU usage. If you don't have as fast CPU
-# as mine (I think you have, though) you can always lower this value.
-# Unfortunately, there may be some pauses between samples so "reading
-# aloud" will be less natural.
-
 for el in message:
     if el == "_":
         pygame.time.wait(500)
@@ -249,18 +163,10 @@ for el in message:
         while voice_channel.get_busy():
             pygame.time.Clock().tick(25)
 
-# Possibly the argument of ``pygame.time.Clock().tick()`` should be in
-# config file...
-#
-# The following four lines give us a one second break (for CTCSS, PTT and
-# other stuff) before closing the ``pygame`` mixer and display some debug
-# informations.
-
 logger.info("finishing...")
 
 pygame.time.delay(1000)
 
-# If we've opened serial it's now time to close it.
 try:
     if config.serial_port is not None:
         ser.close()
@@ -271,6 +177,3 @@ except NameError:
 pygame.mixer.quit()
 
 logging.info("goodbye")
-
-# Documentation is a good thing when you need to double or triple your
-# Lines-Of-Code index ;)
