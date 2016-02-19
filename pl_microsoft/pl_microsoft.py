@@ -19,25 +19,6 @@ from six import u
 import datetime
 from functools import wraps
 
-# #################
-# CAUTION!
-# DIRTY HACK BELOW
-# #################
-#
-# for now `pyliczba` is not a Python module in terms like you can `pip` it or
-# something. It's even impossibru to import it, because it does not have an
-# `__init__  file. And the main file isn't even called `pyliczba`!
-#
-# ... so we create one...
-
-import os
-
-pyliczba_init = os.sep.join(('pl_google', 'pyliczba', '__init__.py'))
-with open(pyliczba_init, 'w') as f:
-    f.write("from .kwotaslownie import *")
-
-# It works!
-
 import pyliczba
 
 
