@@ -59,16 +59,9 @@ _ kierunek_wiatru {CURRENT_WIND_DIR}
 pokrywa_chmur {CURRENT_CLOUDCOVER} _
 
 prognoza_na_nastepne trzy godziny
-{FCAST0_WEATHER} temperatura_minimalna
-{FCAST0_TEMP_MIN_C} maksymalna {FCAST0_TEMP_MAX_C}
-kierunek_wiatru {FCAST0_WIND_DIR} {FCAST0_WIND_DIR_DEG} predkosc_wiatru
-{FCAST0_WIND_SPEED_MPS} {FCAST0_WIND_SPEED_KMPH}
-
-_ jutro {FCAST1_WEATHER} temperatura_minimalna
-{FCAST1_TEMP_MIN_C} maksymalna {FCAST1_TEMP_MAX_C} kierunek_wiatru
-{FCAST1_WIND_DIR} {FCAST1_WIND_DIR_DEG} predkosc_wiatru
-{FCAST1_WIND_SPEED_MPS} {FCAST1_WIND_SPEED_KMPH} _ """,
-)
+{FCAST_WEATHER} temperatura {FCAST_TEMP_C} stopni_celsjusza
+kierunek_wiatru {FCAST_WIND_DIR} {FCAST_WIND_DIR_DEG} predkosc_wiatru
+{FCAST_WIND_SPEED_MPS} {FCAST_WIND_SPEED_KMPH}""")
 
 
 # -------------
