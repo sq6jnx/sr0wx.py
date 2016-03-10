@@ -214,54 +214,59 @@ class PLMicrosoft(SR0WXLanguage):
 # World Weather Online
 
 wwo_weather_codes = {
-    '113': _(ra(u('bezchmurnie'))),                                      # Clear/Sunny
-    '116': _(ra(u('częściowe zachmurzenie'))),                           # Partly Cloudy
-    '119': _(ra(u('pochmurno'))),                                        # Cloudy
-    '122': _(ra(u('zachmurzenie całkowite'))),                           # Overcast
-    '143': _(ra(u('zamglenia'))),                                        # Mist
-    '176': _(ra(u('lokalne przelotne opady deszczu'))),                  # Patchy rain nearby
-    '179': _(ra(u('śnieg'))),                                            # Patchy snow nearby
-    '182': _(ra(u('śnieg z deszczem'))),                                 # Patchy sleet nearby
-    '185': _(ra(u('lokalna przelotna marznąca mżawka'))),                # Patchy freezing drizzle nearby
-    '200': _(ra(u('lokalne burze'))),                                    # Thundery outbreaks in nearby
-    '227': _(ra(u('zamieć śnieżna'))),                                   # Blowing snow
-    '230': _(ra(u('zamieć śnieżna'))),                                   # Blizzard
-    '248': _(ra(u('mgła'))),                                             # Fog
-    '260': _(ra(u('marznąca mgła'))),                                    # Freezing fog
-    '263': _(ra(u('mżawka'))),                                           # Patchy light drizzle
-    '266': _(ra(u('mżawka'))),                                           # Light drizzle
-    '281': _(ra(u('marznąca mżawka'))),                                  # Freezing drizzle
-    '284': _(ra(u('marznąca mżawka'))),                                  # Heavy freezing drizzle
-    '293': _(ra(u('lokalny słaby deszcz'))),                             # Patchy light rain
-    '296': _(ra(u('słaby deszcz'))),                                     # Light rain
-    '299': _(ra(u('przelotne opady deszczu'))),                          # Moderate rain at times
-    '302': _(ra(u('umiarkowane opady deszczu'))),                        # Moderate rain
-    '305': _(ra(u('przelotne ulewy'))),                                  # Heavy rain at times
-    '308': _(ra(u('ulewy'))),                                            # Heavy rain
-    '311': _(ra(u('słabe opady marznącego deszczu'))),                   # Light freezing rain
-    '314': _(ra(u('umiarkowane opady marznącego deszczu'))),             # Moderate or Heavy freezing rain
-    '317': _(ra(u('słabe opady śniegu z deszczem'))),                    # Light sleet
-    '320': _(ra(u('umiarkowane lub ciężkie opady śniegu z deszczem'))),  # Moderate or heavy sleet
-    '323': _(ra(u('słabe opady śniegu'))),                               # Patchy light snow
-    '326': _(ra(u('słabe opady śniegu'))),                               # Light snow
-    '329': _(ra(u('umiarkowane opady śniegu'))),                         # Patchy moderate snow
-    '332': _(ra(u('umiarkowane opady śniegu'))),                         # Moderate snow
-    '335': _(ra(u('opady śniegu'))),                                     # Patchy heavy snow
-    '338': _(ra(u('intensywne_opady_sniegu'))),                          # Heavy snow
-    '350': _(ra(u('grad'))),                                             # Ice pellets
-    '353': _(ra(u('słabe przelotne opady deszczu'))),                    # Light rain shower
-    '356': _(ra(u('przelotne opady deszczu'))),                          # Moderate or heavy rain shower
-    '359': _(ra(u('ulewny deszcz'))),                                    # Torrential rain shower
-    '362': _(ra(u('słabe opady śniegu z deszczem'))),                    # Light sleet showers
-    '365': _(ra(u('umiarkowane opady śniegu z deszczem'))),              # Moderate or heavy sleet showers
-    '368': _(ra(u('słabe opady śniegu'))),                               # Light snow showers
-    '371': _(ra(u('umiarkowane opady śniegu'))),                         # Moderate or heavy snow showers
-    '374': _(ra(u('słabe opady śniegu ziarnistego'))),                   # Light showers of ice pellets
-    '377': _(ra(u('umiarkowane opady śniegu ziarnistego'))),             # Moderate or heavy showers of ice pellets
-    '386': _(ra(u('burza'))),                                            # Patchy light rain in area with thunder
-    '389': _(ra(u('burza'))),                                            # Moderate or heavy rain in area with thunder
-    '392': _(ra(u('burza śnieżna'))),                                    # Patchy light snow in area with thunder
-    '395': _(ra(u('burza śnieżna'))),                                    # Moderate or heavy snow in area with thunder
+    'Clear/Sunny': _(ra(u('bezchmurnie'))),
+    'Partly Cloudy': _(ra(u('częściowe zachmurzenie'))),
+    'Cloudy': _(ra(u('pochmurno'))),
+    'Overcast': _(ra(u('zachmurzenie całkowite'))),
+    'Mist': _(ra(u('zamglenia'))),
+    'Patchy rain nearby': _(ra(u('lokalne przelotne opady deszczu'))),
+    'Patchy snow nearby': _(ra(u('śnieg'))),
+    'Patchy sleet nearby': _(ra(u('śnieg z deszczem'))),
+    'Patchy freezing drizzle nearby':
+        _(ra(u('lokalna przelotna marznąca mżawka'))),
+    'Thundery outbreaks in nearby': _(ra(u('lokalne burze'))),
+    'Blowing snow': _(ra(u('zamieć śnieżna'))),
+    'Blizzard': _(ra(u('zamieć śnieżna'))),
+    'Fog': _(ra(u('mgła'))),
+    'Freezing fog': _(ra(u('marznąca mgła'))),
+    'Patchy light drizzle': _(ra(u('mżawka'))),
+    'Light drizzle': _(ra(u('mżawka'))),
+    'Freezing drizzle': _(ra(u('marznąca mżawka'))),
+    'Heavy freezing drizzle': _(ra(u('marznąca mżawka'))),
+    'Patchy light rain': _(ra(u('lokalny słaby deszcz'))),
+    'Light rain': _(ra(u('słaby deszcz'))),
+    'Moderate rain at times': _(ra(u('przelotne opady deszczu'))),
+    'Moderate rain': _(ra(u('umiarkowane opady deszczu'))),
+    'Heavy rain at times': _(ra(u('przelotne ulewy'))),
+    'Heavy rain': _(ra(u('ulewy'))),
+    'Light freezing rain': _(ra(u('słabe opady marznącego deszczu'))),
+    'Moderate or Heavy freezing rain':
+        _(ra(u('umiarkowane opady marznącego deszczu'))),
+    'Light sleet': _(ra(u('słabe opady śniegu z deszczem'))),
+    'Moderate or heavy sleet':
+        _(ra(u('umiarkowane lub ciężkie opady śniegu z deszczem'))),
+    'Patchy light snow': _(ra(u('słabe opady śniegu'))),
+    'Light snow': _(ra(u('słabe opady śniegu'))),
+    'Patchy moderate snow': _(ra(u('umiarkowane opady śniegu'))),
+    'Moderate snow': _(ra(u('umiarkowane opady śniegu'))),
+    'Patchy heavy snow': _(ra(u('opady śniegu'))),
+    'Heavy snow': _(ra(u('intensywne_opady_sniegu'))),
+    'Ice pellets': _(ra(u('grad'))),
+    'Light rain shower': _(ra(u('słabe przelotne opady deszczu'))),
+    'Moderate or heavy rain shower': _(ra(u('przelotne opady deszczu'))),
+    'Torrential rain shower': _(ra(u('ulewny deszcz'))),
+    'Light sleet showers': _(ra(u('słabe opady śniegu z deszczem'))),
+    'Moderate or heavy sleet showers':
+        _(ra(u('umiarkowane opady śniegu z deszczem'))),
+    'Light snow showers': _(ra(u('słabe opady śniegu'))),
+    'Moderate or heavy snow showers': _(ra(u('umiarkowane opady śniegu'))),
+    'Light showers of ice pellets': _(ra(u('słabe opady śniegu ziarnistego'))),
+    'Moderate or heavy showers of ice pellets':
+        _(ra(u('umiarkowane opady śniegu ziarnistego'))),
+    'Patchy light rain in area with thunder': _(ra(u('burza'))),
+    'Moderate or heavy rain in area with thunder': _(ra(u('burza'))),
+    'Patchy light snow in area with thunder': _(ra(u('burza śnieżna'))),
+    'Moderate or heavy snow in area with thunder': _(ra(u('burza śnieżna'))),
 }
 
 
@@ -279,4 +284,3 @@ read_degrees = pl.read_degrees
 read_direction = pl.read_direction
 read_datetime = pl.read_datetime
 read_callsign = pl.read_callsign
-

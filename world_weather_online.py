@@ -79,13 +79,12 @@ tricky part, so best see example config."""
         cc = d['current_condition'][0]
 
         # calculating index for weather forecast for the next few hours is
-        # tricky. 
+        # tricky.
         datetime_3hrs = observation_datetime_utc + datetime.timedelta(hours=3)
         fcast_day_index = 1 if datetime_3hrs.day != observation_datetime_utc else 0
         fcast_hour_index = int(datetime_3hrs.hour / 3)
 
         fcast = d["weather"][fcast_day_index]["hourly"][fcast_hour_index]
-
 
         data = {
             'OBSERVATION_TIME': l.read_datetime(observation_localtime, '%H %M'),
@@ -93,14 +92,14 @@ tricky part, so best see example config."""
             'CURRENT_HUMIDITY': l.read_percent(int(cc['humidity'])),
             'CURRENT_PRESSURE': l.read_pressure(int(cc['pressure'])),
             'CURRENT_TEMP_C': l.read_temperature(int(cc['temp_C'])),
-            'CURRENT_WEATHER': l.ra(wc[cc['weatherCode']]),
+            'CURRENT_WEATHER': l.ra(wc[cc['weatherDesc'][0]['value']]),
             'CURRENT_WIND_DIR': l.read_direction(cc['winddir16Point'], short=True),
             'CURRENT_WIND_DIR_DEG': l.read_degrees(int(cc['winddirDegree'])),
             'CURRENT_WIND_SPEED_KMPH': l.read_speed(int(cc['windspeedKmph']), unit='kmph'),
             'CURRENT_WIND_SPEED_MPS': l.read_speed(self.kmph2mps(cc['windspeedKmph'])),
 
             'FCAST_TEMP_C': l.read_number(int(fcast['tempC'])),
-            'FCAST_WEATHER': l.ra(wc[fcast['weatherCode']]),
+            'FCAST_WEATHER': l.ra(wc[fcast['weatherDesc'][0]['value']]),
             'FCAST_WIND_DIR': l.read_direction(fcast['winddir16Point'], short=True),
             'FCAST_WIND_DIR_DEG': l.read_degrees(int(fcast['winddirDegree'])),
             'FCAST_WIND_SPEED_KMPH': l.read_speed(int(fcast['windspeedKmph']), unit='kmph'),
