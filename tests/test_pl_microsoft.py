@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-import pl_google.pl_google as pl_google
+import pl_microsoft.pl_microsoft as pl_microsoft
 import datetime
 
 
-class TestPLGoogle(unittest.TestCase):
+class TestPLMicrosoft(unittest.TestCase):
     def setUp(self):
-        self.lang = pl_google.PLGoogle()
+        self.lang = pl_microsoft.PLMicrosoft()
 
     def test_read_number(self):
         test_cases = {
