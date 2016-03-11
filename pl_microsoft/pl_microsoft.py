@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-#   Copyright 2009-2014 Michal Sadowski (sq6jnx at hamradio dot pl)
+#   Copyright 2009-2016 Michal Sadowski (sq6jnx at hamradio dot pl)
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -35,12 +35,14 @@ def ra(value):
         .replace(u("ż"), "z").replace(u("Ż"), "z")\
         .lower()
 
+
 def remove_accents(function):
     """unicodedata.normalize() doesn't work with ł and Ł"""
     @wraps(function)
     def wrapper(*args, **kwargs):
         return ra(function(*args, **kwargs))
     return wrapper
+
 
 def _(text):
     return text.replace(' ', '_')
@@ -54,7 +56,7 @@ class SR0WXLanguage(object):
 
 class PLMicrosoft(SR0WXLanguage):
     def __init__(self):
-        pass
+        super(PLMicrosoft, self).__init__()
 
     @remove_accents
     def read_number(self, value, units=None):
@@ -82,7 +84,9 @@ class PLMicrosoft(SR0WXLanguage):
 
     @remove_accents
     def read_temperature(self, value):
-        C = [_(u("stopień Celsjusza")), _("stopnie Celsjusza"), _("stopni Celsjusza")]
+        C = [_(u("stopień Celsjusza")),
+             _("stopnie Celsjusza"),
+             _("stopni Celsjusza")]
         return read_number(value, C)
 
     @remove_accents
@@ -100,20 +104,18 @@ class PLMicrosoft(SR0WXLanguage):
         deg = [u("stopień"), u("stopnie"), u("stopni")]
         return read_number(value, deg)
 
-
     @remove_accents
     def read_direction(self, value, short=False):
         directions = {
-            "N": (u("północno"),   u("północny")),
-            "E": (u("wschodnio"),  u("wschodni")),
-            "W": (u("zachodnio"),  u("zachodni")),
+            "N": (u("północno"), u("północny")),
+            "E": (u("wschodnio"), u("wschodni")),
+            "W": (u("zachodnio"), u("zachodni")),
             "S": (u("południowo"), u("południowy")),
         }
         if short:
             value = value[-2:]
         return '-'.join([directions[d][0 if i < 0 else 1]
                          for i, d in enumerate(value, -len(value)+1)])
-
 
     @remove_accents
     def read_datetime(self, value, out_fmt, in_fmt=None):
@@ -127,28 +129,26 @@ class PLMicrosoft(SR0WXLanguage):
                             'value and in_fmt')
 
         MONTHS = [u(""),
-                  u("stycznia"), u("lutego"), u("marca"), u("kwietnia"), u("maja"),
-                  u("czerwca"), u("lipca"), u("sierpnia"), u("września"),
-                  u("października"), u("listopada"), u("grudnia"),
-        ]
+                  u("stycznia"), u("lutego"), u("marca"), u("kwietnia"),
+                  u("maja"), u("czerwca"), u("lipca"), u("sierpnia"),
+                  u("września"), u("października"), u("listopada"),
+                  u("grudnia")]
 
-        DAYS_N0 = [u(""), u(""), u("dwudziestego"), u("trzydziestego"),]
+        DAYS_N0 = [u(""), u(""), u("dwudziestego"), u("trzydziestego")]
         DAYS_N = [u(""),
-                  u("pierwszego"), u("drugiego"), u("trzeciego"), u("czwartego"),
-                  u("piątego"), u("szóstego"), u("siódmego"), u("ósmego"),
-                  u("dziewiątego"), u("dziesiątego"), u("jedenastego"),
-                  u("dwunastego"), u("trzynastego"), u("czternastego"),
-                  u("piętnastego"), u("szesnastego"), u("siedemnastego"),
-                  u("osiemnastego"), u("dziewiętnastego"),
-        ]
-        HOURS = [u("zero"), u("pierwsza"), u("druga"), u("trzecia"), u("czwarta"),
-                 u("piąta"), u("szósta"), u("siódma"), u("ósma"), u("dziewiąta"),
-                 u("dziesiąta"), u("jedenasta"), u("dwunasta"), u("trzynasta"),
-                 u("czternasta"), u("piętnasta"), u("szesnasta"),
-                 u("siedemnasta"), u("osiemnasta"), u("dziewiętnasta"),
-                 u("dwudziesta"),
-        ]
+                  u("pierwszego"), u("drugiego"), u("trzeciego"),
+                  u("czwartego"), u("piątego"), u("szóstego"), u("siódmego"),
+                  u("ósmego"), u("dziewiątego"), u("dziesiątego"),
+                  u("jedenastego"), u("dwunastego"), u("trzynastego"),
+                  u("czternastego"), u("piętnastego"), u("szesnastego"),
+                  u("siedemnastego"), u("osiemnastego"), u("dziewiętnastego")]
 
+        HOURS = [u("zero"), u("pierwsza"), u("druga"), u("trzecia"),
+                 u("czwarta"), u("piąta"), u("szósta"), u("siódma"), u("ósma"),
+                 u("dziewiąta"), u("dziesiąta"), u("jedenasta"), u("dwunasta"),
+                 u("trzynasta"), u("czternasta"), u("piętnasta"),
+                 u("szesnasta"), u("siedemnasta"), u("osiemnasta"),
+                 u("dziewiętnasta"), u("dwudziesta")]
 
         _, tm_mon, tm_mday, tm_hour, tm_min, _, _, _, _ = value.timetuple()
         retval = []
@@ -157,7 +157,7 @@ class PLMicrosoft(SR0WXLanguage):
                 if tm_mday <= 20:
                     retval.append(DAYS_N[tm_mday])
                 else:
-                    retval.append(DAYS_N0[tm_mday //10])
+                    retval.append(DAYS_N0[tm_mday // 10])
                     retval.append(DAYS_N[tm_mday % 10])
             elif word == '%B':  # Month as locale’s full name
                 retval.append(MONTHS[tm_mon])
@@ -180,28 +180,48 @@ class PLMicrosoft(SR0WXLanguage):
 
     @remove_accents
     def read_callsign(self, value):
-        # literowanie polskie wg. "Krótkofalarstwo i radiokomunikacja - poradnik",
-        # Łukasz Komsta SQ8QED, Wydawnictwa Komunikacji i Łączności Warszawa, 2001,
-        # str. 130
-        LETTERS = {
-            'a': u('adam'), 'b': u('barbara'), 'c': u('celina'), 'd': u('dorota'),
-            'e': u('edward'), 'f': u('franciszek'), 'g': u('gustaw'),
-            'h': u('henryk'), 'i': u('irena'), 'j': u('józef'), 'k': u('karol'),
-            'l': u('ludwik'), 'm': u('marek'), 'n': u('natalia'), 'o': u('olga'),
-            'p': u('paweł'), 'q': u('quebec'), 'r': u('roman'), 's': u('stefan'),
-            't': u('tadeusz'), 'u': u('urszula'), 'v': u('violetta'),
-            'w': u('wacław'), 'x': u('xawery'), 'y': u('ypsilon'), 'z': u('zygmunt'),
+        # literowanie polskie wg. "Krótkofalarstwo i radiokomunikacja
+        # - poradnik", Łukasz Komsta SQ8QED, Wydawnictwa Komunikacji
+        # i Łączności Warszawa, 2001, str. 130
+        ICAO_LETTERS = {
+            'a': u('adam'),
+            'b': u('barbara'),
+            'c': u('celina'),
+            'd': u('dorota'),
+            'e': u('edward'),
+            'f': u('franciszek'),
+            'g': u('gustaw'),
+            'h': u('henryk'),
+            'i': u('irena'),
+            'j': u('józef'),
+            'k': u('karol'),
+            'l': u('ludwik'),
+            'm': u('marek'),
+            'n': u('natalia'),
+            'o': u('olga'),
+            'p': u('paweł'),
+            'q': u('quebec'),
+            'r': u('roman'),
+            's': u('stefan'),
+            't': u('tadeusz'),
+            'u': u('urszula'),
+            'v': u('violetta'),
+            'w': u('wacław'),
+            'x': u('xawery'),
+            'y': u('ypsilon'),
+            'z': u('zygmunt'),
             '/': u('łamane'),
         }
         retval = []
         for char in value.lower():
             try:
-                retval.append(LETTERS[char])
+                retval.append(ICAO_LETTERS[char])
             except KeyError:
                 try:
                     retval.append(read_number(int(char)))
                 except ValueError:
-                    raise ValueError("\"%s\" is not a element of callsign", char)
+                    msg = "'%s' may not a element of callsign" % (char, )
+                    raise ValueError(msg)
         return ' '.join(retval)
 
 
