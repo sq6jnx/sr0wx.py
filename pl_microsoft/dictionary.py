@@ -172,7 +172,6 @@ phrases = (
 
     Phrase(u"kierunek wiatru"),
     Phrase(u"metry na sekundę"),
-    Phrase(u"metrów na sekundę"),
     Phrase(u"kilometr na godzinę"),
     Phrase(u"kilometry na godzinę"),
     Phrase(u"kilometrów na godzinę"),
@@ -183,7 +182,6 @@ phrases = (
     Phrase(u"hektopaskali"),
     Phrase(u"tendencja spadkowa"),
     Phrase(u"tendencja wzrostowa"),
-    Phrase(u"temperatura odczuwalna"),
     Phrase(u"temperatura minimalna"),
     Phrase(u"maksymalna"),
     Phrase(u"następnie"),
