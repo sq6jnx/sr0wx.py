@@ -1,7 +1,7 @@
 #!/usr/bin/python -tt
 # -*- coding: utf-8 -*-
 #
-#   Copyright 2014 Michal Sadowski (sq6jnx at hamradio dot pl)
+#   Copyright 2009-2016 Michal Sadowski (sq6jnx at hamradio dot pl)
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -18,11 +18,16 @@
 
 import warnings
 
+from six.moves import urllib
+
 
 class SR0WXModule(object):
     """Base class for SR0WX modules."""
     def __init__(self):
         pass
+
+    def download_file(self, url, timeout=5):
+        return urllib.request.urlopen(url=url, timeout=timeout).read()
 
     def getData(self):
         """Deprecated method. Runs `get_data()`."""
