@@ -75,6 +75,25 @@ prognoza_na_nastepne trzy godziny
 kierunek_wiatru {FCAST_WIND_DIR} {FCAST_WIND_DIR_DEG} predkosc_wiatru
 {FCAST_WIND_SPEED_MPS} {FCAST_WIND_SPEED_KMPH}""")
 
+from open_weather_map import OpenWeatherMap
+openweathermap = OpenWeatherMap(
+    api_key="CHANGEME",
+    latitude=52.71,
+    longitude=19.11,
+    language=pl_microsoft,
+    message_template="""\
+stan_pogody_z_godziny {OBSERVATION_TIME}
+{CURRENT_WEATHER}
+temperatura {CURRENT_TEMP_C} wilgotnosc {CURRENT_HUMIDITY}
+kierunek_wiatru {CURRENT_WIND_DIR_DEG}
+predkosc_wiatru {CURRENT_WIND_SPEED_MPS}
+cisnienie {CURRENT_PRESSURE}
+pokrywa_chmur {CURRENT_CLOUDCOVER}
+
+prognoza_na_nastepne trzy godziny
+{FCAST_WEATHER} temperatura {FCAST_TEMP_C}
+kierunek_wiatru {FCAST_WIND_DIR_DEG} predkosc_wiatru
+{FCAST_WIND_SPEED_MPS}""")
 
 # -------------
 # activity_map
@@ -94,4 +113,4 @@ activitymap = ActivityMap(
 )
 
 # List of modules to query on program run
-modules = [activitymap, worldweatheronline, ]
+modules = [activitymap, worldweatheronline, openweathermap, ]
