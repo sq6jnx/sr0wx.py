@@ -1,5 +1,5 @@
 hg+http://bitbucket.org/pygame/pygame # alternatively: apt-get install python-pygame
-http://github.com/sq6jnx/pyliczba
+git+http://github.com/sq6jnx/pyliczba
 pytz
 six
 pyserial
